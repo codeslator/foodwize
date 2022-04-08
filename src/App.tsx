@@ -9,7 +9,11 @@ const App = () => {
       <header className="App-header">
         <p>Hello Vite + React!</p>
         <p>
-          <Button type="button" variant="contained" onClick={() => setCount((count) => count + 1)}>
+          <Button
+            type="button"
+            variant="contained"
+            onClick={() => setCount((count) => count + 1)}
+          >
             count is: {count}
           </Button>
         </p>
@@ -18,7 +22,7 @@ const App = () => {
         </p>
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
