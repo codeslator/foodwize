@@ -3,7 +3,6 @@ import {
   AppBar,
   IconButton,
   Toolbar,
-  Typography,
   useMediaQuery,
   Box,
   List,

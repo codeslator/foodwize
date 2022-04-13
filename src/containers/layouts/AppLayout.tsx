@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Box, Toolbar } from '@mui/material';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -15,7 +16,7 @@ const AppLayout: FC = () => {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${200}px)` } }}
       >
         <Toolbar />
-        Hello World
+        <Outlet />
       </Box>
     </Box>
   );

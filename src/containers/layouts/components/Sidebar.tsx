@@ -2,18 +2,17 @@ import { FC } from 'react'
 import {
   Drawer,
   List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
+  Divider,
   useMediaQuery,
   Box,
-  Typography,
 } from '@mui/material';
-import { makeStyles, Theme } from '@mui/styles';
-import { Mail, Inbox } from '@mui/icons-material';
+import { makeStyles } from '@mui/styles';
+import { Mail, Inbox, Home } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
-import Foodwise from '../../../assets/img/foodwize.svg';
-import Logo from '../../../assets/img/logo.svg';
+import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
+import { NavLink } from 'react-router-dom';
+import { SidebarFooter } from './SidebarFooter';
+import { SidebarHeader } from './SidebarHeader';
 
 const useStyles = makeStyles({
   root: {
@@ -26,22 +25,20 @@ const useStyles = makeStyles({
       justifyContent: 'space-between'
     },
   },
-  button: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    color: '#ffffff',
-    paddingTop: '10px',
-    paddingBottom: '10px',
-  },
-  icon: {
-    color: '#ffffff',
-    minWidth: 0,
-  },
-  caption: {
-    marginBottom: 5,
-  }
 });
+
+const routes = [
+  {
+    name: 'Home',
+    to: '/',
+    Icon: Home
+  },
+  {
+    name: 'Mails',
+    to: '/',
+    Icon: Inbox
+  }
+]
 
 export const Sidebar: FC = () => {
   const classes = useStyles();
@@ -59,61 +56,30 @@ export const Sidebar: FC = () => {
         className={classes.root}
       >
         <Box>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            my: '30px'
-          }}>
-            <img src={Foodwise} alt="foodwize logo" />
-          </Box>
+          <SidebarHeader />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItemButton
-                key={text}
-                className={classes.button}
-                selected={index === 1}
-              >
-                <ListItemIcon className={classes.icon}>
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+            {routes.map(({ name, to, Icon }, index) => (
+              <SidebarListItemButton
+                key={index}
+                text={name}
+                component={NavLink}
+                to={to}
+                icon={<Icon />}
+              />
             ))}
           </List>
         </Box>
         <Box>
           <List>
-            {['Logout'].map((text, index) => (
-              <ListItemButton
-                key={text}
-                className={classes.button}
-                selected={index === 1}
-              >
-                <ListItemIcon className={classes.icon}>
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            ))}
+            <SidebarListItemButton
+              text="Log Out"
+              component={NavLink}
+              to="/"
+              icon={<Mail />}
+            />
           </List>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            my: '30px'
-          }}>
-            <Typography
-              color="white"
-              variant="caption"
-              className={classes.caption}
-            >
-              Powered by
-            </Typography>
-            <img src={Logo} alt="foodwize logo" />
-          </Box>
+          <Divider />
+          <SidebarFooter />
         </Box>
       </Drawer>
     </nav>
