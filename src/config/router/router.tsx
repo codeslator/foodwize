@@ -11,10 +11,10 @@ export const Router: FC = () => (
   )}>
     <BrowserRouter>
       <Routes>
-        {routes.map(({ Layout, path, children }) => (
-          <Route element={<Layout />} key={path}>
-            {children.map(({ Component, path, to }) => (
-              <Route path={path} element={<Component />} key={to} />
+        {routes.map(({ Layout, path: root, children }) => (
+          <Route element={<Layout />} path={root} key={root} >
+            {children.map(({ Component, path }, index) => (
+              <Route path={path} element={<Component />} key={index} />
             ))}
           </Route>
         ))}

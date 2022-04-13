@@ -35,7 +35,7 @@ const routes = [
   },
   {
     name: 'Mails',
-    to: '/',
+    to: '/test',
     Icon: Inbox
   }
 ]
