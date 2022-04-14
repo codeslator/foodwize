@@ -1,46 +1,61 @@
 import { FC } from 'react'
 import {
   Box,
-  CssBaseline,
   Grid,
-  Link,
   Paper,
-  Typography
 } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Image from 'mui-image';
+import Stand from '../../assets/img/stand.svg';
+import { CopyrightHeader } from './components/CopyrightHeader';
 
 const AuthLayout: FC = () => {
   return (
-    <Grid container component="main" sx={{ height: '100vh' }}>
-      <CssBaseline />
+    <Grid
+      container
+      component="main"
+      sx={{
+        height: '100vh',
+        background: 'linear-gradient(180deg, #FFD489 70%, #FFE1AC 30%)',
+        overflow: 'hidden'
+      }}
+    >
       <Grid
         item
         xs={false}
         sm={4}
         md={6}
+      >
+        <Image
+          src={Stand}
+          fit="scale-down"
+          easing="linear"
+          duration={0}
+          sx={{ display: { xs: 'none', sm: 'block' }, zIndex: 0 }}
+          style={{
+            width: 'none',
+            height: '100vh'
+          }}
+          wrapperStyle={{
+            display: 'block',
+          }}
+        />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={6}
+        component={Paper}
+        elevation={6}
+        square
         sx={{
-          backgroundImage: 'url(https://source.unsplash.com/random)',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: (t) =>
-            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          borderTopLeftRadius: { sm: 30 },
+          borderBottomLeftRadius: { sm: 30 },
+          zIndex: { sm: 9999 },
+          backgroundColor: '#ffffff',
         }}
-      />
-      <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} >
+      >
         <Box
           sx={{
             my: 8,
@@ -50,7 +65,12 @@ const AuthLayout: FC = () => {
             alignItems: 'center',
           }}
         >
-          <Outlet />
+          <CopyrightHeader />
+          <Grid container justifyContent="center">
+            <Grid item xs={12} sm={12} md={8}>
+              <Outlet />
+            </Grid>
+          </Grid>
         </Box>
       </Grid>
     </Grid>

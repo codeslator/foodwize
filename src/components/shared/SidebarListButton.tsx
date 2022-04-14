@@ -11,12 +11,10 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    color: '#ffffff',
     paddingTop: '10px',
     paddingBottom: '10px',
   },
   icon: {
-    color: '#ffffff',
     minWidth: 0,
   },
 });
@@ -28,14 +26,26 @@ interface Props {
 };
 
 export const SidebarListItemButton: FC<Props> = ({ text, icon, ...props }) => {
+  const { selected } = props;
   const classes = useStyles();
+
+  console.log(selected);
 
   return (
     <ListItemButton
       className={classes.button}
       {...props}
+      sx={{
+        color: selected ? 'primary.main' : '#fff',
+        backgroundColor: selected && '#FCE7E1 !important',
+      }}
     >
-      <ListItemIcon className={classes.icon}>
+      <ListItemIcon
+        className={classes.icon}
+        sx={{
+          color: selected ? 'primary.main' : '#fff',
+        }}
+      >
         {icon}
       </ListItemIcon>
       <ListItemText primary={text} />

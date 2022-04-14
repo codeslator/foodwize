@@ -7,10 +7,17 @@ import {
   Box,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Mail, Inbox, Home } from '@mui/icons-material';
+import {
+  Store,
+  Home,
+  LocalOffer,
+  PieChart,
+  PeopleAlt,
+  Logout
+} from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
 import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarHeader } from './SidebarHeader';
 
@@ -34,15 +41,31 @@ const routes = [
     Icon: Home
   },
   {
-    name: 'Mails',
+    name: 'Stock',
     to: '/test',
-    Icon: Inbox
-  }
+    Icon: Store
+  },
+  {
+    name: 'Products',
+    to: '/test',
+    Icon: LocalOffer
+  },
+  {
+    name: 'Analytics',
+    to: '/test',
+    Icon: PieChart
+  },
+  {
+    name: 'Users',
+    to: '/test',
+    Icon: PeopleAlt, Logout
+  },
 ]
 
 export const Sidebar: FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));
+  const { pathname } = useLocation();
 
   return (
     <nav>
@@ -65,6 +88,7 @@ export const Sidebar: FC = () => {
                 component={NavLink}
                 to={to}
                 icon={<Icon />}
+                selected={pathname === to}
               />
             ))}
           </List>
@@ -74,8 +98,9 @@ export const Sidebar: FC = () => {
             <SidebarListItemButton
               text="Log Out"
               component={NavLink}
-              to="/"
-              icon={<Mail />}
+              to="/auth/login"
+              icon={<Logout />}
+              // selected={pathname === '/'}
             />
           </List>
           <Divider />
