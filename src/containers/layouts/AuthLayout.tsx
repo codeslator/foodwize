@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC } from 'react';
 import {
   Box,
   Grid,
@@ -67,7 +67,7 @@ const AuthLayout: FC = () => {
         >
           <CopyrightHeader />
           <Grid container justifyContent="center">
-            <Grid item xs={12} sm={12} md={8}>
+            <Grid item xs={12} sm={12} md={10} lg={8}>
               <Outlet />
             </Grid>
           </Grid>
