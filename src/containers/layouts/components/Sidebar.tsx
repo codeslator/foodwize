@@ -20,6 +20,7 @@ import { SidebarListItemButton } from '../../../components/shared/SidebarListBut
 import { NavLink, useLocation } from 'react-router-dom';
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarHeader } from './SidebarHeader';
+import useUI from '../../../utils/hooks/useUI';
 
 const useStyles = makeStyles({
   root: {
@@ -66,13 +67,14 @@ export const Sidebar: FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));
   const { pathname } = useLocation();
+  const { toggleDrawer, openDrawer } = useUI();
 
   return (
     <nav>
       <Drawer
         variant={matches ? 'permanent' : 'temporary'}
-        // open={mobileOpen}
-        // onClose={handleDrawerToggle}
+        open={openDrawer}
+        onClose={toggleDrawer}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}

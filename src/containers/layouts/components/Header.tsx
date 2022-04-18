@@ -13,9 +13,11 @@ import {
 } from '@mui/material'
 import { Menu, KeyboardArrowDown } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
+import useUI from '../../../utils/hooks/useUI';
 
 export const Header: FC = () => {
   const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));
+  const { toggleDrawer } = useUI();
 
   return (
     <header>
@@ -40,7 +42,7 @@ export const Header: FC = () => {
                 color="inherit"
                 aria-label="open drawer"
                 edge="start"
-                // onClick={handleDrawerToggle}
+                onClick={toggleDrawer}
                 sx={{ mr: 2 }}
               >
                 <Menu />
@@ -52,8 +54,8 @@ export const Header: FC = () => {
               justifyContent='center'
               alignItems="center"
             >
-              <List sx={{ width: '100%', maxWidth: 360, py: 0, px: 0 }}>
-                <ListItem>
+              <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>
+                <ListItem sx={{ padding: 0 }}>
                   <ListItemText primary="John Doe" secondary="Admin" sx={{ textAlign: 'right' }} />
                   <ListItemAvatar sx={{ ml: '10px' }}>
                     <Avatar>
