@@ -1,4 +1,9 @@
 import { FC, LazyExoticComponent, Component } from 'react';
+import { AxiosRequestConfig } from 'axios';
+
+interface AxiosMutationConfig extends AxiosRequestConfig {
+  onFinally?: () => void;
+};
 
 export type JSXComponent = () => JSX.Element;
 export type LazyComponent = LazyExoticComponent<JSXComponent>;
@@ -14,3 +19,5 @@ export interface RouteChild {
   path: string;
   Component: LazyComponent | JSXComponent | FC;
 };
+
+export type AxiosConfig = AxiosMutationConfig;

@@ -1,4 +1,4 @@
-import { RouteParent } from '../../types';
+import { RouteParent } from '../../interfacesfaces';
 import { TestView, FormView } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 
