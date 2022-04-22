@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AxiosConfig } from '../../config/interfaces';
 import useConfig from './useConfig';
+import axiosInstance from '../../config/axiosConfig';
 
 const defaultConfig: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_URL,
   url: 'settings/',
-  method: 'GET',
+  method: 'get',
   data: null,
   headers: {
-    'x-api-key': !!process.env.REACT_APP_APIKEY,
+    'x-api-key': `${process.env.REACT_APP_APIKEY}`,
     'Content-Type': 'application/json'
   },
 };
-
 // const ENV = process.env.NODE_ENV;
 
-const useAxios = <T>(config: AxiosConfig = defaultConfig, logs: boolean = false) => {
+const useAxios = <T>(config: AxiosConfig, logs: boolean = false) => {
   const [response, setResponse] = useState<AxiosResponse>();
   const [data, setData] = useState<T>();
   const [error, setError] = useState<AxiosError | Error>();
@@ -36,7 +36,7 @@ const useAxios = <T>(config: AxiosConfig = defaultConfig, logs: boolean = false)
     // }
 
     try {
-      const response = await axios.request(config);
+      const response = await axiosInstance.request(config);
       // Check if exists a backend error
       // if (response)
       setResponse(response);

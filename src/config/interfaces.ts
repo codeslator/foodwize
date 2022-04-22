@@ -1,4 +1,4 @@
-import { FC, LazyExoticComponent, Component } from 'react';
+import { FC, LazyExoticComponent } from 'react';
 import { AxiosRequestConfig } from 'axios';
 
 interface AxiosMutationConfig extends AxiosRequestConfig {
