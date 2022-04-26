@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import {
   Checkbox,
@@ -22,8 +23,15 @@ import {
 import useAuth from '../../utils/hooks/useAuth';
 
 export const SignInForm: FC = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const { login, isLoading } = useAuth();
+  const { login, isLoading, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if(isAuthenticated) {
+      navigate('/test')
+    }
+  }, [isAuthenticated])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);

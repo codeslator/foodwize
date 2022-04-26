@@ -11,9 +11,7 @@ export const routes: RouteParent[] = [
   {
     path: '',
     Layout: AuthLayout,
-    // isIndex: true,
     children: [
-      // { to: '', path: '', Component: SignInView },
       { to: 'login', path: 'login', Component: SignInView },
       { to: 'register', path: 'register', Component: SignUpView },
       { to: 'recover-password', path: 'recover-password', Component: RecoverPasswordView },
@@ -30,4 +28,4 @@ export const routes: RouteParent[] = [
       // { path: '*', Component: <Navigate to="/404" /> }
     ]
   },
-]
+];

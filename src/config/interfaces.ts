@@ -11,7 +11,6 @@ export type LazyComponent = LazyExoticComponent<JSXComponent>;
 export interface RouteParent {
   path?: string;
   Layout: LazyComponent | JSXComponent | FC;
-  isIndex?: boolean;
   children: RouteChild[];
 };
 

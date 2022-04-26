@@ -1,10 +1,20 @@
-import { FC } from 'react';
-import { Outlet } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Box, Toolbar } from '@mui/material';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
+import useAuth from '../../utils/hooks/useAuth';
 
 const AppLayout: FC = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if(!isAuthenticated) {
+      navigate('/login', { replace: true });
+    }
+  }, []);
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Header />

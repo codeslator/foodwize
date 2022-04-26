@@ -1,15 +1,25 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import {
   Box,
   Grid,
   Paper,
 } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Image from 'mui-image';
 import Stand from '../../assets/img/stand.svg';
 import { CopyrightHeader } from './components/CopyrightHeader';
+import useAuth from '../../utils/hooks/useAuth';
 
 const AuthLayout: FC = () => {
+  // const navigate = useNavigate();
+  // const { isAuthenticated } = useAuth();
+
+  // useEffect(() => {
+  //   if(isAuthenticated) {
+  //     navigate('/test', { replace: true });
+  //   }
+  // }, []);
+
   return (
     <Grid
       container

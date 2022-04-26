@@ -14,7 +14,7 @@ interface AuthUser {
 export interface UserAuthenticated {
   token: string;
   refreshToken: string;
-  user: AuthUser;
+  user: AuthUser | null;
 };
 
 export interface AuthState {
@@ -27,14 +27,7 @@ export const authState: AuthState = {
   currentUser: {
     token: '',
     refreshToken: '',
-    user: {
-      accountId: '',
-      email: '',
-      firstName: '',
-      lastName: '',
-      metadata: [],
-      status: '',
-    }
+    user: null
   },
   isAuthenticated: false,
   isLoading: false,

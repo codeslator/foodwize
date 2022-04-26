@@ -1,5 +1,5 @@
 import { FC, Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { routes } from './navigation/routes';
 
@@ -11,7 +11,6 @@ export const Router: FC = () => (
   )}>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
         {routes.map(({ Layout, path: root, children }) => (
           <Route  element={<Layout />} path={root} key={root} >
             {children.map(({ Component, path }, index) => (

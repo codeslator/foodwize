@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosRequestConfig } from "axios";
+import { FOODWIZE_APP_APIKEY, FOODWIZE_APP_URL } from "../../config";
 // import { AuthActions } from './index';
 interface RefreshTokenParams {
   refreshToken: string;
@@ -15,9 +16,9 @@ export const refreshToken = createAsyncThunk('auth/refreshToken', async ({ refre
   const data = JSON.stringify({ refresh_token: refreshToken, email });
   const config: AxiosRequestConfig = {
     method: 'put',
-    url: `${import.meta.env.VITE_REACT_APP_URL}/identities/auth`,
+    url: `${FOODWIZE_APP_URL}/identities/auth`,
     headers: {
-      'x-api-key': !!import.meta.env.VITE_REACT_APP_APIKEY,
+      'x-api-key': FOODWIZE_APP_APIKEY,
       'Content-Type': 'application/json',
     },
     data,
@@ -40,12 +41,12 @@ export const refreshToken = createAsyncThunk('auth/refreshToken', async ({ refre
   };
 });
 
-export const login = createAsyncThunk('auth/login', async ({ email, password }: LoginParams) => {
+export const logIn = createAsyncThunk('auth/login', async ({ email, password }: LoginParams) => {
   const config: AxiosRequestConfig = {
     method: 'post',
-    url: `${import.meta.env.VITE_REACT_APP_URL}/identities/auth`,
+    url: `${FOODWIZE_APP_URL}/identities/auth`,
     headers: {
-      'x-api-key': !!import.meta.env.VITE_REACT_APP_APIKEY,
+      'x-api-key': FOODWIZE_APP_APIKEY,
       'Content-Type': 'application/json',
     },
     data: { email, password },

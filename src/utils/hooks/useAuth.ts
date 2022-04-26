@@ -1,10 +1,8 @@
 import { useAppSelector, useAppDispatch } from './';
 import { selectAuthState } from '../../store/selectors';
-import { REFRESH_TOKEN, SET_CURRENT_USER, LOGIN } from '../../store/auth';
-import { useNavigate } from 'react-router-dom';
+import { REFRESH_TOKEN, SET_CURRENT_USER, LOGIN, LOGOUT } from '../../store/auth';
 
 const useAuth = () => {
-  const navigate = useNavigate();
   const { currentUser, isLoading, isAuthenticated } = useAppSelector(selectAuthState);
   const dispatch = useAppDispatch();
 
@@ -18,10 +16,10 @@ const useAuth = () => {
 
   const login = async (email: string, password: string) => {
     await dispatch(LOGIN({ email, password }));
-    // TODO: Move validation to view
-    if(isAuthenticated && currentUser) {
-      navigate('/test', { replace: true })
-    }
+  };
+
+  const logout = () => {
+    dispatch(LOGOUT());
   };
 
   return {
@@ -29,6 +27,7 @@ const useAuth = () => {
     setCurrentUser,
     refreshUser,
     login,
+    logout,
     isLoading,
     isAuthenticated,
   };
