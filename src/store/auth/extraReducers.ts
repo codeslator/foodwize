@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosRequestConfig } from "axios";
 // import { AuthActions } from './index';
-
 interface RefreshTokenParams {
   refreshToken: string;
   email: string;
@@ -16,9 +15,9 @@ export const refreshToken = createAsyncThunk('auth/refreshToken', async ({ refre
   const data = JSON.stringify({ refresh_token: refreshToken, email });
   const config: AxiosRequestConfig = {
     method: 'put',
-    url: `${process.env.REACT_APP_URL}/identities/auth`,
+    url: `${import.meta.env.VITE_REACT_APP_URL}/identities/auth`,
     headers: {
-      'x-api-key': !!process.env.REACT_APP_APIKEY,
+      'x-api-key': !!import.meta.env.VITE_REACT_APP_APIKEY,
       'Content-Type': 'application/json',
     },
     data,
@@ -28,7 +27,7 @@ export const refreshToken = createAsyncThunk('auth/refreshToken', async ({ refre
     const userRefreshed = response.data;
     const user = {
       token: userRefreshed.token,
-      refresh_token: userRefreshed.refresh_token,
+      refreshToken: userRefreshed.refreshToken,
       email,
     };
     localStorage.setItem('user', JSON.stringify(user));
@@ -44,9 +43,9 @@ export const refreshToken = createAsyncThunk('auth/refreshToken', async ({ refre
 export const login = createAsyncThunk('auth/login', async ({ email, password }: LoginParams) => {
   const config: AxiosRequestConfig = {
     method: 'post',
-    url: `${process.env.REACT_APP_URL}/identities/auth`,
+    url: `${import.meta.env.VITE_REACT_APP_URL}/identities/auth`,
     headers: {
-      'x-api-key': !!process.env.REACT_APP_APIKEY,
+      'x-api-key': !!import.meta.env.VITE_REACT_APP_APIKEY,
       'Content-Type': 'application/json',
     },
     data: { email, password },

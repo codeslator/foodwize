@@ -1,4 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import { isEmpty } from 'lodash';
+import useAuth from '../utils/hooks/useAuth';
 // import { store } from '../store';
 // import { refreshToken } from '../store/auth/extraReducers';
 
@@ -13,9 +17,39 @@ const defaultConfig: AxiosRequestConfig = {
   },
 };
 
-const axiosInstance: AxiosInstance = axios.create(defaultConfig);
 
-axiosInstance.interceptors.request.use((request) => {
+const useAxiosInterceptor = () => {
+  const axiosInstance: AxiosInstance = axios.create(defaultConfig);
+  const navigate = useNavigate();
+  const { currentUser, refreshUser } = useAuth();
+
+  useEffect(() => {
+    const interceptor = axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
+      return request;
+    },
+    (error: AxiosError) => {
+      if(error.response?.status === 401) {
+        if(isEmpty(currentUser.refreshToken && isEmpty(currentUser.user.email))) {
+          localStorage.clear();
+          navigate('/login');
+        }
+        else {
+          return refreshUser(currentUser.refreshToken, currentUser.user.email);
+        }
+      }
+    });
+
+    return () => axiosInstance.interceptors.response.eject(interceptor);
+  }, []);
+
+  return {
+    axiosInstance,
+  };
+};
+
+export default useAxiosInterceptor;
+
+/* axiosInstance.interceptors.request.use((request) => {
   // Edit request config
   return request;
 }, (error) => {
@@ -39,4 +73,4 @@ axiosInstance.interceptors.request.use((request) => {
   return Promise.reject(error);
 });
 
-export default axiosInstance;
+export default axiosInstance; */

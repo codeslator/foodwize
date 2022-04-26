@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AxiosConfig } from '../../config/interfaces';
 import useConfig from './useConfig';
-import axiosInstance from '../../config/axiosConfig';
+// import axiosInstance from '../../config/axiosConfig';
+import useAxiosInterceptor from '../../config/axiosConfig';
 
-const defaultConfig: AxiosRequestConfig = {
+/* const defaultConfig: AxiosRequestConfig = {
   baseURL: process.env.REACT_APP_URL,
   url: 'settings/',
   method: 'get',
@@ -13,7 +14,7 @@ const defaultConfig: AxiosRequestConfig = {
     'x-api-key': `${process.env.REACT_APP_APIKEY}`,
     'Content-Type': 'application/json'
   },
-};
+}; */
 // const ENV = process.env.NODE_ENV;
 
 const useAxios = <T>(config: AxiosConfig, logs: boolean = false) => {
@@ -21,7 +22,9 @@ const useAxios = <T>(config: AxiosConfig, logs: boolean = false) => {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<AxiosError | Error>();
   const [loading, setLoading] = useState<boolean>(true);
+  const { axiosInstance } = useAxiosInterceptor();
   const { checkConfig } = useConfig();
+
 
   const fetchData = async (newConfig?: AxiosConfig) => {
     if (newConfig) {

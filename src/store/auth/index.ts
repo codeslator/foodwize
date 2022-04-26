@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authState, AuthState } from './state';
+import { authState, AuthState, UserAuthenticated } from './state';
 import * as authReducer from './reducer';
 import { login, refreshToken } from "./extraReducers";
 
@@ -11,15 +11,17 @@ export const authSlice = createSlice({
     [refreshToken.pending as any]: (state: AuthState) => {
       state.isLoading = true;
     },
-    [refreshToken.fulfilled as any]: (state: AuthState, { payload }: PayloadAction) => {
+    [refreshToken.fulfilled as any]: (state: AuthState, { payload }: PayloadAction<UserAuthenticated>) => {
       state.isLoading = false;
+      state.isAuthenticated = true;
       state.currentUser = payload;
     },
     [login.pending as any]: (state: AuthState) => {
       state.isLoading = true;
     },
-    [login.fulfilled as any]: (state: AuthState, { payload }: PayloadAction) => {
+    [login.fulfilled as any]: (state: AuthState, { payload }: PayloadAction<UserAuthenticated>) => {
       state.isLoading = false;
+      state.isAuthenticated = true;
       state.currentUser = payload;
     },
   }

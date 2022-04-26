@@ -1,14 +1,22 @@
 import { RouteParent } from '../../interfaces';
-import { TestView, FormView } from '../../../views';
+import {
+  TestView,
+  SignInView,
+  SignUpView,
+  RecoverPasswordView
+} from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 
 export const routes: RouteParent[] = [
   {
-    path: '/',
+    path: '',
     Layout: AuthLayout,
+    // isIndex: true,
     children: [
-      { to: '', path: '', Component: FormView },
-      { to: 'login', path: 'login', Component: FormView },
+      // { to: '', path: '', Component: SignInView },
+      { to: 'login', path: 'login', Component: SignInView },
+      { to: 'register', path: 'register', Component: SignUpView },
+      { to: 'recover-password', path: 'recover-password', Component: RecoverPasswordView },
       // { path: '*', Component: AuthLayout },
       // { path: '*', Component: <Navigate to="/404" /> }
     ]
