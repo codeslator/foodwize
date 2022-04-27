@@ -1,5 +1,5 @@
 import { RouteParent } from '../../interfaces';
-import { TestView, FormView } from '../../../views';
+import { TestView, FormView, Users } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 
 export const routes: RouteParent[] = [
@@ -18,6 +18,15 @@ export const routes: RouteParent[] = [
     Layout: AppLayout,
     children: [
       { to: 'test', path: 'test', Component: TestView },
+      // { path: '*', Component: TestView },
+      // { path: '*', Component: <Navigate to="/404" /> }
+    ]
+  },
+  {
+    path: '',
+    Layout: AppLayout,
+    children: [
+      { to: 'user', path: 'user', Component: Users },
       // { path: '*', Component: TestView },
       // { path: '*', Component: <Navigate to="/404" /> }
     ]

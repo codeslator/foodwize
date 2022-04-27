@@ -3,7 +3,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { defaultTheme } from './assets/themes/index';
 // import AppLayout from './containers/layouts/AppLayout';
 import { store } from './store';
-import { Router } from './config/router/Router';
+import { Router } from './config/router/router';
 
 const App = () => {
 

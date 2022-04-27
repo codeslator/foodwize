@@ -29,7 +29,7 @@ export const SidebarListItemButton: FC<Props> = ({ text, icon, ...props }) => {
   const { selected } = props;
   const classes = useStyles();
 
-  console.log(selected);
+  // console.log(selected);
 
   return (
     <ListItemButton
