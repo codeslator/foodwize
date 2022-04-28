@@ -1,8 +1,18 @@
-import { RouteParent } from '../../types';
-import { TestView, FormView } from '../../../views';
+import { RouteParent } from '../../interfaces';
+import { TestView, FormView, Users } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 
 export const routes: RouteParent[] = [
+  {
+    path: '/',
+    Layout: AuthLayout,
+    children: [
+      { to: '', path: '', Component: FormView },
+      { to: 'login', path: 'login', Component: FormView },
+      // { path: '*', Component: AuthLayout },
+      // { path: '*', Component: <Navigate to="/404" /> }
+    ]
+  },
   {
     path: '',
     Layout: AppLayout,
@@ -13,11 +23,11 @@ export const routes: RouteParent[] = [
     ]
   },
   {
-    path: 'auth',
-    Layout: AuthLayout,
+    path: '',
+    Layout: AppLayout,
     children: [
-      { to: 'login', path: 'login', Component: FormView },
-      // { path: '*', Component: AuthLayout },
+      { to: 'user', path: 'user', Component: Users },
+      // { path: '*', Component: TestView },
       // { path: '*', Component: <Navigate to="/404" /> }
     ]
   },

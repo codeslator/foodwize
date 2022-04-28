@@ -1,10 +1,10 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from '@mui/material';
 import { Montserrat } from './fonts';
 import { defaultPalette } from './defaultPalette';
 
 export const defaultTheme = createTheme({
   typography: {
-    fontFamily: 'Montserrat'
+    fontFamily: 'Montserrat',
   },
   palette: {
     mode: 'light',
