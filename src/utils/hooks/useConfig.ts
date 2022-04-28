@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FOODWIZE_APP_APIKEY, FOODWIZE_APP_URL } from '../../config';
 import { AxiosConfig } from '../../config/interfaces';
 import { store } from '../../store';
 
@@ -14,7 +14,7 @@ const useConfig = () => {
 
     // checks for missing info in the request
     if (!config.baseURL) {
-      config.baseURL = process.env.REACT_APP_URL;
+      config.baseURL = FOODWIZE_APP_URL;
     }
 
     if (!config.method) {
@@ -30,7 +30,7 @@ const useConfig = () => {
       config.headers.Authorization = currentUser.token;
     }
     if (!config.headers['x-api-key']) {
-      config.headers['x-api-key'] = !!process.env.REACT_APP_APIKEY;
+      config.headers['x-api-key'] = FOODWIZE_APP_APIKEY;
     }
     if (!config.headers['Content-Type']) {
       config.headers['Content-Type'] = 'application/json';

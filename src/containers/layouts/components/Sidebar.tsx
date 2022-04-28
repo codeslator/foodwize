@@ -17,10 +17,11 @@ import {
 } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
 import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarHeader } from './SidebarHeader';
 import useUI from '../../../utils/hooks/useUI';
+import useAuth from '../../../utils/hooks/useAuth';
 
 const useStyles = makeStyles({
   root: {
@@ -61,13 +62,20 @@ const routes = [
     to: '/user',
     Icon: PeopleAlt, Logout
   },
-]
+];
 
 export const Sidebar: FC = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const classes = useStyles();
   const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));
-  const { pathname } = useLocation();
   const { toggleDrawer, openDrawer } = useUI();
+  const { logout } = useAuth();
+
+  const logOut = () => {
+    logout();
+    navigate('/login');
+  }
 
   return (
     <nav>
@@ -99,10 +107,9 @@ export const Sidebar: FC = () => {
           <List>
             <SidebarListItemButton
               text="Log Out"
-              component={NavLink}
-              to="/auth/login"
+              to="/login"
               icon={<Logout />}
-              // selected={pathname === '/'}
+              onClick={logOut}
             />
           </List>
           <Divider />

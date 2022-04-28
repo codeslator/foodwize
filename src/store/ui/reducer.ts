@@ -1,4 +1,3 @@
-import { PayloadAction } from '@reduxjs/toolkit';
 import { UIState } from './state';
 
 export const toggleModal = (state: UIState) => {
@@ -11,4 +10,8 @@ export const toggleBackdrop = (state: UIState) => {
 
 export const toggleDrawer = (state: UIState) => {
   state.openDrawer = !state.openDrawer;
+};
+
+export const toggleSnackbar = (state: UIState) => {
+  state.openSnackbar = !state.openSnackbar;
 };
