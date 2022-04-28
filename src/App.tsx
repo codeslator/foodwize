@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 import { defaultTheme } from './assets/themes/index';
-// import AppLayout from './containers/layouts/AppLayout';
 import { store } from './store';
 import { Router } from './config/router/router';
 
@@ -10,8 +10,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
-        <CssBaseline />
-        <Router />
+        <SnackbarProvider maxSnack={3}>
+          <CssBaseline />
+          <Router />
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   );

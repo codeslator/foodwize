@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
-import { AxiosConfig } from '../../config/interfaces';
+import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
 import { useConfig } from './';
 import useAxiosInterceptor from '../../config/useAxiosInterceptor';
+import { APP_MODE } from '../../config/index';
 
-const useAxios = <T>(config: AxiosConfig, logs: boolean = false) => {
-  const [response, setResponse] = useState<AxiosResponse>();
-  const [data, setData] = useState<T>();
-  const [error, setError] = useState<AxiosError | Error>();
-  const [loading, setLoading] = useState<boolean>(true);
+const useAxios = <T extends Object>(config: AxiosConfig, logs: boolean = false) => {
+  const [response, setResponse] = useState<AxiosResponse | ServerErrorResponse>(<AxiosResponse>{});
+  const [data, setData] = useState<T>(<T>{});
+  const [error, setError] = useState<AxiosError | Error | ServerErrorResponse>();
+  const [loading, setLoading] = useState<boolean>(false);
   const { axiosInstance } = useAxiosInterceptor();
   const { checkConfig } = useConfig();
 
@@ -18,21 +19,24 @@ const useAxios = <T>(config: AxiosConfig, logs: boolean = false) => {
     }
     // Check all configuration
     checkConfig(config);
-
     // logs the request in development only
-    // if (logs && (!ENV || ENV === 'development')) {
-    //   console.log(config);
-    // }
-
+    if (logs && (!APP_MODE || APP_MODE === 'development')) {
+      console.log(config);
+    }
+    setLoading(true);
     try {
-      const response = await axiosInstance.request(config);
-      // Check if exists a backend error
-      // if (response)
-      setResponse(response);
-      setData(response.data);
-
+      const axiosResponse = await axiosInstance.request(config);
+      if (logs && (!APP_MODE || APP_MODE === 'development')) {
+        console.log('Axios Response: ', axiosResponse);
+        console.log('Data: ', axiosResponse.data);
+      }
+      setResponse(axiosResponse);
+      setData(axiosResponse.data);
     }
     catch (error: any) {
+      if (logs && (!APP_MODE || APP_MODE === 'development')) {
+        console.log('Error: ', error);
+      }
       setError(error);
     }
     finally {

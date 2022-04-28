@@ -1,3 +1,4 @@
+import { UIError } from '../../config/interfaces';
 interface AuthUser {
   accountId: string;
   accountType?: string;
@@ -17,10 +18,15 @@ export interface UserAuthenticated {
   user: AuthUser | null;
 };
 
+export interface UserNotAuthenticated {
+  message: string;
+}
+
 export interface AuthState {
   currentUser: UserAuthenticated;
   isLoading: boolean;
   isAuthenticated: boolean;
+  error: string;
 };
 
 export const authState: AuthState = {
@@ -31,4 +37,5 @@ export const authState: AuthState = {
   },
   isAuthenticated: false,
   isLoading: false,
+  error: '',
 };

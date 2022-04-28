@@ -1,5 +1,5 @@
 import { FC, LazyExoticComponent } from 'react';
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosError } from 'axios';
 
 interface AxiosMutationConfig extends AxiosRequestConfig {
   onFinally?: () => void;
@@ -21,3 +21,12 @@ export interface RouteChild {
 };
 
 export type AxiosConfig = AxiosMutationConfig;
+export interface ServerErrorResponse {
+  httpStatusCode: number;
+  errorCode: number;
+  errorMessage: string;
+  cause: string;
+};
+
+export type UIError = Error | AxiosError | ServerErrorResponse | string;
+

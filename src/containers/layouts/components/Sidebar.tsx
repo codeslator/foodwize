@@ -62,7 +62,7 @@ const routes = [
     to: '/test',
     Icon: PeopleAlt, Logout
   },
-]
+];
 
 export const Sidebar: FC = () => {
   const { pathname } = useLocation();
@@ -72,7 +72,7 @@ export const Sidebar: FC = () => {
   const { toggleDrawer, openDrawer } = useUI();
   const { logout } = useAuth();
 
-  const signOut = () => {
+  const logOut = () => {
     logout();
     navigate('/login');
   }
@@ -109,8 +109,7 @@ export const Sidebar: FC = () => {
               text="Log Out"
               to="/login"
               icon={<Logout />}
-              onClick={signOut}
-              // selected={pathname === '/'}
+              onClick={logOut}
             />
           </List>
           <Divider />

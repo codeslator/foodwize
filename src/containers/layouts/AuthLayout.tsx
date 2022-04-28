@@ -62,7 +62,7 @@ const AuthLayout: FC = () => {
         sx={{
           borderTopLeftRadius: { sm: 30 },
           borderBottomLeftRadius: { sm: 30 },
-          zIndex: { sm: 9999 },
+          zIndex: { xs: 0 },
           backgroundColor: '#ffffff',
         }}
       >

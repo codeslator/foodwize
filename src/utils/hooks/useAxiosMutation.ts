@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { AxiosConfig } from '../../config/interfaces';
+import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import useConfig from './useConfig';
+import { APP_MODE } from '../../config/index';
 
-
-const useAxiosMutation = <T>(config: AxiosConfig, logs: boolean = false) => {
+const useAxiosMutation = <T extends Object>(config: AxiosConfig, logs: boolean = false) => {
   const [response, setResponse] = useState<AxiosResponse>();
   const [data, setData] = useState<T>();
-  const [error, setError] = useState<AxiosError>();
+  const [error, setError] = useState<AxiosError | Error | ServerErrorResponse | string>();
   const [loading, setloading] = useState<boolean>(false);
   const { checkConfig } = useConfig();
 
@@ -16,48 +16,33 @@ const useAxiosMutation = <T>(config: AxiosConfig, logs: boolean = false) => {
    */
   const fetchData = async (newConfig: AxiosConfig) => {
     config.data = newConfig;
-
     checkConfig(config);
-
     // logs the request in development only
-    if (logs && (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')) {
+    if (logs && (!APP_MODE || APP_MODE === 'development')) {
       console.log(config);
     }
-
     setloading(true);
-
     try {
-      const response = await axios.request(config);
-      setData(response.data)
-      // checks for error
-      if (!res.errorMessage) {
-      // logs the response in development only
-        if (logs && (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')) {
-          setResponse(res.data);
-          console.log(res);
-        }
-
-      } else {
-      // logs the error in development only
-        if (logs && (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')) {
-          console.error(res.errorMessage);
-        }
-        setError(!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? res.errorMessage : 'Internal Error');
+      const axiosResponse = await axios.request(config);
+      if (logs && (!APP_MODE || APP_MODE === 'development')) {
+        console.log('Axios Response: ', axiosResponse);
+        console.log('Data: ', axiosResponse.data);
       }
-    } catch (err) {
+      setResponse(axiosResponse);
+      setData(axiosResponse.data)
+    } catch (error: any) {
       // logs the error in development only
-      if (logs && (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')) {
-        console.error(err);
+      if (logs && (!APP_MODE || APP_MODE === 'development')) {
+        console.error(error);
       }
-
-      setError(!process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? err.message : 'Request Error');
+      setError(error);
     } finally {
       setloading(false);
       (config.onFinally) && config.onFinally();
     }
   };
 
-  return [fetchData, { response, error, loading }];
+  return [fetchData, { response, error, loading, data }];
 };
 
 export default useAxiosMutation;

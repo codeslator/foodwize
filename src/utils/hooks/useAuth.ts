@@ -3,7 +3,7 @@ import { selectAuthState } from '../../store/selectors';
 import { REFRESH_TOKEN, SET_CURRENT_USER, LOGIN, LOGOUT } from '../../store/auth';
 
 const useAuth = () => {
-  const { currentUser, isLoading, isAuthenticated } = useAppSelector(selectAuthState);
+  const { currentUser, isLoading, isAuthenticated, error } = useAppSelector(selectAuthState);
   const dispatch = useAppDispatch();
 
   const setCurrentUser = (user: any) => {
@@ -14,8 +14,8 @@ const useAuth = () => {
     dispatch(REFRESH_TOKEN({ refreshToken, email }));
   };
 
-  const login = async (email: string, password: string) => {
-    await dispatch(LOGIN({ email, password }));
+  const login = (email: string, password: string) => {
+    dispatch(LOGIN({ email, password }));
   };
 
   const logout = () => {
@@ -30,6 +30,7 @@ const useAuth = () => {
     logout,
     isLoading,
     isAuthenticated,
+    error,
   };
 };
 

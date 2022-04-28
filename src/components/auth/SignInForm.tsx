@@ -1,5 +1,4 @@
-import { FC, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useState } from 'react';
 import { Formik } from 'formik';
 import {
   Checkbox,
@@ -20,27 +19,36 @@ import {
   SIGN_IN_INITIAL_VALUES,
   SIGN_IN_VALIDATION_SCHEMA
 } from '../../utils/validations/authValidations';
-import useAuth from '../../utils/hooks/useAuth';
 
-export const SignInForm: FC = () => {
-  const navigate = useNavigate();
+interface SignInFormProps {
+  isLoading: boolean;
+  login: (email: string, password: string) => void;
+};
+
+export const SignInForm: FC<SignInFormProps> = ({ login, isLoading }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const { login, isLoading, isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    if(isAuthenticated) {
-      navigate('/test')
-    }
-  }, [isAuthenticated])
-
+  
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const logIn = (values: typeof SIGN_IN_INITIAL_VALUES) => {
+    const { email, remember, password } = values;
+    if(remember) {
+      // TODO: Implement and correct error when use localStorage custom hook
+      localStorage.setItem('localLogin', JSON.stringify({
+        email,
+        remember,
+        password: ''
+      }));
+    }
+    login(email, password);
   };
 
   return (
     <Formik
       initialValues={SIGN_IN_INITIAL_VALUES}
-      onSubmit={(values) => login(values.email, values.password)}
+      onSubmit={(values) => logIn(values)}
       validationSchema={SIGN_IN_VALIDATION_SCHEMA}
     >
       {({
@@ -102,12 +110,19 @@ export const SignInForm: FC = () => {
                   )
                 }}
                 fullWidth
-              // autoComplete="current-password"
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value={values.remember} color="primary" />}
+                control={(
+                  <Checkbox
+                    name="remember"
+                    value={values.remember}
+                    checked={values.remember}
+                    color="primary"
+                    onChange={handleChange}
+                  />
+                )}
                 label="Remember me"
               />
             </Grid>

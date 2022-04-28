@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { isEmpty } from 'lodash';
 import useAuth from '../utils/hooks/useAuth';
-// import { store } from '../store';
-// import { refreshToken } from '../store/auth/extraReducers';
 
 const defaultConfig: AxiosRequestConfig = {
   baseURL: `${import.meta.env.VITE_REACT_APP_URL}`,
