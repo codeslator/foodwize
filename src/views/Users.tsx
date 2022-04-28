@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
+import { HeaderToolBar } from '../components/shared/HeaderToolBar';
 import { TableView } from '../components/shared/TableView';
 
 const Users = () => {
@@ -12,12 +13,36 @@ const Users = () => {
     'Actions',
   ];
 
-  const tableData = [
-    'Apolline',
-    'Labrie',
-    '+33 44 196060',
-    'ApollineLabrie@ersurgeon.fr',
-    'Finances',
+  // const tableData = [
+  //   'Apolline',
+  //   'Labrie',
+  //   '+33 44 196060',
+  //   'ApollineLabrie@ersurgeon.fr',
+  //   'Finances',
+  // ];
+
+  const tableUsers = [
+    {
+      firtName: 'Apolline',
+      lastName: 'Labrie',
+      phone: '+33 44 196060',
+      email: 'ApollineLabrie@ersurgeon.fr',
+      role: 'Finances',
+    },
+    {
+      firtName: 'Apolline',
+      lastName: 'Labrie',
+      phone: '+33 44 196060',
+      email: 'ApollineLabrie@ersurgeon.fr',
+      role: 'Finances',
+    },
+    {
+      firtName: 'Apolline',
+      lastName: 'Labrie',
+      phone: '+33 44 196060',
+      email: 'ApollineLabrie@ersurgeon.fr',
+      role: 'Finances',
+    },
   ];
 
   const toolBarList = [
@@ -50,7 +75,12 @@ const Users = () => {
           </Typography>
         </Button>
       </Box>
-      <TableView />
+      <Box mt={2}>
+        <HeaderToolBar toolBarList={toolBarList} />
+      </Box>
+      <Box mt={-2}>
+        <TableView headerListNames={headerListNames} tableData={tableUsers} />
+      </Box>
     </>
   );
 };

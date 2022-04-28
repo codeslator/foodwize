@@ -7,11 +7,13 @@ import React from 'react';
 interface Props {
   headerListNames: Array<string>;
 }
-
+/**
+ * https://mui.com/material-ui/react-tabs/#customization
+ */
 export const TableHeader: FC<Props> = ({ headerListNames }) => {
   return (
     <TableHead>
-      <TableRow sx={{ backgroundColor: '#F2F6F8' }}>
+      <TableRow sx={{ backgroundColor: '#F8FBFC' }}>
         <TableCell padding="checkbox">
           <Checkbox color="primary" value="true" />
         </TableCell>

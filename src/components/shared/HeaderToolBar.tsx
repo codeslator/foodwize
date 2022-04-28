@@ -13,7 +13,7 @@ export const HeaderToolBar: FC<Props> = ({ toolBarList }) => {
         container
         spacing={2}
         sx={{
-          mb: '15px',
+          mb: '2px',
           color: '#5E565A',
           cursor: 'pointer',
         }}
@@ -21,10 +21,11 @@ export const HeaderToolBar: FC<Props> = ({ toolBarList }) => {
         {toolBarList.map((item, i) => {
           return i === 0 ? (
             <Grid
+              key={i}
               item
               sx={{
                 textDecoration: 'underline',
-                textUnderlineOffset: '20px',
+                textUnderlineOffset: 6,
                 textDecorationColor: 'green',
                 fontWeight: 'bold',
               }}
@@ -32,7 +33,9 @@ export const HeaderToolBar: FC<Props> = ({ toolBarList }) => {
               All
             </Grid>
           ) : (
-            <Grid item>{item}</Grid>
+            <Grid key={i} item>
+              {item}
+            </Grid>
           );
         })}
       </Grid>

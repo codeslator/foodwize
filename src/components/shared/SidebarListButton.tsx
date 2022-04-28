@@ -1,9 +1,5 @@
-import { FC } from 'react'
-import {
-  ListItemButton,
-  ListItemIcon,
-  ListItemText
-} from '@mui/material';
+import { FC } from 'react';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
@@ -23,7 +19,7 @@ interface Props {
   text: string;
   icon?: any;
   [x: string]: any;
-};
+}
 
 export const SidebarListItemButton: FC<Props> = ({ text, icon, ...props }) => {
   const { selected } = props;

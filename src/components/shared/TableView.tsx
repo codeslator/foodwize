@@ -1,26 +1,14 @@
-import { TableList } from './TableList';
+import { TableRow } from './TableList';
 import { Box, Table, TableBody } from '@mui/material';
 import { TableHeader } from './TableHeader';
+import { FC } from 'react';
 
-export const TableView = ({}) => {
-  const headerListNames = [
-    'Name',
-    'Last Name',
-    'Phone Number',
-    'Email',
-    'Role',
-    'Status',
-    'Actions',
-  ];
+interface Props {
+  tableData: Array<{}>;
+  headerListNames: Array<string>;
+}
 
-  const tableData = [
-    'Apolline',
-    'Labrie',
-    '+33 44 196060',
-    'ApollineLabrie@ersurgeon.fr',
-    'Finances',
-  ];
-
+export const TableView: FC<Props> = ({ tableData, headerListNames }) => {
   return (
     <Box
       sx={{
@@ -34,9 +22,9 @@ export const TableView = ({}) => {
       <Table>
         <TableHeader headerListNames={headerListNames} />
         <TableBody>
-          <TableList tableData={tableData} />
-          <TableList tableData={tableData} />
-          <TableList tableData={tableData} />
+          {tableData.map((item, i) => (
+            <TableRow key={i} tableData={Object.values(item)} />
+          ))}
         </TableBody>
       </Table>
     </Box>

@@ -2,26 +2,30 @@ import { FC } from 'react';
 import {
   Checkbox,
   TableCell,
-  TableRow,
+  TableRow as MUITableRow,
   Button,
   Typography,
+  IconButton,
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface Props {
-  tableData: Array<string>;
+  tableData: Array<string | number | JSX.Element>;
 }
 
-export const TableList: FC<Props> = ({ tableData }) => {
+export const TableRow: FC<Props> = ({ tableData }) => {
+  const rowData = tableData.map((item, i) => (
+    <TableCell key={i}>
+      <Typography>{item}</Typography>
+    </TableCell>
+  ));
   return (
-    <TableRow>
+    <MUITableRow>
       <TableCell padding="checkbox">
         <Checkbox color="secondary" value="true" />
       </TableCell>
-      {tableData.map((item, i) => {
-        return <TableCell key={i}>{item}</TableCell>;
-      })}
+      {rowData}
       <TableCell>
         <Button
           sx={{
@@ -44,17 +48,17 @@ export const TableList: FC<Props> = ({ tableData }) => {
         </Button>
       </TableCell>
       <TableCell>
-        <Button color="secondary">
+        <IconButton color="secondary">
           <EditIcon
             sx={{
               color: '#9E9A9C',
             }}
           />
-        </Button>
-        <Button color="primary">
+        </IconButton>
+        <IconButton color="primary">
           <DeleteOutlineIcon />
-        </Button>
+        </IconButton>
       </TableCell>
-    </TableRow>
+    </MUITableRow>
   );
 };
