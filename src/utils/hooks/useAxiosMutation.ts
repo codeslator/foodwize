@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
 import useConfig from './useConfig';
-import { APP_MODE } from '../../config/index';
+import { APP_MODE } from '../../config';
 
-const useAxiosMutation = <T extends Object>(config: AxiosConfig, logs: boolean = false) => {
+const useAxiosMutation = <T>(config: AxiosConfig, logs = false) => {
   const [response, setResponse] = useState<AxiosResponse>();
   const [data, setData] = useState<T>();
   const [error, setError] = useState<AxiosError | Error | ServerErrorResponse | string>();
@@ -30,15 +30,17 @@ const useAxiosMutation = <T extends Object>(config: AxiosConfig, logs: boolean =
       }
       setResponse(axiosResponse);
       setData(axiosResponse.data)
-    } catch (error: any) {
+    } catch (err: any) {
       // logs the error in development only
       if (logs && (!APP_MODE || APP_MODE === 'development')) {
-        console.error(error);
+        console.error(err);
       }
-      setError(error);
+      setError(err);
     } finally {
       setloading(false);
-      (config.onFinally) && config.onFinally();
+      if (config.onFinally) {
+        config.onFinally()
+      }
     }
   };
 

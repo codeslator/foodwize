@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
-import { useConfig } from './';
+import { useConfig } from '.';
 import useAxiosInterceptor from '../../config/useAxiosInterceptor';
-import { APP_MODE } from '../../config/index';
+import { APP_MODE } from '../../config';
 
-const useAxios = <T extends Object>(config: AxiosConfig, logs: boolean = false) => {
+const useAxios = <T>(config: AxiosConfig, logs = false) => {
   const [response, setResponse] = useState<AxiosResponse | ServerErrorResponse>(<AxiosResponse>{});
   const [data, setData] = useState<T>(<T>{});
   const [error, setError] = useState<AxiosError | Error | ServerErrorResponse>();
@@ -33,11 +33,11 @@ const useAxios = <T extends Object>(config: AxiosConfig, logs: boolean = false) 
       setResponse(axiosResponse);
       setData(axiosResponse.data);
     }
-    catch (error: any) {
+    catch (err: any) {
       if (logs && (!APP_MODE || APP_MODE === 'development')) {
-        console.log('Error: ', error);
+        console.log('Error: ', err);
       }
-      setError(error);
+      setError(err);
     }
     finally {
       setLoading(false);

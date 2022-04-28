@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { isEmpty } from 'lodash';
-import useAuth from '../utils/hooks/useAuth';
+import { useAuth } from '../utils/hooks';
 
 const defaultConfig: AxiosRequestConfig = {
   baseURL: `${import.meta.env.VITE_REACT_APP_URL}`,

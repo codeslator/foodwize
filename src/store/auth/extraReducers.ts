@@ -1,11 +1,11 @@
-import { createAsyncThunk, thunkAPI } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosRequestConfig } from "axios";
 import { FOODWIZE_APP_APIKEY, FOODWIZE_APP_URL } from "../../config";
-// import { AuthActions } from './index';
+
 interface RefreshTokenParams {
   refreshToken: string;
   email: string;
-};
+}
 
 interface LoginParams {
   email: string;
@@ -35,17 +35,17 @@ export const refreshToken = createAsyncThunk('auth/refreshToken',
       localStorage.setItem('user', JSON.stringify(user));
       return user;
     }
-    catch (error: any) {
-      if (error.response.data) {
-        const errorResponse = JSON.parse(error.response.data.errorMessage);
+    catch (err: any) {
+      if (err.response.data) {
+        const errorResponse = JSON.parse(err.response.data.errorMessage);
         return rejectWithValue({
           message: errorResponse.error
         });
       }
       return rejectWithValue({
-        message: error
+        message: err
       });
-    };
+    }
   });
 
 export const logIn = createAsyncThunk('auth/logIn', async ({ email, password }: LoginParams, { rejectWithValue }) => {
@@ -63,15 +63,15 @@ export const logIn = createAsyncThunk('auth/logIn', async ({ email, password }: 
     const loginData = response.data;
     return loginData;
   }
-  catch (error: any) {
-    if (error.response.data) {
-      const errorResponse = JSON.parse(error.response.data.errorMessage);
+  catch (err: any) {
+    if (err.response.data) {
+      const errorResponse = JSON.parse(err.response.data.errorMessage);
       return rejectWithValue({
         message: errorResponse.error
       });
     }
     return rejectWithValue({
-      message: error
+      message: err
     });
   }
 });

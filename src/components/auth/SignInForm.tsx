@@ -23,7 +23,7 @@ import {
 interface SignInFormProps {
   isLoading: boolean;
   login: (email: string, password: string) => void;
-};
+}
 
 export const SignInForm: FC<SignInFormProps> = ({ login, isLoading }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -143,6 +143,5 @@ export const SignInForm: FC<SignInFormProps> = ({ login, isLoading }) => {
         </form>
       )}
     </Formik>
-  
   );
 };
