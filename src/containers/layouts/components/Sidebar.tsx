@@ -59,7 +59,7 @@ const routes = [
   },
   {
     name: 'Users',
-    to: '/test',
+    to: '/user',
     Icon: PeopleAlt, Logout
   },
 ];

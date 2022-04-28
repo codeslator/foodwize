@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC } from 'react';
 import {
   AppBar,
   IconButton,
@@ -10,7 +10,7 @@ import {
   Avatar,
   ListItemText,
   ListItemAvatar,
-} from '@mui/material'
+} from '@mui/material';
 import { Menu, KeyboardArrowDown } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
 import useUI from '../../../utils/hooks/useUI';
@@ -24,6 +24,7 @@ export const Header: FC = () => {
       <AppBar
         position="fixed"
         color="default"
+        elevation={3}
         sx={{
           width: { sm: `calc(100% - ${200}px)` },
           ml: { sm: `${200}px` },
@@ -51,16 +52,18 @@ export const Header: FC = () => {
             <Box
               display="flex"
               flexDirection="row"
-              justifyContent='center'
+              justifyContent="center"
               alignItems="center"
             >
               <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>
                 <ListItem sx={{ padding: 0 }}>
-                  <ListItemText primary="John Doe" secondary="Admin" sx={{ textAlign: 'right' }} />
+                  <ListItemText
+                    primary="John Doe"
+                    secondary="Admin"
+                    sx={{ textAlign: 'right' }}
+                  />
                   <ListItemAvatar sx={{ ml: '10px' }}>
-                    <Avatar>
-                      JD
-                    </Avatar>
+                    <Avatar>JD</Avatar>
                   </ListItemAvatar>
                 </ListItem>
               </List>
@@ -68,9 +71,9 @@ export const Header: FC = () => {
                 <IconButton
                   color="inherit"
                   aria-label="open drawer"
-                // edge="end"
-                // onClick={handleDrawerToggle}
-                // sx={{ mr: 2 }}
+                  // edge="end"
+                  // onClick={handleDrawerToggle}
+                  // sx={{ mr: 2 }}
                 >
                   <KeyboardArrowDown />
                 </IconButton>

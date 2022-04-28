@@ -3,7 +3,8 @@ import {
   TestView,
   SignInView,
   SignUpView,
-  RecoverPasswordView
+  RecoverPasswordView,
+  Users
 } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 
@@ -24,6 +25,7 @@ export const routes: RouteParent[] = [
     Layout: AppLayout,
     children: [
       { to: 'test', path: 'test', Component: TestView },
+      { to: 'user', path: 'user', Component: Users },
       // { path: '*', Component: TestView },
       // { path: '*', Component: <Navigate to="/404" /> }
     ]
