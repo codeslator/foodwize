@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Box,
 } from '@mui/material';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import {
   Store,
@@ -17,11 +18,10 @@ import {
 } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
 import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarHeader } from './SidebarHeader';
-import useUI from '../../../utils/hooks/useUI';
-import useAuth from '../../../utils/hooks/useAuth';
+import { useAuth, useUI } from '../../../utils/hooks';
+import { URLS_TO } from '../../../config/router/navigation/index';
 
 const useStyles = makeStyles({
   root: {
@@ -39,27 +39,27 @@ const useStyles = makeStyles({
 const routes = [
   {
     name: 'Home',
-    to: '/',
+    to: URLS_TO.HOME,
     Icon: Home
   },
   {
     name: 'Stock',
-    to: '/test',
+    to: URLS_TO.STOCK,
     Icon: Store
   },
   {
     name: 'Products',
-    to: '/test',
+    to: URLS_TO.PRODUCTS,
     Icon: LocalOffer
   },
   {
     name: 'Analytics',
-    to: '/test',
+    to: URLS_TO.ANALYTICS,
     Icon: PieChart
   },
   {
     name: 'Users',
-    to: '/user',
+    to: URLS_TO.USERS,
     Icon: PeopleAlt, Logout
   },
 ];
@@ -74,7 +74,7 @@ export const Sidebar: FC = () => {
 
   const logOut = () => {
     logout();
-    navigate('/login');
+    navigate(URLS_TO.LOGIN);
   }
 
   return (
@@ -94,8 +94,8 @@ export const Sidebar: FC = () => {
             {routes.map(({ name, to, Icon }, index) => (
               <SidebarListItemButton
                 key={index}
-                text={name}
                 component={NavLink}
+                text={name}
                 to={to}
                 icon={<Icon />}
                 selected={pathname === to}
@@ -107,7 +107,6 @@ export const Sidebar: FC = () => {
           <List>
             <SidebarListItemButton
               text="Log Out"
-              to="/login"
               icon={<Logout />}
               onClick={logOut}
             />

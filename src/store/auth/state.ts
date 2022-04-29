@@ -1,4 +1,3 @@
-import { UIError } from '../../config/interfaces';
 interface AuthUser {
   accountId: string;
   accountType?: string;
@@ -10,13 +9,13 @@ interface AuthUser {
   metadata: object | string | string[];
   status: string;
   stripeStatus?: string;
-};
+}
 
 export interface UserAuthenticated {
   token: string;
   refreshToken: string;
   user: AuthUser | null;
-};
+}
 
 export interface UserNotAuthenticated {
   message: string;
@@ -27,7 +26,7 @@ export interface AuthState {
   isLoading: boolean;
   isAuthenticated: boolean;
   error: string;
-};
+}
 
 export const authState: AuthState = {
   currentUser: {

@@ -4,6 +4,7 @@ import { Box, Toolbar } from '@mui/material';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import useAuth from '../../utils/hooks/useAuth';
+import { URLS_TO } from '../../config/router/navigation/index';
 
 const AppLayout: FC = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const AppLayout: FC = () => {
 
   useEffect(() => {
     if(!isAuthenticated) {
-      navigate('/login', { replace: true });
+      navigate(URLS_TO.ROOT, { replace: true });
     }
   }, []);
 

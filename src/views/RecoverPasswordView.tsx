@@ -7,7 +7,8 @@ import {
   Typography
 } from '@mui/material';
 import { Helmet } from 'react-helmet';
-import { SignInForm } from '../components/auth/SignInForm';
+import { RecoverPasswordForm } from '../components/auth/RecoverPasswordForm';
+import { URLS_TO } from '../config/router/navigation/index';
 
 const SignInView: FC = () => {
   return (
@@ -17,23 +18,23 @@ const SignInView: FC = () => {
       </Helmet>
       <Box
         sx={{
-          marginTop: 1,
+          marginTop: 5,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography component="h1" variant="h5" color="primary">
+          Forgot your password?
         </Typography>
         <Box sx={{ mt: 2 }}>
-          <SignInForm />
-          <Grid container>
-            <Grid item xs>
-              <Link component={NavLink} to="/recover-password" variant="body2">Forgot password?</Link>
+          <RecoverPasswordForm />
+          <Grid container spacing={1} sx={{ mt: 2, textAlign: 'center' }}>
+            <Grid item xs={12}>
+              <Link component={NavLink} to={URLS_TO.LOGIN} variant="body2">Do you already have an account? Login</Link>
             </Grid>
-            <Grid item>
-              <Link component={NavLink} to="/register" variant="body2">Don't have an account? Sign Up</Link>
+            <Grid item xs={12}>
+              <Link component={NavLink} to={URLS_TO.REGISTER} variant="body2">Don't have an account? Sign Up</Link>
             </Grid>
           </Grid>
         </Box>

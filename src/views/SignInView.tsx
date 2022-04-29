@@ -11,6 +11,7 @@ import { useSnackbar } from 'notistack';
 import { Helmet } from 'react-helmet';
 import { SignInForm } from '../components/auth/SignInForm';
 import { useAuth } from '../utils/hooks';
+import { URLS_TO } from '../config/router/navigation/index';
 
 const SignInView: FC = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const SignInView: FC = () => {
 
   useEffect(() => {
     if(isAuthenticated) {
-      navigate('/test');
+      navigate('/app/home');
     }
   }, [isAuthenticated]);
   
@@ -56,10 +57,10 @@ const SignInView: FC = () => {
           <SignInForm login={login} isLoading={isLoading} />
           <Grid container sx={{ mt: 1 }}>
             <Grid item xs>
-              <Link component={NavLink} to="/recover-password" variant="body2">Forgot password?</Link>
+              <Link component={NavLink} to={URLS_TO.RECOVER_PASSWORD} variant="body2">Forgot password?</Link>
             </Grid>
             <Grid item>
-              <Link component={NavLink} to="/register" variant="body2">Don't have an account? Sign Up</Link>
+              <Link component={NavLink} to={URLS_TO.REGISTER} variant="body2">Don't have an account? Sign Up</Link>
             </Grid>
           </Grid>
         </Box>

@@ -7,7 +7,7 @@ import { APP_MODE } from '../../config';
 
 const useAxios = <T>(config: AxiosConfig, logs = false) => {
   const [response, setResponse] = useState<AxiosResponse | ServerErrorResponse>(<AxiosResponse>{});
-  const [data, setData] = useState<T>(<T>{});
+  const [data, setData] = useState<T>();
   const [error, setError] = useState<AxiosError | Error | ServerErrorResponse>();
   const [loading, setLoading] = useState<boolean>(false);
   const { axiosInstance } = useAxiosInterceptor();
