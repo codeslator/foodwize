@@ -75,7 +75,7 @@ export const Sidebar: FC = () => {
   const logOut = () => {
     logout();
     navigate(URLS_TO.LOGIN);
-  }
+  };
 
   return (
     <nav>
@@ -91,9 +91,9 @@ export const Sidebar: FC = () => {
         <Box>
           <SidebarHeader />
           <List>
-            {routes.map(({ name, to, Icon }, index) => (
+            {routes.map(({ name, to, Icon }) => (
               <SidebarListItemButton
-                key={index}
+                key={to}
                 component={NavLink}
                 text={name}
                 to={to}

@@ -11,6 +11,12 @@ interface LoginParams {
   email: string;
   password: string;
 }
+// TODO: Fix problem with type of dispatch
+export interface IRefreshTokenUser {
+  token: string;
+  refreshToken: string;
+  email: string;
+}
 
 export const refreshToken = createAsyncThunk('auth/refreshToken',
   async ({ refreshToken, email }: RefreshTokenParams, { rejectWithValue }) => {
@@ -27,7 +33,7 @@ export const refreshToken = createAsyncThunk('auth/refreshToken',
     try {
       const response = await axios.request(config);
       const userRefreshed = response.data;
-      const user = {
+      const user: IRefreshTokenUser = {
         token: userRefreshed.token,
         refreshToken: userRefreshed.refreshToken,
         email,

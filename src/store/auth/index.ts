@@ -39,5 +39,5 @@ export const {
 export {
   refreshToken as REFRESH_TOKEN,
   logIn as LOGIN,
-} from "./extraReducers";
+} from './extraReducers';
 export default authSlice.reducer;
