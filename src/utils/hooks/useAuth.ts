@@ -1,4 +1,4 @@
-import { useAppSelector, useAppDispatch } from './';
+import { useAppSelector, useAppDispatch } from '.';
 import { selectAuthState } from '../../store/selectors';
 import { REFRESH_TOKEN, SET_CURRENT_USER, LOGIN, LOGOUT } from '../../store/auth';
 

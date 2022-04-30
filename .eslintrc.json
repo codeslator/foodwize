@@ -51,7 +51,6 @@
     "jsx-a11y"
   ],
   "rules": {
-
     "no-console": "warn",
     "no-unused-vars": "off",
     "import/extensions": "off",
@@ -75,14 +74,17 @@
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "react/no-unescaped-entities": "off",
-    "react/function-component-definition": [2,
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/function-component-definition": [
+      2,
       {
         "namedComponents": "arrow-function",
         "unnamedComponents": "arrow-function"
       }
     ],
     "react/no-array-index-key": "warn",
-    "no-unused-expressions": ["error",
+    "no-unused-expressions": [
+      "error",
       {
         "allowShortCircuit": true,
         "allowTernary": true,

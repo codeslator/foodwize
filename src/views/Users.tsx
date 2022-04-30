@@ -1,17 +1,9 @@
 import { Box, Button, Typography } from '@mui/material';
-import { HeaderToolBar } from '../components/shared/HeaderToolBar';
 import { TableView } from '../components/shared/TableView';
+import HeaderTabs from '../components/shared/HeaderTabs';
 
 const Users = () => {
-  const headerListNames = [
-    'Name',
-    'Last Name',
-    'Phone Number',
-    'Email',
-    'Role',
-    'Status',
-    'Actions',
-  ];
+  const headerListNames = ['Name', 'Last Name', 'Phone Number', 'Email', 'Role', 'Status', 'Actions'];
 
   // const tableData = [
   //   'Apolline',
@@ -45,14 +37,7 @@ const Users = () => {
     },
   ];
 
-  const toolBarList = [
-    'All',
-    'Users',
-    'Finances',
-    'Operations',
-    'Admins',
-    'Super Admin',
-  ];
+  const toolBarList = ['All', 'Users', 'Finances', 'Operations', 'Admins', 'Super Admin'];
 
   return (
     <>
@@ -60,23 +45,18 @@ const Users = () => {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-        }}
-      >
+        }}>
         <Typography variant="h4" color="#5E565A">
           Users
         </Typography>
         <Button color="secondary" variant="contained">
-          <Typography
-            variant="body2"
-            color="#fff"
-            sx={{ textTransform: 'none' }}
-          >
+          <Typography variant="body2" color="#fff" sx={{ textTransform: 'none' }}>
             Add Users
           </Typography>
         </Button>
       </Box>
       <Box mt={2}>
-        <HeaderToolBar toolBarList={toolBarList} />
+        <HeaderTabs toolBarList={toolBarList} />
       </Box>
       <Box mt={-2}>
         <TableView headerListNames={headerListNames} tableData={tableUsers} />
