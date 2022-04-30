@@ -1,19 +1,8 @@
 /* eslint-disable no-constant-condition */
-import {
-  Box,
-  Button,
-  Checkbox,
-  Fade,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  Paper,
-  Theme,
-  Typography,
-} from '@mui/material';
+import { Box, Checkbox, FormControl, FormControlLabel, FormHelperText, Paper, Theme, Typography } from '@mui/material';
 import SwipeableViews from 'react-swipeable-views';
 import { useState } from 'react';
-import HeaderTabs from '../components/shared/HeaderTabs';
+import NavTabs, { TabContent } from '../components/shared/NavTabs';
 
 const Check = () => (
   <FormControl
@@ -24,16 +13,6 @@ const Check = () => (
   </FormControl>
 );
 
-const TabContent = ({ children, index, tabIndex }) => (
-  <Fade
-    timeout={{
-      enter: 1000,
-      exit: 200,
-    }}
-    in={index === tabIndex}>
-    <Box>{children}</Box>
-  </Fade>
-);
 const Settings = () => {
   // const tableData = [
   //   'Apolline',
@@ -68,7 +47,7 @@ const Settings = () => {
         </Button> */}
       </Box>
       <Box mt={2}>
-        <HeaderTabs tabs={tabs} onSetTab={setTab} />
+        <NavTabs tabs={tabs} onSetTab={setTab} />
       </Box>
       <Box mt={2}>
         <SwipeableViews index={tabIndex}>

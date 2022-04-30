@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { TableView } from '../components/shared/TableView';
-import HeaderTabs from '../components/shared/HeaderTabs';
+import NavTabs from '../components/shared/NavTabs';
 
 const Users = () => {
   const headerListNames = ['Name', 'Last Name', 'Phone Number', 'Email', 'Role', 'Status', 'Actions'];
@@ -56,7 +56,7 @@ const Users = () => {
         </Button>
       </Box>
       <Box mt={2}>
-        <HeaderTabs toolBarList={toolBarList} />
+        <NavTabs tabs={toolBarList} />
       </Box>
       <Box mt={-2}>
         <TableView headerListNames={headerListNames} tableData={tableUsers} />
