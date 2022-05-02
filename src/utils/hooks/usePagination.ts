@@ -28,7 +28,7 @@ const usePagination = <T>({ refetch, defaultUrl }: UsePaginationHookParams) => {
     });
   };
 
-  const rowsPerPageOptions = (array: T[], steps = 5) => {
+  const rowsPerPageOptions = (array: T[], steps = 5): number[] => {
     const surplus = array.length % Math.floor(steps);
     const lastStep = array.length + (Math.floor(steps) - surplus);
     const stepPages = [];

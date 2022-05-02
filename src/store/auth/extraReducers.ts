@@ -11,11 +11,12 @@ interface LoginParams {
   email: string;
   password: string;
 }
-// TODO: Fix problem with type of dispatch
-export interface IRefreshTokenUser {
+
+export interface IUserData {
   token: string;
   refreshToken: string;
   email: string;
+  user?: object;
 }
 
 export const refreshToken = createAsyncThunk('auth/refreshToken',
@@ -33,7 +34,7 @@ export const refreshToken = createAsyncThunk('auth/refreshToken',
     try {
       const response = await axios.request(config);
       const userRefreshed = response.data;
-      const user: IRefreshTokenUser = {
+      const user: IUserData = {
         token: userRefreshed.token,
         refreshToken: userRefreshed.refreshToken,
         email,
@@ -67,6 +68,13 @@ export const logIn = createAsyncThunk('auth/logIn', async ({ email, password }: 
   try {
     const response = await axios.request(config);
     const loginData = response.data;
+    const user: IUserData = {
+      token: loginData.token,
+      refreshToken: loginData.refreshToken,
+      user: loginData.user,
+      email,
+    };
+    localStorage.setItem('user', JSON.stringify(user));
     return loginData;
   }
   catch (err: any) {
