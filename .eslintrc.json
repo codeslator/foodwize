@@ -12,7 +12,7 @@
     "plugin:@typescript-eslint/recommended",
     "eslint:recommended",
     // "plugin:jsdoc/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
   ],
   "globals": {
     "React": true,
@@ -90,6 +90,7 @@
         "allowTernary": true,
         "allowTaggedTemplates": true
       }
-    ]
+    ],
+    "import/no-cycle": [2, { "maxDepth": 1 }]
   }
 }

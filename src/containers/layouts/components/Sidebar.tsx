@@ -8,8 +8,8 @@ import { defaultTheme } from '../../../assets/themes';
 import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
 import { SidebarFooter } from './SidebarFooter';
 import { SidebarHeader } from './SidebarHeader';
-import useUI from '../../../utils/hooks/useUI';
-import useAuth from '../../../utils/hooks/useAuth';
+import { useAuth, useUI } from '../../../utils/hooks';
+import { URLS_TO } from '../../../config/router/navigation/index';
 
 const useStyles = makeStyles({
   root: {
@@ -29,33 +29,29 @@ const useStyles = makeStyles({
 const routes = [
   {
     name: 'Home',
-    to: '/',
+    to: URLS_TO.HOME,
     Icon: Home,
   },
   {
     name: 'Stock',
-    to: '/test',
+    to: URLS_TO.STOCK,
     Icon: Store,
   },
   {
     name: 'Products',
-    to: '/test',
+    to: URLS_TO.PRODUCTS,
     Icon: LocalOffer,
   },
   {
     name: 'Analytics',
-    to: '/test',
+    to: URLS_TO.ANALYTICS,
     Icon: PieChart,
   },
   {
     name: 'Users',
-    to: '/users',
+    to: URLS_TO.USERS,
     Icon: PeopleAlt,
-  },
-  {
-    name: 'Settings',
-    to: '/settings',
-    Icon: SettingsOutlined,
+    Logout,
   },
 ];
 
@@ -69,38 +65,43 @@ export const Sidebar: FC = () => {
 
   const logOut = () => {
     logout();
-    navigate('/login');
+    navigate(URLS_TO.LOGIN);
   };
 
   return (
-    <Drawer
-      variant={matches ? 'permanent' : 'temporary'}
-      open={openDrawer}
-      onClose={toggleDrawer}
-      ModalProps={{
-        keepMounted: true, // Better open performance on mobile.
-      }}
-      className={classes.root}>
-      <SidebarHeader />
-      {/* <Box sx={{ 'max-height': '50%', overflow: 'hidden', position: 'relative' }}> */}
-      <PerfectScrollbar>
-        {routes.map(({ name, to, Icon }, index) => (
-          <SidebarListItemButton
-            key={index}
-            text={name}
-            component={NavLink}
-            to={to}
-            icon={<Icon />}
-            selected={pathname === to}
-          />
-        ))}
-      </PerfectScrollbar>
-      {/* </Box> */}
-      <Box>
-        <SidebarListItemButton text="Log Out" to="/login" icon={<Logout />} onClick={logOut} />
-        <Divider />
-        <SidebarFooter />
-      </Box>
-    </Drawer>
+    <nav>
+      <Drawer
+        variant={matches ? 'permanent' : 'temporary'}
+        open={openDrawer}
+        onClose={toggleDrawer}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        className={classes.root}
+      >
+        <Box>
+          <SidebarHeader />
+          <List>
+            {routes.map(({ name, to, Icon }) => (
+              <SidebarListItemButton
+                key={to}
+                component={NavLink}
+                text={name}
+                to={to}
+                icon={<Icon />}
+                selected={pathname === to}
+              />
+            ))}
+          </List>
+        </Box>
+        <Box>
+          <List>
+            <SidebarListItemButton text="Log Out" icon={<Logout />} onClick={logOut} />
+          </List>
+          <Divider />
+          <SidebarFooter />
+        </Box>
+      </Drawer>
+    </nav>
   );
 };

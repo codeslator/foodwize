@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { routes } from './navigation/routes';
 import { useAuth } from "../../utils/hooks";
+import { URLS_TO } from './navigation/index';
 
 export const Router: FC = () => {
   const { isAuthenticated } = useAuth();
@@ -14,7 +15,7 @@ export const Router: FC = () => {
     )}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to={isAuthenticated ? '/test' : 'login'} replace />} />
+          <Route path={URLS_TO.ROOT} element={<Navigate to={isAuthenticated ? URLS_TO.HOME : URLS_TO.LOGIN} replace />} />
           {routes.map(({ Layout, path: root, children }) => (
             <Route  element={<Layout />} path={root} key={root} >
               {children.map(({ Component, path }, index) => (

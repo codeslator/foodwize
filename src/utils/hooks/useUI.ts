@@ -1,9 +1,9 @@
 import { useAppSelector, useAppDispatch } from './index';
-import { selectUIState } from '../../store/ui/selectors';
-import { TOGGLE_BACKDROP, TOGGLE_DRAWER, TOGGLE_MODAL } from "../../store/ui";
+import { selectUIState } from '../../store/selectors';
+import { TOGGLE_BACKDROP, TOGGLE_DRAWER, TOGGLE_MODAL, TOGGLE_SNACKBAR } from "../../store/ui";
 
 const useUI = () => {
-  const { openDrawer, openBackdrop, openModal } = useAppSelector(selectUIState);
+  const { openDrawer, openBackdrop, openModal, openSnackbar } = useAppSelector(selectUIState);
   const dispatch = useAppDispatch();
 
   const toggleDrawer = () => {
@@ -18,13 +18,19 @@ const useUI = () => {
     dispatch(TOGGLE_MODAL());
   };
 
+  const toggleSnackbar = () => {
+    dispatch(TOGGLE_SNACKBAR());
+  };
+
   return {
     openDrawer,
     openBackdrop,
     openModal,
+    openSnackbar,
     toggleDrawer,
     toggleBackdrop,
     toggleModal,
+    toggleSnackbar
   }
 };
 

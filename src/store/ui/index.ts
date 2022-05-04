@@ -12,5 +12,6 @@ export const {
   toggleModal: TOGGLE_MODAL,
   toggleBackdrop: TOGGLE_BACKDROP,
   toggleDrawer: TOGGLE_DRAWER,
+  toggleSnackbar: TOGGLE_SNACKBAR,
 } = uiSlice.actions;
 export default uiSlice.reducer; 

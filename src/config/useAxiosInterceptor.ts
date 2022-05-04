@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { isEmpty } from 'lodash';
 import { useAuth } from '../utils/hooks';
+import { FOODWIZE_APP_URL, FOODWIZE_APP_APIKEY } from './index';
 
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: `${import.meta.env.VITE_REACT_APP_URL}`,
+  baseURL: FOODWIZE_APP_URL,
   url: 'settings/',
   method: 'get',
   data: null,
   headers: {
-    'x-api-key': `${import.meta.env.VITE_REACT_APP_APIKEY}`,
+    'x-api-key': FOODWIZE_APP_APIKEY,
     'Content-Type': 'application/json',
   },
 };
