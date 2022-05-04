@@ -51,7 +51,11 @@ const routes = [
     name: 'Users',
     to: URLS_TO.USERS,
     Icon: PeopleAlt,
-    Logout,
+  },
+  {
+    name: 'Settings',
+    to: URLS_TO.SETTINGS,
+    Icon: SettingsOutlined,
   },
 ];
 
@@ -81,7 +85,7 @@ export const Sidebar: FC = () => {
       >
         <Box>
           <SidebarHeader />
-          <List>
+          <PerfectScrollbar>
             {routes.map(({ name, to, Icon }) => (
               <SidebarListItemButton
                 key={to}
@@ -92,7 +96,7 @@ export const Sidebar: FC = () => {
                 selected={pathname === to}
               />
             ))}
-          </List>
+          </PerfectScrollbar>
         </Box>
         <Box>
           <List>
