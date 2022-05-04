@@ -4,42 +4,42 @@ import { SxProps, Theme, Divider, Fade, Box } from '@mui/material';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import SwipeableViews from 'react-swipeable-views';
-
-interface Props {
-  tabs: Array<string>;
-  onSetTab: React.Dispatch<React.SetStateAction<string>>;
-}
+import SwipeableViews, { SwipeableViewsProps } from 'react-swipeable-views';
 
 export const useNavTabs = (tabs: Array<string>) => {
   const [tabSelected, setTab] = useState(tabs[0]);
   const tabSelectedIndex = tabs.indexOf(tabSelected);
 
-  return { tabSelected, setTab, tabSelectedIndex };
+  return { tabs, tabSelected, setTab, tabSelectedIndex };
 };
 
-export const TabContent: FC<{ index: number; tabIndex: number }> = ({ children, index, tabIndex }) => (
-  <Fade
-    timeout={{
-      enter: 1000,
-      exit: 200,
-    }}
-    in={index === tabIndex}>
-    <Box>{children}</Box>
-  </Fade>
-);
-
-export const SwipeableTabs = (tabIndex: number, tabs: Array<JSX.Element>) => (
-  <SwipeableViews index={tabIndex}>
-    {tabs.map((tabContent: JSX.Element, i: number) => (
-      <TabContent index={i} tabIndex={tabIndex}>
-        {tabContent}
-      </TabContent>
+interface SwipeableTabsProps {
+  tabSelectedIndex: number;
+  children: Array<JSX.Element>;
+  axis?: SwipeableViewsProps['axis'];
+}
+export const SwipeableTabs: FC<SwipeableTabsProps> = ({ tabSelectedIndex, children, axis }) => (
+  <SwipeableViews index={tabSelectedIndex} axis={axis}>
+    {children.map((tabContent: JSX.Element, i: number) => (
+      <Fade
+        key={`swipeable-tab-${i++}`}
+        timeout={{
+          enter: 1000,
+          exit: 200,
+        }}
+        in={i === tabSelectedIndex}
+      >
+        <Box>{tabContent}</Box>
+      </Fade>
     ))}
   </SwipeableViews>
 );
 
-const NavTabs: FC<Props> = ({ tabs, onSetTab }) => {
+interface NavTabsProps {
+  tabs: Array<string>;
+  onSetTab: React.Dispatch<React.SetStateAction<string>>;
+}
+export const NavTabs: FC<NavTabsProps> = ({ tabs, onSetTab }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: any, newValue: number) => {
@@ -69,7 +69,8 @@ const NavTabs: FC<Props> = ({ tabs, onSetTab }) => {
           cursor: 'pointer',
           fontWeight: 'bold',
           minHeight: 0,
-        })}>
+        })}
+      >
         {tabs.map((item, i) => {
           return <Tab sx={tabSX} disableRipple label={item} key={`header-tab-${i++}`} />;
         })}
@@ -78,5 +79,3 @@ const NavTabs: FC<Props> = ({ tabs, onSetTab }) => {
     </>
   );
 };
-
-export default NavTabs;

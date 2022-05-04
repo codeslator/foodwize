@@ -7,4 +7,4 @@ export const SignUpView = lazy(() => import(/* webpackChunkName: "SignUpView" */
 export const RecoverPasswordView = lazy(() => import(/* webpackChunkName: "RecoverPasswordView" */ './RecoverPasswordView'));
 export const Users = lazy(() => import(/* webpackChunkName: "Users" */ './Users'));
 
-export const Settings = lazy(() => import(/* webpackChunkName: "Settings" */ './Settings'));
+export const SettingsView = lazy(() => import(/* webpackChunkName: "SettingsView" */ './SettingsView'));

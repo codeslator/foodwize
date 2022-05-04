@@ -1,5 +1,5 @@
 import { RouteParent } from '../../interfaces';
-import { TestView, SignInView, SignUpView, RecoverPasswordView, Users, Settings } from '../../../views';
+import { TestView, SignInView, SignUpView, RecoverPasswordView, Users, SettingsView } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 
 export const routes: RouteParent[] = [
@@ -20,7 +20,7 @@ export const routes: RouteParent[] = [
     children: [
       { to: 'test', path: 'test', Component: TestView },
       { to: 'users', path: 'users', Component: Users },
-      { to: 'settings', path: 'settings', Component: Settings },
+      { to: 'settings', path: 'settings', Component: SettingsView },
       { path: '*', Component: TestView },
       // { path: '*', Component: <Navigate to="/404" /> }
     ],
