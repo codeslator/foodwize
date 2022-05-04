@@ -6,7 +6,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 import { defaultTheme } from './assets/themes/index';
 import { store } from './store';
-import { Router } from './config/router/Router';
+import { Router } from './config/router/router';
 
 const persistor = persistStore(store);
 
