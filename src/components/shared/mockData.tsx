@@ -1,0 +1,78 @@
+import { GridRowModel } from '@mui/x-data-grid';
+
+const rowsData: GridRowModel = [
+  {
+    id: 1,
+    lastName: 'Apolline',
+    firstName: 'Labrie',
+    phoneNumber: '+33 44 196060',
+    email: 'ApollineLabrie@ersurgeon.fr',
+    role: 'Finances',
+    status: 'Active',
+  },
+  {
+    id: 2,
+    lastName: 'Claude',
+    firstName: 'Lizotte',
+    phoneNumber: '+33 97 297824',
+    email: 'ClaudeLizotte@metronightclubs.fr',
+    role: 'Operations',
+    status: 'Active',
+  },
+  {
+    id: 3,
+    lastName: 'Gemma',
+    firstName: 'Simon',
+    phoneNumber: '+33 51 442429',
+    email: 'GemmaSimon@mobilecycles.fr',
+    role: 'Admin',
+    status: 'Active',
+  },
+  {
+    id: 4,
+    lastName: 'Marine',
+    firstName: 'Bourget',
+    phoneNumber: '+33 38 804746',
+    email: 'MarineBourget@buyconferencing.fr',
+    role: 'User',
+    status: 'Active',
+  },
+  {
+    id: 12,
+    lastName: 'Apolline',
+    firstName: 'Labrie',
+    phoneNumber: '+33 44 196060',
+    email: 'ApollineLabrie@ersurgeon.fr',
+    role: 'Finances',
+    status: 'Active',
+  },
+  {
+    id: 23,
+    lastName: 'Claude',
+    firstName: 'Lizotte',
+    phoneNumber: '+33 97 297824',
+    email: 'ClaudeLizotte@metronightclubs.fr',
+    role: 'Operations',
+    status: 'Active',
+  },
+  {
+    id: 34,
+    lastName: 'Gemma',
+    firstName: 'Simon',
+    phoneNumber: '+33 51 442429',
+    email: 'GemmaSimon@mobilecycles.fr',
+    role: 'Admin',
+    status: 'Active',
+  },
+  {
+    id: 41,
+    lastName: 'Marine',
+    firstName: 'Bourget',
+    phoneNumber: '+33 38 804746',
+    email: 'MarineBourget@buyconferencing.fr',
+    role: 'User',
+    status: 'Active',
+  },
+];
+
+export default rowsData;
