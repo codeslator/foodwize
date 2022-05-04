@@ -27,7 +27,6 @@ export interface ServerErrorResponse {
   errorCode: number;
   errorMessage: string;
   cause: string;
-};
+}
 
 export type UIError = Error | AxiosError | ServerErrorResponse | string;
-

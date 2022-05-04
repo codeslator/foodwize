@@ -1,6 +1,7 @@
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist'
-import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 import { defaultTheme } from './assets/themes/index';

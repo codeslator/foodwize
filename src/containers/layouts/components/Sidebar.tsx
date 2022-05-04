@@ -1,21 +1,9 @@
-import { FC } from 'react'
-import {
-  Drawer,
-  List,
-  Divider,
-  useMediaQuery,
-  Box,
-} from '@mui/material';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { FC } from 'react';
+import { Drawer, List, Divider, useMediaQuery, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import {
-  Store,
-  Home,
-  LocalOffer,
-  PieChart,
-  PeopleAlt,
-  Logout
-} from '@mui/icons-material';
+import { Store, Home, LocalOffer, PieChart, PeopleAlt, Logout, SettingsOutlined } from '@mui/icons-material';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { defaultTheme } from '../../../assets/themes';
 import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
 import { SidebarFooter } from './SidebarFooter';
@@ -26,12 +14,14 @@ import { URLS_TO } from '../../../config/router/navigation/index';
 const useStyles = makeStyles({
   root: {
     '& .MuiDrawer-paper': {
-      boxSizing: 'border-box',
       width: 200,
+      MaxHeight: '100%',
+      overflowY: 'unset',
+      boxSizing: 'border-box',
       backgroundColor: defaultTheme.palette.primary.main,
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
   },
 });
@@ -40,27 +30,28 @@ const routes = [
   {
     name: 'Home',
     to: URLS_TO.HOME,
-    Icon: Home
+    Icon: Home,
   },
   {
     name: 'Stock',
     to: URLS_TO.STOCK,
-    Icon: Store
+    Icon: Store,
   },
   {
     name: 'Products',
     to: URLS_TO.PRODUCTS,
-    Icon: LocalOffer
+    Icon: LocalOffer,
   },
   {
     name: 'Analytics',
     to: URLS_TO.ANALYTICS,
-    Icon: PieChart
+    Icon: PieChart,
   },
   {
     name: 'Users',
     to: URLS_TO.USERS,
-    Icon: PeopleAlt, Logout
+    Icon: PeopleAlt,
+    Logout,
   },
 ];
 
@@ -105,16 +96,12 @@ export const Sidebar: FC = () => {
         </Box>
         <Box>
           <List>
-            <SidebarListItemButton
-              text="Log Out"
-              icon={<Logout />}
-              onClick={logOut}
-            />
+            <SidebarListItemButton text="Log Out" icon={<Logout />} onClick={logOut} />
           </List>
           <Divider />
           <SidebarFooter />
         </Box>
       </Drawer>
     </nav>
-  )
-}
+  );
+};

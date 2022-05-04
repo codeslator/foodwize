@@ -20,7 +20,7 @@ export const routes: RouteParent[] = [
       { path: ROUTES.REGISTER, Component: SignUpView },
       { path: ROUTES.RECOVER_PASSWORD, Component: RecoverPasswordView },
       { path: ROUTES.ANY, Component: RedirectToLoginView },
-    ]
+    ],
   },
   {
     path: ROUTES.APP,
@@ -32,6 +32,6 @@ export const routes: RouteParent[] = [
       { path: ROUTES.ANALYTICS, Component: TestView },
       { path: ROUTES.USERS, Component: Users },
       { path: ROUTES.ANY, Component: NotFoundView },
-    ]
+    ],
   },
 ];
