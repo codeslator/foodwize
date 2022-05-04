@@ -3,14 +3,7 @@ import { HeaderToolBar } from '../components/shared/HeaderToolBar';
 import DataGridTable from '../components/shared/DataGridTable';
 
 const Users = () => {
-  const toolBarList = [
-    'All',
-    'Users',
-    'Finances',
-    'Operations',
-    'Admins',
-    'Super Admin',
-  ];
+  const toolBarList = ['All', 'Users', 'Finances', 'Operations', 'Admins', 'Super Admin'];
 
   return (
     <>
@@ -24,17 +17,13 @@ const Users = () => {
           Users
         </Typography>
         <Button color="secondary" variant="contained">
-          <Typography
-            variant="body2"
-            color="#fff"
-            sx={{ textTransform: 'none' }}
-          >
+          <Typography variant="body2" color="#fff" sx={{ textTransform: 'none' }}>
             Add Users
           </Typography>
         </Button>
       </Box>
       <Box mt={2}>
-        <HeaderToolBar toolBarList={toolBarList} />
+        <NavTabs tabs={toolBarList} />
       </Box>
       {/* <TableView headerListNames={headerListNames} tableData={tableUsers} /> */}
       <DataGridTable />

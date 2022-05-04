@@ -1,11 +1,5 @@
 import { RouteParent } from '../../interfaces';
-import {
-  TestView,
-  SignInView,
-  SignUpView,
-  RecoverPasswordView,
-  Users
-} from '../../../views';
+import { TestView, SignInView, SignUpView, RecoverPasswordView, Users, SettingsView } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 
 export const routes: RouteParent[] = [
@@ -18,16 +12,17 @@ export const routes: RouteParent[] = [
       { to: 'recover-password', path: 'recover-password', Component: RecoverPasswordView },
       // { path: '*', Component: AuthLayout },
       // { path: '*', Component: <Navigate to="/404" /> }
-    ]
+    ],
   },
   {
     path: '',
     Layout: AppLayout,
     children: [
       { to: 'test', path: 'test', Component: TestView },
-      { to: 'user', path: 'user', Component: Users },
-      // { path: '*', Component: TestView },
+      { to: 'users', path: 'users', Component: Users },
+      { to: 'settings', path: 'settings', Component: SettingsView },
+      { path: '*', Component: TestView },
       // { path: '*', Component: <Navigate to="/404" /> }
-    ]
+    ],
   },
 ];
