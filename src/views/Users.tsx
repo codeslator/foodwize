@@ -1,42 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
-import { TableView } from '../components/shared/TableView';
-import NavTabs from '../components/shared/NavTabs';
+import { HeaderToolBar } from '../components/shared/HeaderToolBar';
+import DataGridTable from '../components/shared/DataGridTable';
 
 const Users = () => {
-  const headerListNames = ['Name', 'Last Name', 'Phone Number', 'Email', 'Role', 'Status', 'Actions'];
-
-  // const tableData = [
-  //   'Apolline',
-  //   'Labrie',
-  //   '+33 44 196060',
-  //   'ApollineLabrie@ersurgeon.fr',
-  //   'Finances',
-  // ];
-
-  const tableUsers = [
-    {
-      firtName: 'Apolline',
-      lastName: 'Labrie',
-      phone: '+33 44 196060',
-      email: 'ApollineLabrie@ersurgeon.fr',
-      role: 'Finances',
-    },
-    {
-      firtName: 'Apolline',
-      lastName: 'Labrie',
-      phone: '+33 44 196060',
-      email: 'ApollineLabrie@ersurgeon.fr',
-      role: 'Finances',
-    },
-    {
-      firtName: 'Apolline',
-      lastName: 'Labrie',
-      phone: '+33 44 196060',
-      email: 'ApollineLabrie@ersurgeon.fr',
-      role: 'Finances',
-    },
-  ];
-
   const toolBarList = ['All', 'Users', 'Finances', 'Operations', 'Admins', 'Super Admin'];
 
   return (
@@ -45,7 +11,8 @@ const Users = () => {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-        }}>
+        }}
+      >
         <Typography variant="h4" color="#5E565A">
           Users
         </Typography>
@@ -58,9 +25,8 @@ const Users = () => {
       <Box mt={2}>
         <NavTabs tabs={toolBarList} />
       </Box>
-      <Box mt={-2}>
-        <TableView headerListNames={headerListNames} tableData={tableUsers} />
-      </Box>
+      {/* <TableView headerListNames={headerListNames} tableData={tableUsers} /> */}
+      <DataGridTable />
     </>
   );
 };
