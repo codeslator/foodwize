@@ -1,9 +1,9 @@
 import { useAppSelector, useAppDispatch } from './';
 import { selectAuthState } from '../../store/selectors';
-import { REFRESH_TOKEN, SET_CURRENT_USER, LOGIN } from '../../store/auth';
+import { REFRESH_TOKEN, SET_CURRENT_USER, LOGIN, LOGOUT } from '../../store/auth';
 
 const useAuth = () => {
-  const { currentUser } = useAppSelector(selectAuthState);
+  const { currentUser, isLoading, isAuthenticated, error } = useAppSelector(selectAuthState);
   const dispatch = useAppDispatch();
 
   const setCurrentUser = (user: any) => {
@@ -18,12 +18,19 @@ const useAuth = () => {
     dispatch(LOGIN({ email, password }));
   };
 
+  const logout = () => {
+    dispatch(LOGOUT());
+  };
 
   return {
     currentUser,
     setCurrentUser,
     refreshUser,
     login,
+    logout,
+    isLoading,
+    isAuthenticated,
+    error,
   };
 };
 

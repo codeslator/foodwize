@@ -51,6 +51,7 @@
     "jsx-a11y"
   ],
   "rules": {
+
     "no-console": "warn",
     "no-unused-vars": "off",
     "import/extensions": "off",
@@ -62,7 +63,7 @@
     "no-else-return": "off",
     "no-restricted-syntax": "off",
     "no-param-reassign": "off",
-    "import/prefer-default-export": "off",
+    "import/prefer-default-export": 0,
     "comma-dangle": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "max-len": "off",
@@ -74,7 +75,19 @@
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "react/no-unescaped-entities": "off",
-    "react/function-component-definition": "warn",
-    "react/no-array-index-key": "warn"
+    "react/function-component-definition": [2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "react/no-array-index-key": "warn",
+    "no-unused-expressions": ["error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true,
+        "allowTaggedTemplates": true
+      }
+    ]
   }
 }

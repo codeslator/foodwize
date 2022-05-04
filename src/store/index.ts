@@ -1,13 +1,35 @@
-import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import authSlice from './auth';
-import uiSlice from './ui';
+// TODO: Correct eslint disable property
+import { Action, configureStore, ThunkAction, combineReducers } from '@reduxjs/toolkit';
+import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'
+import autoMergeLevel1 from 'redux-persist/lib/stateReconciler/autoMergeLevel1';
+import authReducer from './auth';
+import uiReducer from './ui';
+
+const combinedReducers = combineReducers({
+  auth: authReducer,
+  ui: uiReducer,
+});
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  stateReconciler: autoMergeLevel1,
+};
+
+// TODO: Fix code problem with combineReducer, currently works but maybe has code error
+const persitedReducer = persistReducer(persistConfig, combinedReducers);
 
 export const store = configureStore({
-  reducer: {
-    auth: authSlice,
-    ui: uiSlice,
-  },
+  reducer: persitedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;

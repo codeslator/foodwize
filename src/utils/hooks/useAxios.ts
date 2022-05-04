@@ -1,26 +1,16 @@
 import { useEffect, useState } from 'react';
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { AxiosConfig } from '../../config/interfaces';
-import useConfig from './useConfig';
-import axiosInstance from '../../config/axiosConfig';
+import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
+import { useConfig } from '.';
+import useAxiosInterceptor from '../../config/useAxiosInterceptor';
+import { APP_MODE } from '../../config';
 
-const defaultConfig: AxiosRequestConfig = {
-  baseURL: process.env.REACT_APP_URL,
-  url: 'settings/',
-  method: 'get',
-  data: null,
-  headers: {
-    'x-api-key': `${process.env.REACT_APP_APIKEY}`,
-    'Content-Type': 'application/json'
-  },
-};
-// const ENV = process.env.NODE_ENV;
-
-const useAxios = <T>(config: AxiosConfig, logs: boolean = false) => {
-  const [response, setResponse] = useState<AxiosResponse>();
-  const [data, setData] = useState<T>();
-  const [error, setError] = useState<AxiosError | Error>();
-  const [loading, setLoading] = useState<boolean>(true);
+const useAxios = <T>(config: AxiosConfig, logs = false) => {
+  const [response, setResponse] = useState<AxiosResponse | ServerErrorResponse>(<AxiosResponse>{});
+  const [data, setData] = useState<T>(<T>{});
+  const [error, setError] = useState<AxiosError | Error | ServerErrorResponse>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { axiosInstance } = useAxiosInterceptor();
   const { checkConfig } = useConfig();
 
   const fetchData = async (newConfig?: AxiosConfig) => {
@@ -29,22 +19,25 @@ const useAxios = <T>(config: AxiosConfig, logs: boolean = false) => {
     }
     // Check all configuration
     checkConfig(config);
-
     // logs the request in development only
-    // if (logs && (!ENV || ENV === 'development')) {
-    //   console.log(config);
-    // }
-
-    try {
-      const response = await axiosInstance.request(config);
-      // Check if exists a backend error
-      // if (response)
-      setResponse(response);
-      setData(response.data);
-
+    if (logs && (!APP_MODE || APP_MODE === 'development')) {
+      console.log(config);
     }
-    catch (error: any) {
-      setError(error);
+    setLoading(true);
+    try {
+      const axiosResponse = await axiosInstance.request(config);
+      if (logs && (!APP_MODE || APP_MODE === 'development')) {
+        console.log('Axios Response: ', axiosResponse);
+        console.log('Data: ', axiosResponse.data);
+      }
+      setResponse(axiosResponse);
+      setData(axiosResponse.data);
+    }
+    catch (err: any) {
+      if (logs && (!APP_MODE || APP_MODE === 'development')) {
+        console.log('Error: ', err);
+      }
+      setError(err);
     }
     finally {
       setLoading(false);
