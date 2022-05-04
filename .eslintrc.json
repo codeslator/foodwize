@@ -4,17 +4,20 @@
     "es2021": true
   },
   "extends": [
-    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
     "airbnb-typescript",
-    "prettier/@typescript-eslint",
-    "eslint:recommended",
     "airbnb",
     "airbnb/hooks",
-    "plugin:react/recommended",
     "prettier",
-    "prettier/react",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    // "plugin:jsdoc/recommended",
     "plugin:jsx-a11y/recommended"
   ],
+  "globals": {
+    "React": true,
+    "JSX": true
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -24,13 +27,54 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "."
+        ],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
   "plugins": [
+    "prettier",
     "@typescript-eslint",
     "react",
     "react-hooks",
-    "jsx-a11y",
-    "jsdoc",
-    "import"
+    // "jsdoc",
+    "jsx-a11y"
   ],
-  "rules": {}
+  "rules": {
+    "no-console": "warn",
+    "no-unused-vars": "off",
+    "import/extensions": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/no-extraneous-dependencies": "warn",
+    "linebreak-style": "off",
+    "arrow-body-style": "off",
+    "operator-linebreak": "off",
+    "no-else-return": "off",
+    "no-restricted-syntax": "off",
+    "no-param-reassign": "off",
+    "import/prefer-default-export": "off",
+    "comma-dangle": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "max-len": "off",
+    "no-plusplus": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/no-unescaped-entities": "off",
+    "react/function-component-definition": "warn",
+    "react/no-array-index-key": "warn"
+  }
 }

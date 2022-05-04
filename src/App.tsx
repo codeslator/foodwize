@@ -6,7 +6,6 @@ import { store } from './store';
 import { Router } from './config/router/router';
 
 const App = () => {
-
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
