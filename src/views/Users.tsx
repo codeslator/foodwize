@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { HeaderToolBar } from '../components/shared/HeaderToolBar';
 import DataGridTable from '../components/shared/DataGridTable';
+import { NavTabs } from '../components/shared/NavTabs';
 
 const Users = () => {
   const toolBarList = ['All', 'Users', 'Finances', 'Operations', 'Admins', 'Super Admin'];

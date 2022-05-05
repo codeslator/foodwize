@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Drawer, List, Divider, useMediaQuery, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Store, Home, LocalOffer, PieChart, PeopleAlt, Logout, SettingsOutlined } from '@mui/icons-material';
+import { Store, Home, LocalOffer, PieChart, PeopleAlt, Logout, SettingsOutlined, Discount } from '@mui/icons-material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { defaultTheme } from '../../../assets/themes';
@@ -38,9 +38,9 @@ const routes = [
     Icon: Store,
   },
   {
-    name: 'Products',
-    to: URLS_TO.PRODUCTS,
-    Icon: LocalOffer,
+    name: 'Suppliers',
+    to: URLS_TO.SUPPLIERS,
+    Icon: Discount,
   },
   {
     name: 'Analytics',
