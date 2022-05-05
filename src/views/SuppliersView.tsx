@@ -1,8 +1,17 @@
 import { FC } from 'react'
+import { Helmet } from 'react-helmet';
+import { ModuleToolbar } from '../components/shared';
 
 const SuppliersView: FC = () => {
   return (
-    <div>SuppliersView</div>
+    <>
+      <Helmet>
+        <title>Suplliers | Foodwize</title>
+      </Helmet>
+      <ModuleToolbar title="Suppliers" action={() => console.log('Suppliers module here')} actionTitle="Add Supplier">
+        <>Hello worls</>
+      </ModuleToolbar>
+    </>
   );
 };
 
