@@ -1,5 +1,4 @@
-/* eslint-disable react/destructuring-assignment */
-import React, { FC, ReactNode, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { SxProps, Theme, Divider, Fade, Box } from '@mui/material';
 
 import Tabs from '@mui/material/Tabs';
@@ -36,16 +35,15 @@ export const SwipeableTabs: FC<SwipeableTabsProps> = ({ tabSelectedIndex, childr
 );
 
 interface NavTabsProps {
-  tabNames: Array<string>;
-  tabPanels: Array<ReactNode | FC | JSX.Element>;
+  tabs: Array<string>;
   onSetTab: React.Dispatch<React.SetStateAction<string>>;
 }
-export const NavTabs: FC<NavTabsProps> = ({ tabNames, onSetTab }) => {
+export const NavTabs: FC<NavTabsProps> = ({ tabs, onSetTab }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
-    onSetTab(tabNames[newValue]);
+    onSetTab(tabs[newValue]);
   };
 
   const tabSX: SxProps<Theme> = (theme) => ({
@@ -66,13 +64,13 @@ export const NavTabs: FC<NavTabsProps> = ({ tabNames, onSetTab }) => {
         indicatorColor="secondary"
         value={value}
         onChange={handleChange}
-        sx={{
+        sx={(theme) => ({
           cursor: 'pointer',
           fontWeight: 'bold',
           minHeight: 0,
-        }}
+        })}
       >
-        {tabNames.map((item, i) => {
+        {tabs.map((item, i) => {
           return <Tab sx={tabSX} disableRipple label={item} key={`header-tab-${i++}`} />;
         })}
       </Tabs>

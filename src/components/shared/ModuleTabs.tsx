@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Box, SxProps, Tab, Tabs, Theme, useTheme } from '@mui/material';
+import { Box, SxProps, Tab, Tabs, Theme, useTheme, Fade } from '@mui/material';
 import SwipeableViews from 'react-swipeable-views';
 import useTabs from '../../utils/hooks/useTabs';
 import TabPanel from './TabPanel';
@@ -12,7 +12,7 @@ interface ModuleTabsProps {
 const tabSX: SxProps<Theme> = (theme) => ({
   minWidth: 0,
   minHeight: 0,
-  px: 2,
+  px: 3,
   py: '5px',
   color: theme.palette.greys['60'],
   textTransform: 'none',
@@ -35,13 +35,16 @@ const ModuleTabs: FC<ModuleTabsProps> = ({ tabNames, tabs }) => {
           indicatorColor="secondary"
           textColor="inherit"
           aria-label="full width tabs example"
+          // variant="scrollable"
+          // scrollButtons
+          // scrollButtons={false}
+          // allowScrollButtonsMobile
           sx={{
             minHeight: 0,
           }}
         >
           {tabNames.map((name, index) => (
-            <Tab label={name} {...a11yProps(index)} sx={tabSX}
-            />
+            <Tab label={name} {...a11yProps(index)} sx={tabSX} key={`tab-${index}`} />
           ))}
         </Tabs>
       </Box>
@@ -51,8 +54,17 @@ const ModuleTabs: FC<ModuleTabsProps> = ({ tabNames, tabs }) => {
         onChangeIndex={handleSelectedIndex}
       >
         {tabs.map((Element, index) => (
-          <TabPanel value={selectedTab} index={index} dir={theme.direction} key={index}>
-            {Element}
+          <TabPanel value={selectedTab} index={index} dir={theme.direction}>
+            <Fade
+              key={`swipeable-tab-${index++}`}
+              timeout={{
+                enter: 1000,
+                exit: 200,
+              }}
+              in={index === selectedTab}
+            >
+              <Box>{Element}</Box>
+            </Fade>
           </TabPanel>
         ))}
       </SwipeableViews>

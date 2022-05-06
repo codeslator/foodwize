@@ -1,8 +1,9 @@
-import { Grid } from '@mui/material';
-import { FC } from 'react'
+import { FC } from 'react';
+import { Grid, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import { ModuleToolbar } from '../components/shared';
 import ModuleTabs from '../components/shared/ModuleTabs';
+import { SuppliersList, DeliveriesList, OrdersList } from '../components/suppliers';
 
 const SuppliersView: FC = () => {
   return (
@@ -22,15 +23,16 @@ const SuppliersView: FC = () => {
         <Grid item xs={12}>
           <ModuleTabs
             tabNames={[
-              'Tab 1',
-              'Tab 2',
+              'Orders',
+              'Suppliers',
+              'Delivery',
             ]}
             tabs={[
-              <>Hola mundo 1</>,
-              <>Hola mundo 2</>,
+              <OrdersList />,
+              <SuppliersList />,
+              <DeliveriesList />,
             ]}
           />
-
         </Grid>
       </Grid>
     </>
