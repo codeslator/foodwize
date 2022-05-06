@@ -1,6 +1,6 @@
 import { GridRowModel } from '@mui/x-data-grid';
 
-const rowsData: GridRowModel = [
+export const rowsData: GridRowModel = [
   {
     id: 1,
     lastName: 'Apolline',
@@ -44,7 +44,7 @@ const rowsData: GridRowModel = [
     phoneNumber: '+33 44 196060',
     email: 'ApollineLabrie@ersurgeon.fr',
     role: 'Finances',
-    status: 'Active',
+    status: 'Inactive',
   },
   {
     id: 23,
@@ -75,4 +75,38 @@ const rowsData: GridRowModel = [
   },
 ];
 
-export default rowsData;
+
+export const suppliersData: GridRowModel = [
+  {
+    supplierId: 1,
+    totalCost: '$0.00',
+    actualCost: '$0.00',
+    tax: '$0.00',
+    discount: '$0.00',
+    status: 'Active',
+  },
+  {
+    supplierId: 2,
+    totalCost: '$0.00',
+    actualCost: '$0.00',
+    tax: '$0.00',
+    discount: '$0.00',
+    status: 'Active',
+  },
+  {
+    supplierId: 3,
+    totalCost: '$0.00',
+    actualCost: '$0.00',
+    tax: '$0.00',
+    discount: '$0.00',
+    status: 'Active',
+  },
+  {
+    supplierId: 4,
+    totalCost: '$0.00',
+    actualCost: '$0.00',
+    tax: '$0.00',
+    discount: '$0.00',
+    status: 'Active',
+  },
+]

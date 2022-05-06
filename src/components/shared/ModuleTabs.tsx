@@ -54,9 +54,9 @@ const ModuleTabs: FC<ModuleTabsProps> = ({ tabNames, tabs }) => {
         onChangeIndex={handleSelectedIndex}
       >
         {tabs.map((Element, index) => (
-          <TabPanel value={selectedTab} index={index} dir={theme.direction}>
+          <TabPanel value={selectedTab} index={index} dir={theme.direction} key={`tab-panel-${index}`}>
             <Fade
-              key={`swipeable-tab-${index++}`}
+              // key={`swipeable-tab-${index++}`}
               timeout={{
                 enter: 1000,
                 exit: 200,

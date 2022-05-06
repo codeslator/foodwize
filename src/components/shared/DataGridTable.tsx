@@ -11,7 +11,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { defaultPalette } from '../../assets/themes/defaultPalette';
 import { CustomNoRowsOverlay } from './EmptyTable';
-import rowsData from './mockData';
+import {rowsData} from './mockData';
 
 export default function DataGridTable() {
   const handleEditClick = (id: GridRowId) => (event: React.MouseEvent) => {

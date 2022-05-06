@@ -18,7 +18,7 @@ const TabPanel: FC<TabPanelProps> = ({ children, value, index, ...other }) => {
       {...other}
     >
       {(value === index) && (
-        <>{children}</>
+        <Box sx={{ py: 2 }}>{children}</Box>
       )}
     </Box>
   );
