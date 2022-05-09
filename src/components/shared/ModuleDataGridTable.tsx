@@ -3,23 +3,22 @@ import Box from '@mui/material/Box';
 import {
   DataGrid,
   GridToolbar,
-  // GridActionsCellItem,
   GridColumns,
-  GridRowIdGetter,
-  // GridRowId,
 } from '@mui/x-data-grid';
-// import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-// import EditIcon from '@mui/icons-material/Edit';
-// import { defaultPalette } from '../../assets/themes/defaultPalette';
 import { CustomNoRowsOverlay } from './EmptyTable';
-// import rowsData from './mockData';
 import { SxProps, Theme } from '@mui/material';
+import useDataGrid from '../../utils/hooks/useDataGrid';
+import { AxiosConfig } from '../../config/interfaces';
 
-interface DataGridTableProps {
+interface ModuleDataGridTableProps {
   rows: Array<any>;
   columns: GridColumns;
   toolbar?: boolean;
   idName: string;
+  loading: boolean;
+  refetch: (config: AxiosConfig) => void;
+  refetchUrl: string;
+  count: number;
 }
 
 const dataGridSX: SxProps<Theme> = (theme) => ({
@@ -31,13 +30,29 @@ const dataGridSX: SxProps<Theme> = (theme) => ({
   '& .MuiDataGrid-columnHeaderTitle': { fontWeight: 'bold' },
 })
 
-const DataGridTable: FC<DataGridTableProps> = ({ rows, columns, toolbar, idName }) => {
-  console.log(rows);
+const ModuleDataGridTable: FC<ModuleDataGridTableProps> = ({
+  rows,
+  columns,
+  toolbar,
+  idName,
+  loading,
+  refetch,
+  refetchUrl,
+  count
+}) => {
+  const {
+    handlePageSize,
+    pageSize,
+    handlePage,
+    page,
+    handleSelectedItems,
+    selectedItems,
+  } = useDataGrid({ refetch, defaultUrl: refetchUrl });
 
   return (
     <Box
       sx={{
-        height: '67vh',
+        height: '90vh',
       }}
     >
       <DataGrid
@@ -46,15 +61,24 @@ const DataGridTable: FC<DataGridTableProps> = ({ rows, columns, toolbar, idName 
           NoRowsOverlay: CustomNoRowsOverlay,
         }}
         rows={rows}
+        rowCount={count}
         getRowId={(row) => row[idName]}
         columns={columns}
-        pageSize={10}
+        pageSize={pageSize}
+        onPageSizeChange={handlePageSize}
         rowsPerPageOptions={[10, 20, 50]}
+        page={page}
+        onPageChange={handlePage}
         checkboxSelection
+        onSelectionModelChange={handleSelectedItems}
+        selectionModel={selectedItems}
         sx={dataGridSX}
+        loading={loading}
+        paginationMode="server"
+        disableSelectionOnClick={loading}
       />
     </Box>
   );
 }
 
-export default DataGridTable; 
+export default ModuleDataGridTable; 

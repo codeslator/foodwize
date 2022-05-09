@@ -2,7 +2,7 @@ import { Edit, DeleteOutline } from '@mui/icons-material';
 import { Chip } from '@mui/material';
 import { GridActionsCellItem, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { FC } from 'react'
-import { DataGridTable } from '../shared';
+import { ModuleDataGridTable } from '../shared';
 import { suppliersData } from '../shared/mockData';
 
 const SuppliersList: FC = () => {
@@ -11,7 +11,6 @@ const SuppliersList: FC = () => {
       field: 'supplierId',
       headerName: 'Supplier Details Id',
       flex: 1,
-      // editable: true,
     },
     { field: 'totalCost', headerName: 'Total Cost', flex: 1 },
     { field: 'actualCost', headerName: 'Actual Cost', flex: 1 },
@@ -53,10 +52,12 @@ const SuppliersList: FC = () => {
 
   return (
     <>
-      <DataGridTable
+      <ModuleDataGridTable
         rows={suppliersData}
         columns={columns}
         idName="supplierId"  
+        loading={false}
+        toolbar
       />
     </>
   );
