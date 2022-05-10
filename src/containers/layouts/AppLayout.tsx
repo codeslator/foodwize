@@ -5,10 +5,12 @@ import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import useAuth from '../../utils/hooks/useAuth';
 import { URLS_TO } from '../../config/router/navigation/index';
+import useAxiosInterceptor from '../../config/useAxiosInterceptor';
 
 const AppLayout: FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  useAxiosInterceptor();
 
   useEffect(() => {
     if(!isAuthenticated) {

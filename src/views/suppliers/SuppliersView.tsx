@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet';
-import { ModuleToolbar } from '../components/shared';
-import ModuleTabs from '../components/shared/ModuleTabs';
-import { SuppliersList, DeliveriesList, OrdersList } from '../components/suppliers';
+import { ModuleToolbar } from '../../components/shared';
+import ModuleTabs from '../../components/shared/ModuleTabs';
+import { SuppliersList, DeliveriesList, OrdersList } from '../../components/suppliers';
 
 const SuppliersView: FC = () => {
   return (

@@ -78,7 +78,7 @@ export const rowsData: GridRowModel = [
 
 export const suppliersData: GridRowModel = [
   {
-    supplierId: 1,
+    id: 1,
     totalCost: '$0.00',
     actualCost: '$0.00',
     tax: '$0.00',
@@ -86,7 +86,7 @@ export const suppliersData: GridRowModel = [
     status: 'Active',
   },
   {
-    supplierId: 2,
+    id: 2,
     totalCost: '$0.00',
     actualCost: '$0.00',
     tax: '$0.00',
@@ -94,7 +94,7 @@ export const suppliersData: GridRowModel = [
     status: 'Active',
   },
   {
-    supplierId: 3,
+    id: 3,
     totalCost: '$0.00',
     actualCost: '$0.00',
     tax: '$0.00',
@@ -102,7 +102,7 @@ export const suppliersData: GridRowModel = [
     status: 'Active',
   },
   {
-    supplierId: 4,
+    id: 4,
     totalCost: '$0.00',
     actualCost: '$0.00',
     tax: '$0.00',

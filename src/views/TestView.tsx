@@ -1,9 +1,10 @@
 import { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { GridActionsCellItem, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
+import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { ModuleDataGridTable } from '../components/shared';
 import useAxios from '../utils/hooks/useAxios';
-import { Avatar, Box, Chip, Typography } from '@mui/material';
+import { Avatar, Box, Chip, Typography, IconButton } from '@mui/material';
 import { DeleteOutline, Edit } from '@mui/icons-material';
 import useUtils from '../utils/hooks/useUtils';
 
@@ -22,7 +23,7 @@ interface Vendor {
 
 interface VendorData {
   vendors: Vendor[];
-  total: number;
+  total: string;
 }
 
 const TestView = () => {
@@ -88,19 +89,18 @@ const TestView = () => {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <GridActionsCellItem
-            icon={<Edit />}
-            label="Edit"
-            className="textPrimary"
-            color="secondary"
-            onClick={() => console.log(id)}
-          />,
-          <GridActionsCellItem
-            icon={<DeleteOutline />}
-            label="Delete"
-            color="primary"
-            onClick={() => console.log(id)}
-          />,
+          <IconButton
+            component={NavLink}
+            to={`${id}`}
+          >
+            <Edit color="secondary" />
+          </IconButton>,
+          <IconButton
+            component={NavLink}
+            to={`${id}`}
+          >
+            <DeleteOutline color="primary" />
+          </IconButton>,
         ];
       },
     },
@@ -114,7 +114,7 @@ const TestView = () => {
       </Helmet>
       <ModuleDataGridTable
         rows={data?.vendors || []}
-        count={data?.total || 0}
+        count={data?.total || '0'}
         columns={columns}
         idName="accountId"  
         loading={loading}

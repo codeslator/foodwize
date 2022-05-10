@@ -18,7 +18,7 @@ interface ModuleDataGridTableProps {
   loading: boolean;
   refetch: (config: AxiosConfig) => void;
   refetchUrl: string;
-  count: number;
+  count: string;
 }
 
 const dataGridSX: SxProps<Theme> = (theme) => ({
@@ -61,7 +61,7 @@ const ModuleDataGridTable: FC<ModuleDataGridTableProps> = ({
           NoRowsOverlay: CustomNoRowsOverlay,
         }}
         rows={rows}
-        rowCount={count}
+        rowCount={parseInt(count, 10)}
         getRowId={(row) => row[idName]}
         columns={columns}
         pageSize={pageSize}

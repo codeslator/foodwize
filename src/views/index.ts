@@ -8,6 +8,7 @@ export const RecoverPasswordView = lazy(() => import(/* webpackChunkName: "Recov
 export const NotFoundView = lazy(() => import(/* webpackChunkName: "NotFoundView" */ './NotFoundView'));
 export const RedirectToLoginView = lazy(() => import(/* webpackChunkName: "RedirectToLoginView" */ './RedirectToLoginView'));
 export const Users = lazy(() => import(/* webpackChunkName: "Users" */ './Users'));
-export const SuppliersView = lazy(() => import(/* webpackChunkName: "SuppliersView" */ './SuppliersView'));
+export const SuppliersView = lazy(() => import(/* webpackChunkName: "SuppliersView" */ './suppliers/SuppliersView'));
+export const OrderDetailsView = lazy(() => import(/* webpackChunkName: "OrderDetailsView" */ './suppliers/OrderDetailsView'));
 
 export const SettingsView = lazy(() => import(/* webpackChunkName: "SettingsView" */ './SettingsView'));

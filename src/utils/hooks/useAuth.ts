@@ -2,6 +2,7 @@ import { useAppSelector, useAppDispatch } from '.';
 import { selectAuthState } from '../../store/selectors';
 import { REFRESH_TOKEN, SET_CURRENT_USER, LOGIN, LOGOUT } from '../../store/auth';
 import { UserAuthenticated } from '../../store/auth/state';
+import { AxiosRequestConfig } from 'axios';
 
 const useAuth = () => {
   const { currentUser, isLoading, isAuthenticated, error } = useAppSelector(selectAuthState);
@@ -12,8 +13,9 @@ const useAuth = () => {
   };
 
   // TODO: Fix problem with typing of dispatch of AnyAction
-  const refreshUser = (refreshToken: string, email: string) => {
-    dispatch<any>(REFRESH_TOKEN({ refreshToken, email }));
+  const refreshUser = (refreshToken: string, email: string, originConfig: AxiosRequestConfig) => {
+    // console.log(originConfig)
+    dispatch<any>(REFRESH_TOKEN({ refreshToken, email, originConfig }));
   };
 
   const login = (email: string, password: string) => {

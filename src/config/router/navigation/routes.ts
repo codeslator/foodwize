@@ -9,6 +9,7 @@ import {
   RedirectToLoginView,
   SettingsView,
   SuppliersView,
+  OrderDetailsView
 } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 import { ROUTES } from './index';
@@ -38,4 +39,11 @@ export const routes: RouteParent[] = [
       { path: ROUTES.ANY, Component: NotFoundView },
     ],
   },
+  {
+    path: `${ROUTES.APP}/${ROUTES.HOME}`,
+    Layout: AppLayout,
+    children: [
+      { path: ':orderId', Component: OrderDetailsView },
+    ],
+  }
 ];

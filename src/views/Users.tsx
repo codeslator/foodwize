@@ -1,10 +1,56 @@
 import { Box, Button, Typography } from '@mui/material';
-import { HeaderToolBar } from '../components/shared/HeaderToolBar';
+// import { HeaderToolBar } from '../components/shared/HeaderToolBar';
 import DataGridTable from '../components/shared/DataGridTable';
-import { NavTabs } from '../components/shared/NavTabs';
+import { NavTabs, useNavTabs } from '../components/shared/NavTabs';
+import { GridActionsCellItem, GridColumns } from '@mui/x-data-grid';
+import { DeleteOutline, Edit } from '@mui/icons-material';
+import { rowsData } from '../components/shared/mockData';
 
 const Users = () => {
-  const toolBarList = ['All', 'Users', 'Finances', 'Operations', 'Admins', 'Super Admin'];
+  const { tabs, setTab, tabSelectedIndex } = useNavTabs(['All', 'Users', 'Finances', 'Operations', 'Admins', 'Super Admin']);
+
+  const columns: GridColumns = [
+    {
+      field: 'firstName',
+      headerName: 'Name',
+      flex: 1,
+      editable: true,
+    },
+    { field: 'lastName', headerName: 'Last name', flex: 1 },
+    { field: 'phoneNumber', headerName: 'Phone Number', flex: 1 },
+    { field: 'email', headerName: 'Email', flex: 2 },
+    { field: 'role', headerName: 'Role', flex: 0.8 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 0.7,
+      cellClassName: 'status-theme--cell',
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            icon={<Edit />}
+            label="Edit"
+            className="textPrimary"
+            color="secondary"
+            onClick={() => console.log(id)}
+          />,
+          <GridActionsCellItem
+            icon={<DeleteOutline />}
+            label="Delete"
+            color="primary"
+            onClick={() => console.log(id)}
+          />,
+        ];
+      },
+    },
+  ];
 
   return (
     <>
@@ -24,10 +70,13 @@ const Users = () => {
         </Button>
       </Box>
       <Box mt={2}>
-        <NavTabs tabs={toolBarList} />
+        <NavTabs tabs={tabs} onSetTab={setTab} />
       </Box>
       {/* <TableView headerListNames={headerListNames} tableData={tableUsers} /> */}
-      <DataGridTable />
+      <DataGridTable
+        columns={columns}
+        rows={rowsData}
+      />
     </>
   );
 };
