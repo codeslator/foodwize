@@ -13,9 +13,9 @@ const useAuth = () => {
   };
 
   // TODO: Fix problem with typing of dispatch of AnyAction
-  const refreshUser = (refreshToken: string, email: string, originConfig: AxiosRequestConfig) => {
+  const refreshUser = (refreshToken: string, email: string) => {
     // console.log(originConfig)
-    dispatch<any>(REFRESH_TOKEN({ refreshToken, email, originConfig }));
+    dispatch<any>(REFRESH_TOKEN({ refreshToken, email }));
   };
 
   const login = (email: string, password: string) => {

@@ -18,25 +18,27 @@ const defaultConfig: AxiosRequestConfig = {
 
 const useAxiosInterceptor = () => {
   const axiosInstance: AxiosInstance = axios.create(defaultConfig);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { currentUser, refreshUser } = useAuth();
 
   useLayoutEffect(() => {
-    
     const interceptor = axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
         return response;
       },
       (error: AxiosError) => {
-        // console.log('Error intercepting')
+        const originalRequest: AxiosRequestConfig = error.config;
         if (error.response?.status === 401) {
-          
           if (isEmpty(currentUser.refreshToken) || isEmpty(currentUser.user?.email)) {
-            // console.log('Error 401', currentUser)
             localStorage.clear();
-            navigate('/login');
+            window.location.pathname = '/login';
           } else {
-            return refreshUser(currentUser.refreshToken, currentUser.user?.email, error.config);
+            refreshUser(currentUser.refreshToken, currentUser.user?.email);
+            if(originalRequest.headers) {
+              originalRequest.headers.Authorization = currentUser.token;
+              return axiosInstance.request(originalRequest);
+              // return 
+            }
           }
         }
         return Promise.reject(error);
