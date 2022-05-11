@@ -18,7 +18,7 @@ const defaultConfig: AxiosRequestConfig = {
 
 const useAxiosInterceptor = () => {
   const axiosInstance: AxiosInstance = axios.create(defaultConfig);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { currentUser, refreshUser } = useAuth();
 
   useLayoutEffect(() => {
@@ -31,14 +31,15 @@ const useAxiosInterceptor = () => {
         if (error.response?.status === 401) {
           if (isEmpty(currentUser.refreshToken) || isEmpty(currentUser.user?.email)) {
             localStorage.clear();
-            window.location.pathname = '/login';
+            navigate('/login');
           } else {
-            refreshUser(currentUser.refreshToken, currentUser.user?.email);
-            if(originalRequest.headers) {
-              originalRequest.headers.Authorization = currentUser.token;
-              return axiosInstance.request(originalRequest);
-              // return 
-            }
+            console.log(currentUser.token)
+            return refreshUser(currentUser.refreshToken, currentUser.user?.email, originalRequest);
+            // if(originalRequest.headers) {
+            //   originalRequest.headers.Authorization = currentUser.token;
+            //   // return axiosInstance(originalRequest);
+            //   // return 
+            // }
           }
         }
         return Promise.reject(error);

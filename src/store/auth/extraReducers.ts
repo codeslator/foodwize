@@ -5,7 +5,7 @@ import { FOODWIZE_APP_APIKEY, FOODWIZE_APP_URL } from "../../config";
 interface RefreshTokenParams {
   refreshToken: string;
   email: string;
-  // originConfig: AxiosRequestConfig;
+  originConfig: AxiosRequestConfig;
 }
 
 interface LoginParams {
@@ -21,7 +21,7 @@ export interface IUserData {
 }
 
 export const refreshToken = createAsyncThunk('auth/refreshToken',
-  async ({ refreshToken, email }: RefreshTokenParams, { rejectWithValue }) => {
+  async ({ refreshToken, email, originConfig }: RefreshTokenParams, { rejectWithValue }) => {
     const data = JSON.stringify({ refreshToken, email });
     const config: AxiosRequestConfig = {
       method: 'put',
@@ -34,7 +34,6 @@ export const refreshToken = createAsyncThunk('auth/refreshToken',
     };
     try {
       const response = await axios.request(config);
-      // console.log('Refresh response: ', response);
       const userRefreshed = response.data;
       const user: IUserData = {
         token: userRefreshed.token,
@@ -42,10 +41,11 @@ export const refreshToken = createAsyncThunk('auth/refreshToken',
         email,
       };
       localStorage.setItem('user', JSON.stringify(user));
-      // if (originConfig.headers) {
-      //   originConfig.headers.Authorization = userRefreshed.token;
-      //   await axios.request(originConfig);
-      // };
+      console.log(userRefreshed.token);
+      if (originConfig.headers) {
+        originConfig.headers.Authorization = userRefreshed.token;
+        await axios.request(originConfig);
+      };
       // console.log('New Response: ', newResp.data);
       return user;
     }

@@ -64,7 +64,7 @@ const OrdersList: FC = () => {
       /> */}
       <DataGridTable
         columns={columns}
-        rows={suppliersData}
+        rows={[]}
       />
     </>
   );
