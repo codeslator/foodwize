@@ -10,5 +10,7 @@ export const RedirectToLoginView = lazy(() => import(/* webpackChunkName: "Redir
 export const Users = lazy(() => import(/* webpackChunkName: "Users" */ './Users'));
 export const SuppliersView = lazy(() => import(/* webpackChunkName: "SuppliersView" */ './suppliers/SuppliersView'));
 export const OrderDetailsView = lazy(() => import(/* webpackChunkName: "OrderDetailsView" */ './suppliers/OrderDetailsView'));
+export const StockView = lazy(() => import(/* webpackChunkName: "StockView" */ './stock/StockView'));
+
 
 export const SettingsView = lazy(() => import(/* webpackChunkName: "SettingsView" */ './SettingsView'));

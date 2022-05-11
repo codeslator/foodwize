@@ -9,7 +9,8 @@ import {
   RedirectToLoginView,
   SettingsView,
   SuppliersView,
-  OrderDetailsView
+  OrderDetailsView,
+  StockView
 } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 import { ROUTES } from './index';
@@ -30,7 +31,7 @@ export const routes: RouteParent[] = [
     Layout: AppLayout,
     children: [
       { path: ROUTES.HOME, Component: TestView },
-      { path: ROUTES.STOCK, Component: TestView },
+      { path: ROUTES.STOCK, Component: StockView },
       { path: ROUTES.PRODUCTS, Component: TestView },
       { path: ROUTES.ANALYTICS, Component: TestView },
       { path: ROUTES.SUPPLIERS, Component: SuppliersView },
