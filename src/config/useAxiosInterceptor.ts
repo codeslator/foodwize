@@ -26,20 +26,17 @@ const useAxiosInterceptor = () => {
       (response: AxiosResponse) => {
         return response;
       },
-      (error: AxiosError) => {
+      async (error: AxiosError) => {
         const originalRequest: AxiosRequestConfig = error.config;
         if (error.response?.status === 401) {
           if (isEmpty(currentUser.refreshToken) || isEmpty(currentUser.user?.email)) {
             localStorage.clear();
             navigate('/login');
           } else {
-            console.log(currentUser.token)
-            return refreshUser(currentUser.refreshToken, currentUser.user?.email, originalRequest);
-            // if(originalRequest.headers) {
-            //   originalRequest.headers.Authorization = currentUser.token;
-            //   // return axiosInstance(originalRequest);
-            //   // return 
-            // }
+            const { token } = await refreshUser(currentUser.refreshToken, currentUser.user?.email).unwrap();
+            originalRequest.headers = defaultConfig.headers as {};
+            originalRequest.headers.Authorization = token;
+            if (originalRequest.headers.Authorization) return axiosInstance(originalRequest);
           }
         }
         return Promise.reject(error);
