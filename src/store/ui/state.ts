@@ -1,7 +1,8 @@
 import { UIError } from '../../config/interfaces';
 
 export interface UIState {
-  openModal: boolean;
+  openDialog: boolean;
+  openConfirm: boolean;
   openBackdrop: boolean;
   openDrawer: boolean;
   openSnackbar: boolean;
@@ -10,7 +11,8 @@ export interface UIState {
 
 export const uiState: UIState = {
   openBackdrop: false,
-  openModal: false,
+  openDialog: false,
+  openConfirm: false,
   openDrawer: false,
   openSnackbar: false,
   error: '',

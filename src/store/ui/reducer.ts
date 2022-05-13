@@ -1,7 +1,11 @@
 import { UIState } from './state';
 
-export const toggleModal = (state: UIState) => {
-  state.openModal = !state.openModal;
+export const toggleDialog = (state: UIState) => {
+  state.openDialog = !state.openDialog;
+};
+
+export const toggleConfirm = (state: UIState) => {
+  state.openConfirm = !state.openConfirm;
 };
 
 export const toggleBackdrop = (state: UIState) => {

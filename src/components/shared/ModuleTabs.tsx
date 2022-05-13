@@ -68,7 +68,7 @@ const ModuleTabs: FC<ModuleTabsProps> = ({ tabNames, tabs }) => {
         ))}
       </SwipeableViews>
     </>
-  )
-}
+  );
+};
 
-export default ModuleTabs
+export default ModuleTabs;

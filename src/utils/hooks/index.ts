@@ -13,5 +13,7 @@ export { default as useItemSelector } from './useItemSelector';
 export { default as useLocalStorage } from './useLocalStorage';
 export { default as usePagination } from './usePagination';
 export { default as useSearch } from './useSearch';
+export { default as useTabs } from './useTabs';
+export { default as useDataGrid } from './useDataGrid';
 export { default as useUI } from './useUI';
 export { default as useUtils } from './useUtils';

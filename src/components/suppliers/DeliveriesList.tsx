@@ -1,8 +1,11 @@
 import { FC } from 'react'
+import EmptyView from '../shared/EmptyView';
 
 const DeliveriesList: FC = () => {
   return (
-    <div>DeliveriesList</div>
+    <>
+      <EmptyView title="You don't have any Supplier" link="Click here to add your supplier" />
+    </>
   );
 };
 
