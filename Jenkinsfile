@@ -8,7 +8,7 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-                sh "pm2 start all"
+                sh "sudo npm run start"
             }
         }
     }
