@@ -1,17 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {
-  DataGrid,
-  GridToolbar,
-  GridActionsCellItem,
-  GridColumns,
-  GridRowId,
-} from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridActionsCellItem, GridColumns, GridRowId } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { defaultPalette } from '../../assets/themes/defaultPalette';
 import { CustomNoRowsOverlay } from './EmptyTable';
 import rowsData from './mockData';
+import { Route } from 'react-router-dom';
 
 export default function DataGridTable() {
   const handleEditClick = (id: GridRowId) => (event: React.MouseEvent) => {
@@ -68,6 +63,7 @@ export default function DataGridTable() {
       },
     },
   ];
+  // path=":invoice" element={<Invoice />}
   return (
     <Box
       sx={{
