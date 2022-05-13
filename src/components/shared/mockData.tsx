@@ -30,8 +30,8 @@ export const rowsData: GridRowModel = [
   },
   {
     id: 4,
-    lastName: 'Marine',
-    firstName: 'Bourget',
+    lastName: 'Fayette ',
+    firstName: 'Moquin',
     phoneNumber: '+33 38 804746',
     email: 'MarineBourget@buyconferencing.fr',
     role: 'User',
@@ -39,8 +39,8 @@ export const rowsData: GridRowModel = [
   },
   {
     id: 12,
-    lastName: 'Apolline',
-    firstName: 'Labrie',
+    lastName: 'Olivier',
+    firstName: 'Joly',
     phoneNumber: '+33 44 196060',
     email: 'ApollineLabrie@ersurgeon.fr',
     role: 'Finances',
@@ -48,8 +48,8 @@ export const rowsData: GridRowModel = [
   },
   {
     id: 23,
-    lastName: 'Claude',
-    firstName: 'Lizotte',
+    lastName: 'Sidney',
+    firstName: 'Vaillancour',
     phoneNumber: '+33 97 297824',
     email: 'ClaudeLizotte@metronightclubs.fr',
     role: 'Operations',
@@ -57,8 +57,8 @@ export const rowsData: GridRowModel = [
   },
   {
     id: 34,
-    lastName: 'Gemma',
-    firstName: 'Simon',
+    lastName: 'Natalie',
+    firstName: 'Laisné',
     phoneNumber: '+33 51 442429',
     email: 'GemmaSimon@mobilecycles.fr',
     role: 'Admin',

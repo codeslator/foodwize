@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 // import { HeaderToolBar } from '../components/shared/HeaderToolBar';
 import DataGridTable from '../components/shared/DataGridTable';
@@ -5,10 +6,15 @@ import { NavTabs, useNavTabs } from '../components/shared/NavTabs';
 import { GridActionsCellItem, GridColumns } from '@mui/x-data-grid';
 import { DeleteOutline, Edit } from '@mui/icons-material';
 import { rowsData } from '../components/shared/mockData';
+import BasicModal from '../components/shared/Modal';
+import Form from '../components/shared/Form';
 
 const Users = () => {
   const { tabs, setTab, tabSelectedIndex } = useNavTabs(['All', 'Users', 'Finances', 'Operations', 'Admins', 'Super Admin']);
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
   const columns: GridColumns = [
     {
       field: 'firstName',
@@ -63,8 +69,8 @@ const Users = () => {
         <Typography variant="h4" color="#5E565A">
           Users
         </Typography>
-        <Button color="secondary" variant="contained">
-          <Typography variant="body2" color="#fff" sx={{ textTransform: 'none' }}>
+        <Button color="secondary" variant="contained" onClick={handleOpen}>
+          <Typography variant="body2" color="#fff" sx={{ textTransform: 'none', padding: '0 20px' }}>
             Add Users
           </Typography>
         </Button>
@@ -77,6 +83,9 @@ const Users = () => {
         columns={columns}
         rows={rowsData}
       />
+      <BasicModal open={open} onClose={handleClose}>
+        <Form />
+      </BasicModal>
     </>
   );
 };
