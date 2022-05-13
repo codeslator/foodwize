@@ -9,6 +9,7 @@ export enum ROUTES {
   HOME = 'home',
   STOCK = 'stock',
   PRODUCTS = 'products',
+  SUPPLIERS = 'suppliers',
   SETTINGS = 'settings',
   ANALYTICS = 'analytics',
   TEST = 'test',
@@ -25,6 +26,7 @@ export enum URLS_TO {
   HOME = '/app/home',
   STOCK = '/app/stock',
   PRODUCTS = '/app/products',
+  SUPPLIERS = '/app/suppliers',
   SETTINGS = '/app/settings',
   ANALYTICS = '/app/analytics',
   TEST = '/app/test'

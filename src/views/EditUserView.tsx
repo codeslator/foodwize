@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Grid, MenuItem, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton/LoadingButton';
-import rowsData from '../components/shared/mockData';
+import {rowsData} from '../components/shared/mockData';
 
 const EditUsers = () => {
   const { id, firstName, lastName, email, phoneNumber, role, status } = rowsData[0];

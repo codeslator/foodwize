@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Drawer, List, Divider, useMediaQuery, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Store, Home, LocalOffer, PieChart, PeopleAlt, Logout, SettingsOutlined } from '@mui/icons-material';
+import { Store, Home, LocalOffer, PieChart, PeopleAlt, Logout, SettingsOutlined, Discount } from '@mui/icons-material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, useResolvedPath } from 'react-router-dom';
 import { defaultTheme } from '../../../assets/themes';
 import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
 import { SidebarFooter } from './SidebarFooter';
@@ -38,9 +38,9 @@ const routes = [
     Icon: Store,
   },
   {
-    name: 'Products',
-    to: URLS_TO.PRODUCTS,
-    Icon: LocalOffer,
+    name: 'Suppliers',
+    to: URLS_TO.SUPPLIERS,
+    Icon: Discount,
   },
   {
     name: 'Analytics',
@@ -61,6 +61,8 @@ const routes = [
 
 export const Sidebar: FC = () => {
   const { pathname } = useLocation();
+  // const match = useMatch();
+  // console.log(match)
   const navigate = useNavigate();
   const classes = useStyles();
   const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));

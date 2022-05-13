@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { isEmpty } from 'lodash';
 import { useAuth } from '../utils/hooks';
 import { FOODWIZE_APP_URL, FOODWIZE_APP_APIKEY } from './index';
@@ -21,25 +21,29 @@ const useAxiosInterceptor = () => {
   const navigate = useNavigate();
   const { currentUser, refreshUser } = useAuth();
 
-  useEffect(() => {
-    const interceptor = axiosInstance.interceptors.request.use(
-      (request: AxiosRequestConfig) => {
-        return request;
+  useLayoutEffect(() => {
+    const interceptor = axiosInstance.interceptors.response.use(
+      (response: AxiosResponse) => {
+        return response;
       },
-      (error: AxiosError) => {
+      async (error: AxiosError) => {
+        const originalRequest: AxiosRequestConfig = error.config;
         if (error.response?.status === 401) {
-          if (isEmpty(currentUser.refreshToken && isEmpty(currentUser.user?.email))) {
+          if (isEmpty(currentUser.refreshToken) || isEmpty(currentUser.user?.email)) {
             localStorage.clear();
             navigate('/login');
           } else {
-            return refreshUser(currentUser.refreshToken, currentUser.user?.email);
+            const { token } = await refreshUser(currentUser.refreshToken, currentUser.user?.email).unwrap();
+            originalRequest.headers = defaultConfig.headers as {};
+            originalRequest.headers.Authorization = token;
+            if (originalRequest.headers.Authorization) return axiosInstance(originalRequest);
           }
         }
         return Promise.reject(error);
       },
     );
 
-    return () => axiosInstance.interceptors.response.eject(interceptor);
+    return () => axios.interceptors.response.eject(interceptor);
   }, []);
 
   return {

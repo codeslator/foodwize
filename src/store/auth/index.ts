@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authState, AuthState, UserAuthenticated, UserNotAuthenticated } from './state';
 import * as authReducer from './reducer';
-import { logIn, refreshToken } from "./extraReducers";
+import { logIn, refreshToken } from './extraReducers';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -16,6 +16,10 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.currentUser = payload;
     },
+    [refreshToken.rejected as any]: (state: AuthState, { payload }: PayloadAction<UserNotAuthenticated>) => {
+      state.error = payload.message;
+      state.isLoading = false;
+    },
     [logIn.pending as any]: (state: AuthState) => {
       state.error = '';
       state.isLoading = true;
@@ -29,15 +33,9 @@ export const authSlice = createSlice({
       state.error = payload.message;
       state.isLoading = false;
     },
-  }
+  },
 });
 
-export const {
-  setCurrentUser: SET_CURRENT_USER,
-  logOut: LOGOUT,
-} = authSlice.actions;
-export {
-  refreshToken as REFRESH_TOKEN,
-  logIn as LOGIN,
-} from './extraReducers';
+export const { setCurrentUser: SET_CURRENT_USER, logOut: LOGOUT } = authSlice.actions;
+export { refreshToken as REFRESH_TOKEN, logIn as LOGIN } from './extraReducers';
 export default authSlice.reducer;

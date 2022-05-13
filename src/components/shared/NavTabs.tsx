@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { FC, useState } from 'react';
 import { SxProps, Theme, Divider, Fade, Box } from '@mui/material';
 
