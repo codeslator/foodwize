@@ -45,7 +45,6 @@ const ModuleDialog: FC<ModuleDialogProps> = ({ open, handleClose, title, childre
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          mb: 2
         })}
       >
         <Typography variant="h5" component="span">
