@@ -8,7 +8,7 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-                sh "sudo npm run start"
+                sh "sudo forever run start"
             }
         }
     }
