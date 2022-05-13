@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import { ModuleToolbar } from '../../components/shared';
 import ModuleTabs from '../../components/shared/ModuleTabs';
