@@ -8,7 +8,7 @@ pipeline {
         }
         stage("Deploy") {
             steps {
-                sh "sudo forever run start"
+                sh "pm2 restart cms-saas"
             }
         }
     }
