@@ -24,7 +24,7 @@ const Users = () => {
           Users
         </Typography>
         <Button color="secondary" variant="contained" onClick={handleOpen}>
-          <Typography variant="body2" color="#fff" sx={{ textTransform: 'none' }}>
+          <Typography variant="body2" color="#fff" sx={{ textTransform: 'none', padding: '0 20px' }}>
             Add Users
           </Typography>
         </Button>
