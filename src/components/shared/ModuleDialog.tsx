@@ -45,16 +45,16 @@ const ModuleDialog: FC<ModuleDialogProps> = ({ open, handleClose, title, childre
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          mb: 2
         })}
       >
-        <Typography variant="h5">
+        <Typography variant="h5" component="span">
           {title}
         </Typography>
         <IconButton onClick={handleClose}>
           <Close sx={{ color: '#fff' }} />
         </IconButton>
       </DialogTitle>
-      <Divider />
       <DialogContent sx={{ paddingX: 10 }}>
         {children}
       </DialogContent>
