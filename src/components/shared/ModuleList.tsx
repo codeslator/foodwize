@@ -126,7 +126,7 @@ const ModuleList: FC<ModuleListProps> = ({ title, columns, rows, actions }) => {
               }}
             >
               {actions?.map(({ label, handleAction }) => (
-                <MenuItem onClick={handleAction}>{label}</MenuItem>
+                <MenuItem onClick={handleAction} key={label}>{label}</MenuItem>
               ))}
             </Menu>
           </>
