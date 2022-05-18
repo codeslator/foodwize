@@ -14,6 +14,24 @@ interface IStock {
   status: string;
 }
 
+interface IWarehouse {
+  name: string;
+  label: string;
+  size: number | string;
+  address: string;
+  geolocation: string;
+  status: string;
+}
+
+interface ICanteen {
+  name: string;
+  label: string;
+  size: number | string;
+  address: string;
+  geolocation: string;
+  status: string;
+}
+
 export const STOCK_INITIAL_VALUES: IStock = {
   warehouseDetailId: '',
   warehouseOrderId: '',
@@ -41,3 +59,39 @@ export const STOCK_VALIDATION_SCHEMA = Yup.object({
   supplierProductId: Yup.string().required(),
   status: Yup.string().required()
 });
+
+export const WAREHOUSE_INITIAL_VALUES: IWarehouse = {
+  name: '',
+  label: '',
+  size: '',
+  address: '',
+  geolocation: '',
+  status: '',
+};
+
+export const WAREHOUSE_VALIDATION_SCHEMA = Yup.object({
+  name: Yup.string().required(),
+  label: Yup.string().required(),
+  size: Yup.string().required(),
+  address: Yup.string().required(),
+  geolocation: Yup.string().required(),
+  status: Yup.string().required(),
+})
+
+export const CANTEEN_INITIAL_VALUES: ICanteen = {
+  name: '',
+  label: '',
+  size: '',
+  address: '',
+  geolocation: '',
+  status: '',
+};
+
+export const CANTEEN_VALIDATION_SCHEMA = Yup.object({
+  name: Yup.string().required(),
+  label: Yup.string().required(),
+  size: Yup.string().required(),
+  address: Yup.string().required(),
+  geolocation: Yup.string().required(),
+  status: Yup.string().required(),
+})

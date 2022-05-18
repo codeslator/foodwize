@@ -35,7 +35,7 @@ const ModuleToolbar: FC<ModuleToolbarProps> = ({ title, actions, children }) => 
           </>
         )}
       </Box>
-      {children && <>{children}</>}
+      {Boolean(children) && <>{children}</>}
     </>
   );
 };

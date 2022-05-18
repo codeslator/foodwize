@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { Button, Collapse, Grid, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { STOCK_INITIAL_VALUES, STOCK_VALIDATION_SCHEMA } from '../../utils/validations/stockValidations';
-import { ExpandMore } from '@mui/icons-material';
+import { ExpandMore, ExpandLess } from '@mui/icons-material';
 
 interface StockFormProps {
   isLoading: boolean;
@@ -79,7 +79,7 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
               />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-              <Button endIcon={<ExpandMore />} onClick={toggleOpen}>
+              <Button endIcon={open ? (<ExpandLess />) : (<ExpandMore />)} onClick={toggleOpen}>
                 Advanced
               </Button>
             </Grid>
@@ -210,12 +210,12 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
                     flexDirection: 'row',
                     justifyContent: 'flex-end'
                   }}>
-                  <Button onClick={handleReset}>
+                  <Button variant="contained" onClick={handleReset}>
                     Reset
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
-                  <Button type="submit" color="secondary" variant="contained">
+                  <Button type="submit" color="secondary" variant="contained" sx={{ color: '#fff' }}>
                     Save
                   </Button>
                 </Grid>
