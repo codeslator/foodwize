@@ -1,14 +1,13 @@
-import { FC } from 'react'
-import { Box, Button, Typography } from '@mui/material';
+import { FC, Fragment } from 'react'
+import { Box, Typography } from '@mui/material';
 
 interface ModuleToolbarProps {
   title: string;
-  action?: () => void;
-  actionTitle?: string;
-  children?: JSX.Element | FC;
+  children?: JSX.Element | FC | Array<JSX.Element | FC>;
+  actions?: JSX.Element | FC | Array<JSX.Element | FC>
 }
 
-const ModuleToolbar: FC<ModuleToolbarProps> = ({ title, action, actionTitle, children }) => {
+const ModuleToolbar: FC<ModuleToolbarProps> = ({ title, actions, children }) => {
   return (
     <>
       <Box
@@ -20,17 +19,20 @@ const ModuleToolbar: FC<ModuleToolbarProps> = ({ title, action, actionTitle, chi
         }}
       >
         <Typography variant="h4" color="#5E565A">{title}</Typography>
-        {Boolean(action) && (
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={action}
-            sx={{
-              color: '#fff'
-            }}
-          >
-            {actionTitle}
-          </Button>
+        {Boolean(actions) && (
+          <>
+            {(Array.isArray(actions)) ? (
+              <Box>
+                {actions?.map((action, index) => (
+                  <Fragment key={index}>{action}</Fragment>
+                ))}
+              </Box>
+            ) : (
+              <>
+                {actions}
+              </>
+            )}
+          </>
         )}
       </Box>
       {children && <>{children}</>}

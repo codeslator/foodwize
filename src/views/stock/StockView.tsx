@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Helmet } from 'react-helmet';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import { ModuleDialog, ModuleTabs, ModuleToolbar } from '../../components/shared';
 import { CanteensList, WarehousesList } from '../../components/stock';
 import { useUI } from '../../utils/hooks';
@@ -18,14 +18,24 @@ const StockView: FC = () => {
         <Grid item xs={12}>
           <ModuleToolbar
             title="Stock Management"
-            action={toggleDialog}
-            actionTitle="Add Stock"
+            actions={(
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={toggleDialog}
+                sx={{
+                  color: '#fff',
+                  ml: 1,
+                }}
+              >
+                Add Stock
+              </Button>
+            )}
           >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="lg">
               <StockForm isLoading={false} />
             </ModuleDialog>
           </ModuleToolbar>
-
         </Grid>
         <Grid item xs={12}>
           <ModuleTabs
