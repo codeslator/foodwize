@@ -38,11 +38,11 @@ const WarehousesList: FC = () => {
       category: 'Category 1',
       actions: <ModuleListRowActions />
     },
-  ]
+  ];
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={12} md={3} lg={2}>
+      <Grid item xs={12} sm={12} md={4} lg={3} xl={2}>
         {moduleFilters.map(({ title, filters }) => (
           <ModuleFilter
             key={title}
@@ -51,9 +51,9 @@ const WarehousesList: FC = () => {
           />
         ))}
       </Grid>
-      <Grid item xs={12} sm={12} md={9} lg={10}>
+      <Grid item xs={12} sm={12} md={8} lg={9} xl={10}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             <ModuleList
               title="Expired Products"
               actions={expiredProdcutsActions}
@@ -61,7 +61,7 @@ const WarehousesList: FC = () => {
               rows={expiredProductRows}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             <ModuleList
               title="Restock Products"
               actions={expiredProdcutsActions}
@@ -69,7 +69,7 @@ const WarehousesList: FC = () => {
               rows={expiredProductRows}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             <ModuleList
               title="Delivery"
               actions={expiredProdcutsActions}
@@ -77,7 +77,7 @@ const WarehousesList: FC = () => {
               rows={expiredProductRows}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             <ModuleList
               title="Top Products"
               actions={expiredProdcutsActions}

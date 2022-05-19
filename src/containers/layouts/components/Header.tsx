@@ -13,11 +13,14 @@ import {
 } from '@mui/material';
 import { Menu, KeyboardArrowDown } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
-import useUI from '../../../utils/hooks/useUI';
+import { useAuth, useUI, useUtils } from '../../../utils/hooks';
 
 export const Header: FC = () => {
-  const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));
+  const matches = useMediaQuery(defaultTheme.breakpoints.up('md'));
   const { toggleDrawer } = useUI();
+  const { currentUser } = useAuth();
+  const { getAvatarInitials, getShortId } = useUtils();
+  const { user: { firstName, lastName, role, avatarUrl, accountId } } = currentUser;
 
   return (
     <AppBar
@@ -25,8 +28,8 @@ export const Header: FC = () => {
       color="default"
       elevation={3}
       sx={{
-        width: { sm: `calc(100% - ${200}px)` },
-        ml: { sm: `${200}px` },
+        width: { md: `calc(100% - ${200}px)` },
+        ml: { md: `${200}px` },
       }}>
       <Toolbar>
         <Box
@@ -43,9 +46,12 @@ export const Header: FC = () => {
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
             <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>
               <ListItem sx={{ padding: 0 }}>
-                <ListItemText primary="John Doe" secondary="Admin" sx={{ textAlign: 'right' }} />
+                <ListItemText primary={`${firstName} ${lastName}`} secondary={role} sx={{ textAlign: 'right' }} />
                 <ListItemAvatar sx={{ ml: '10px' }}>
-                  <Avatar>JD</Avatar>
+                  <Avatar
+                    alt={getShortId(accountId)}
+                    src={avatarUrl ? avatarUrl : getAvatarInitials(firstName, lastName)}
+                  />
                 </ListItemAvatar>
               </ListItem>
             </List>

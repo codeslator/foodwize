@@ -47,5 +47,13 @@ export const routes: RouteParent[] = [
     children: [
       { path: ':orderId', Component: OrderDetailsView },
     ],
-  }
+  },
+  {
+    path: `${ROUTES.APP}/${ROUTES.STOCK}`,
+    Layout: AppLayout,
+    children: [
+      { path: ROUTES.WAREHOUSES, Component: OrderDetailsView },
+      { path: ROUTES.CANTEENS, Component: OrderDetailsView },
+    ],
+  },
 ];

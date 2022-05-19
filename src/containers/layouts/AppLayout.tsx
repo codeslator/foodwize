@@ -22,12 +22,12 @@ const AppLayout: FC = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <Header />
-      <Box sx={{ width: { sm: 200 }, flexShrink: { sm: 0 } }}>
+      <Box sx={{ width: { md: 200 }, flexShrink: { md: 0 } }}>
         <Sidebar />
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${200}px)` } }}
+        sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${200}px)` } }}
       >
         <Toolbar />
         <Outlet />

@@ -22,7 +22,7 @@ interface ModuleFilterProps {
 }
 
 const ModuleFilter: FC<ModuleFilterProps> = ({ by, filters }) => {
-  const [checked, setChecked] = useState([0]);
+  const [checked, setChecked] = useState<number[]>([]);
 
   const handleToggle = (value: number) => () => {
     const currentIndex = checked.indexOf(value);
@@ -43,7 +43,6 @@ const ModuleFilter: FC<ModuleFilterProps> = ({ by, filters }) => {
       <List>
         {filters.map(({ label, count }, index) => {
           const labelId = `checkbox-list-label-${label}`;
-
           return (
             <ListItem
               key={label}

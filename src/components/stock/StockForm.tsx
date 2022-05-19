@@ -210,12 +210,12 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
                     flexDirection: 'row',
                     justifyContent: 'flex-end'
                   }}>
-                  <Button variant="contained" onClick={handleReset}>
+                  <Button variant="outlined" onClick={handleReset} sx={{ minWidth: '200px' }}>
                     Reset
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
-                  <Button type="submit" color="secondary" variant="contained" sx={{ color: '#fff' }}>
+                  <Button type="submit" color="secondary" variant="contained" sx={{ color: '#fff', minWidth: '200px' }}>
                     Save
                   </Button>
                 </Grid>
