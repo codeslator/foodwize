@@ -5,16 +5,19 @@ import { LoadingButton } from '@mui/lab';
 import { useAxiosMutation } from '../../utils/hooks';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useSnackbar } from 'notistack';
 
 type UpdatePasswordData = {
   password: string;
   confirm_password: string;
 };
 export const Security = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const [updatePassword, { data, loading, error }] = useAxiosMutation<UpdatePasswordData>({
     url: '/identities',
     method: 'PUT',
   });
+
   const form = useFormik({
     initialValues: {
       newPassword: '',
@@ -36,13 +39,19 @@ export const Security = () => {
         },
         event: {
           onSuccess() {
+            enqueueSnackbar('Successfull Password Update', {
+              variant: 'success',
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'right',
+              },
+            });
             form.resetForm();
           },
         },
       });
     },
   });
-
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);

@@ -15,7 +15,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={defaultTheme}>
-          <SnackbarProvider maxSnack={3}>
+          <SnackbarProvider autoHideDuration={3000} maxSnack={3}>
             <CssBaseline />
             <Router />
           </SnackbarProvider>
