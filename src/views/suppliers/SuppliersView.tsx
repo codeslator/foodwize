@@ -4,8 +4,12 @@ import { Helmet } from 'react-helmet';
 import { ModuleToolbar } from '../../components/shared';
 import ModuleTabs from '../../components/shared/ModuleTabs';
 import { SuppliersList, DeliveriesList, OrdersList } from '../../components/suppliers';
+import ModuleDialog from '../../components/shared/ModuleDialog';
+import { useUI } from '../../utils/hooks';
+import OrderForm from '../../components/suppliers/OrderForm';
 
 const SuppliersView: FC = () => {
+  const { toggleDialog, openDialog } = useUI();
   return (
     <>
       <Helmet>
@@ -15,9 +19,13 @@ const SuppliersView: FC = () => {
         <Grid item xs={12}>
           <ModuleToolbar
             title="Suppliers"
-            action={() => console.log('Suppliers module here')}
+            action={toggleDialog}
             actionTitle="Add Supplier"
-          />
+          >
+            <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
+              <OrderForm isLoading={false} />
+            </ModuleDialog>
+          </ModuleToolbar>
 
         </Grid>
         <Grid item xs={12}>

@@ -1,17 +1,10 @@
 import { FC } from 'react';
 import Box from '@mui/material/Box';
-import {
-  DataGrid,
-  GridToolbar,
-  GridActionsCellItem,
-  GridColumns,
-  GridRowId,
-} from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridActionsCellItem, GridColumns, GridRowId } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { defaultPalette } from '../../assets/themes/defaultPalette';
 import { CustomNoRowsOverlay } from './EmptyTable';
-import {rowsData} from './mockData';
 
 interface DataGridTableProps {
   columns: GridColumns;

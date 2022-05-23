@@ -9,7 +9,8 @@ export const uiSlice = createSlice({
 });
 
 export const {
-  toggleModal: TOGGLE_MODAL,
+  toggleDialog: TOGGLE_DIALOG,
+  toggleConfirm: TOGGLE_CONFIRM,
   toggleBackdrop: TOGGLE_BACKDROP,
   toggleDrawer: TOGGLE_DRAWER,
   toggleSnackbar: TOGGLE_SNACKBAR,
