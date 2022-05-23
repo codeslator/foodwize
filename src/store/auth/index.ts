@@ -27,7 +27,10 @@ export const authSlice = createSlice({
     [logIn.fulfilled as any]: (state: AuthState, { payload }: PayloadAction<UserAuthenticated>) => {
       state.isLoading = false;
       state.isAuthenticated = true;
-      state.currentUser = payload;
+      state.currentUser = {
+        ...payload,
+        refreshToken: payload.refresh_token,
+      };
     },
     [logIn.rejected as any]: (state: AuthState, { payload }: PayloadAction<UserNotAuthenticated>) => {
       state.error = payload.message;

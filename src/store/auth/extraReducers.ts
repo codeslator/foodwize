@@ -1,6 +1,5 @@
-import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { AxiosRequestConfig } from 'axios';
-import { string } from 'yup/lib/locale';
 import { FOODWIZE_APP_APIKEY, FOODWIZE_APP_URL } from '../../config';
 
 interface RefreshTokenParams {
@@ -37,7 +36,7 @@ export const refreshToken = createAsyncThunk(
       const userRefreshed = response.data;
       const user: IUserData = {
         token: userRefreshed.token,
-        refreshToken: userRefreshed.refreshToken,
+        refreshToken: userRefreshed.refreshToken ?? userRefreshed.refresh_token,
         user: userRefreshed.user,
       };
       localStorage.setItem('user', JSON.stringify(user));
@@ -71,7 +70,7 @@ export const logIn = createAsyncThunk('auth/logIn', async ({ email, password }: 
     const loginData = response.data;
     const user: IUserData = {
       token: loginData.token,
-      refreshToken: loginData.refreshToken,
+      refreshToken: loginData.refreshToken ?? loginData.refresh_token,
       user: loginData.user,
     };
     localStorage.setItem('user', JSON.stringify(user));
