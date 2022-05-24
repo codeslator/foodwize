@@ -3,6 +3,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
 import useConfig from './useConfig';
 import { APP_MODE } from '../../config';
+import { useSnackbar } from 'notistack';
 
 type useAxiosMutationReturn<D> = [
   dispatch: (newConfig: AxiosConfig<D>) => void,
@@ -15,17 +16,18 @@ type useAxiosMutationReturn<D> = [
 ];
 
 const useAxiosMutation = <D>(config: AxiosConfig<D>, logs = false): useAxiosMutationReturn<D> => {
+  const { enqueueSnackbar } = useSnackbar();
   const [response, setResponse] = useState<AxiosResponse>();
   const [data, setData] = useState<D>();
   const [error, setError] = useState<AxiosError<D, D> | Error | ServerErrorResponse | string>();
   const [loading, setloading] = useState<boolean>(false);
   const { checkConfig } = useConfig();
-  const { event } = config;
   /**
    * @param {Object} newConfig Body of the request
    */
   const fetchData = async (newConfig: AxiosConfig<D>) => {
     config = { ...config, ...newConfig };
+    const { event } = config;
     checkConfig(config);
     // logs the request in development only
     if (logs && (!APP_MODE || APP_MODE === 'development')) {
@@ -42,6 +44,13 @@ const useAxiosMutation = <D>(config: AxiosConfig<D>, logs = false): useAxiosMuta
       setData(axiosResponse.data);
       if (event?.onSuccess) event?.onSuccess(axiosResponse);
     } catch (err: any) {
+      enqueueSnackbar(err.message, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+      });
       // logs the error in development only
       if (logs && (!APP_MODE || APP_MODE === 'development')) {
         console.error(err);
