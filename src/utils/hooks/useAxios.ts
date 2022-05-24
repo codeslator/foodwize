@@ -4,14 +4,14 @@ import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
 import { useConfig } from '.';
 import { APP_MODE } from '../../config';
 
-const useAxios = <T>(config: AxiosConfig, logs = false) => {
+const useAxios = <T>(config: AxiosConfig<T>, logs = false) => {
   const [response, setResponse] = useState<AxiosResponse | ServerErrorResponse>(<AxiosResponse>{});
   const [data, setData] = useState<T>();
   const [error, setError] = useState<AxiosError | Error | ServerErrorResponse>();
   const [loading, setLoading] = useState<boolean>(false);
   const { checkConfig } = useConfig();
 
-  const fetchData = async (newConfig?: AxiosConfig) => {
+  const fetchData = async (newConfig?: AxiosConfig<T>) => {
     if (newConfig) {
       config = newConfig;
     }

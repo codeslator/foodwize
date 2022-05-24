@@ -13,11 +13,24 @@ import {
 } from '@mui/material';
 import { Menu, KeyboardArrowDown } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
-import useUI from '../../../utils/hooks/useUI';
+import { useAuth, useUI, useUtils } from '../../../utils/hooks';
+import ModuleConfirm from '../../../components/shared/ModuleConfirm';
+
+const initialUser = {
+  firstName: '',
+  lastName: '',
+  role: '',
+  avatarUrl: '',
+  vendorId: '',
+}
 
 export const Header: FC = () => {
-  const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));
-  const { toggleDrawer } = useUI();
+  const matches = useMediaQuery(defaultTheme.breakpoints.up('md'));
+  const { toggleDrawer, toggleConfirm, openConfirm } = useUI();
+  const { currentUser } = useAuth();
+  const { getAvatarInitials, getShortId } = useUtils();
+  console.log(currentUser.user)
+  const { firstName, lastName, role, avatarUrl, vendorId } = currentUser.user ? currentUser.user : initialUser;
 
   return (
     <AppBar
@@ -25,8 +38,8 @@ export const Header: FC = () => {
       color="default"
       elevation={3}
       sx={{
-        width: { sm: `calc(100% - ${200}px)` },
-        ml: { sm: `${200}px` },
+        width: { md: `calc(100% - ${200}px)` },
+        ml: { md: `${200}px` },
       }}>
       <Toolbar>
         <Box
@@ -43,9 +56,17 @@ export const Header: FC = () => {
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
             <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>
               <ListItem sx={{ padding: 0 }}>
-                <ListItemText primary="John Doe" secondary="Admin" sx={{ textAlign: 'right' }} />
+                <ListItemText primary={`${firstName} ${lastName}`} secondary={role} sx={{ textAlign: 'right' }} />
                 <ListItemAvatar sx={{ ml: '10px' }}>
-                  <Avatar>JD</Avatar>
+                  <Avatar
+                    alt={getShortId(vendorId)}
+                    src={avatarUrl ? avatarUrl : getAvatarInitials(firstName, lastName)}
+                    />
+                  {/* <ListItemText primary="Jhon Doe" secondary="Admin" sx={{ textAlign: 'right' }} /> */}
+                  {/* <Avatar
+                    alt="jhon_doe"
+                    src={getAvatarInitials('Jhon', 'Doe')}
+                  /> */}
                 </ListItemAvatar>
               </ListItem>
             </List>
@@ -53,6 +74,7 @@ export const Header: FC = () => {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
+                onClick={toggleConfirm}
                 // edge="end"
                 // onClick={handleDrawerToggle}
                 // sx={{ mr: 2 }}
@@ -63,6 +85,15 @@ export const Header: FC = () => {
           </Box>
         </Box>
       </Toolbar>
+      <ModuleConfirm
+        title="Confirm?"
+        open={openConfirm}
+        handleCancel={toggleConfirm}
+        handleConfirm={() => console.log('Confirm success.')}
+        size="lg"
+      >
+        <>Hello world</>
+      </ModuleConfirm>
     </AppBar>
   );
 };

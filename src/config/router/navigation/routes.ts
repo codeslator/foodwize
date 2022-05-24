@@ -32,20 +32,25 @@ export const routes: RouteParent[] = [
     Layout: AppLayout,
     children: [
       { path: ROUTES.HOME, Component: TestView },
-      { path: ROUTES.STOCK, Component: StockView },
+      {
+        path: ROUTES.STOCK,
+        Component: StockView,
+        children: [
+          { path: ROUTES.WAREHOUSES, Component: OrderDetailsView },
+        ]
+      },
       { path: ROUTES.PRODUCTS, Component: TestView },
       { path: ROUTES.ANALYTICS, Component: EditUserView },
-      { path: ROUTES.SUPPLIERS, Component: SuppliersView },
+      {
+        path: ROUTES.SUPPLIERS,
+        Component: SuppliersView,
+        children: [
+          { path: ':orderId', Component: OrderDetailsView },
+        ],
+      },
       { path: ROUTES.USERS, Component: Users },
       { path: ROUTES.SETTINGS, Component: SettingsView },
       { path: ROUTES.ANY, Component: NotFoundView },
     ],
   },
-  {
-    path: `${ROUTES.APP}/${ROUTES.HOME}`,
-    Layout: AppLayout,
-    children: [
-      { path: ':orderId', Component: OrderDetailsView },
-    ],
-  }
 ];

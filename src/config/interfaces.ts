@@ -17,6 +17,7 @@ export interface RouteChild {
   to?: string;
   path: string;
   Component: LazyComponent | JSXComponent | FC;
+  children?: RouteChild[];
 }
 
 export interface RouteParent {

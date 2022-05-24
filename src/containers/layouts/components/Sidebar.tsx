@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     '& .MuiDrawer-paper': {
       width: 200,
       MaxHeight: '100%',
-      overflowY: 'unset',
+      overflowY: 'auto',
       boxSizing: 'border-box',
       backgroundColor: defaultTheme.palette.primary.main,
       display: 'flex',
@@ -65,7 +65,7 @@ export const Sidebar: FC = () => {
   // console.log(match)
   const navigate = useNavigate();
   const classes = useStyles();
-  const matches = useMediaQuery(defaultTheme.breakpoints.up('sm'));
+  const matches = useMediaQuery(defaultTheme.breakpoints.up('md'));
   const { toggleDrawer, openDrawer } = useUI();
   const { logout } = useAuth();
 
@@ -74,6 +74,7 @@ export const Sidebar: FC = () => {
     navigate(URLS_TO.LOGIN);
   };
 
+  
   return (
     <nav>
       <Drawer

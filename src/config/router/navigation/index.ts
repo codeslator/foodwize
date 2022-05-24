@@ -13,6 +13,8 @@ export enum ROUTES {
   SETTINGS = 'settings',
   ANALYTICS = 'analytics',
   TEST = 'test',
+  WAREHOUSES = 'warehouses',
+  CANTEENS = 'canteens',
   ANY = '*'
 };
 
@@ -25,6 +27,8 @@ export enum URLS_TO {
   USERS = '/app/users',
   HOME = '/app/home',
   STOCK = '/app/stock',
+  WAREHOUSES = '/app/stock/warehouses',
+  CANTEENS = '/app/stock/canteens',
   PRODUCTS = '/app/products',
   SUPPLIERS = '/app/suppliers',
   SETTINGS = '/app/settings',
