@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     '& .MuiDrawer-paper': {
       width: 200,
       MaxHeight: '100%',
-      overflowY: 'unset',
+      overflowY: 'auto',
       boxSizing: 'border-box',
       backgroundColor: defaultTheme.palette.primary.main,
       display: 'flex',

@@ -1,14 +1,16 @@
 interface AuthUser {
-  accountId: string;
-  accountType?: string;
-  deviceId?: number | string;
+  vendorId: string;
   email: string;
   firstName: string;
-  isSocialAuth?: boolean | null;
   lastName: string;
   metadata: object | string | string[];
   status: string;
-  stripeStatus?: string;
+  role: string;
+  avatarUrl?: string;
+  // accountType?: string;
+  // deviceId?: number | string;
+  // isSocialAuth?: boolean | null;
+  // stripeStatus?: string;
 }
 
 export interface UserAuthenticated {

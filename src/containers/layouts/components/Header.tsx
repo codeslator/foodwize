@@ -14,13 +14,23 @@ import {
 import { Menu, KeyboardArrowDown } from '@mui/icons-material';
 import { defaultTheme } from '../../../assets/themes';
 import { useAuth, useUI, useUtils } from '../../../utils/hooks';
+import ModuleConfirm from '../../../components/shared/ModuleConfirm';
+
+const initialUser = {
+  firstName: '',
+  lastName: '',
+  role: '',
+  avatarUrl: '',
+  vendorId: '',
+}
 
 export const Header: FC = () => {
   const matches = useMediaQuery(defaultTheme.breakpoints.up('md'));
-  const { toggleDrawer } = useUI();
+  const { toggleDrawer, toggleConfirm, openConfirm } = useUI();
   const { currentUser } = useAuth();
   const { getAvatarInitials, getShortId } = useUtils();
-  const { user: { firstName, lastName, role, avatarUrl, accountId } } = currentUser;
+  console.log(currentUser.user)
+  const { firstName, lastName, role, avatarUrl, vendorId } = currentUser.user ? currentUser.user : initialUser;
 
   return (
     <AppBar
@@ -49,9 +59,14 @@ export const Header: FC = () => {
                 <ListItemText primary={`${firstName} ${lastName}`} secondary={role} sx={{ textAlign: 'right' }} />
                 <ListItemAvatar sx={{ ml: '10px' }}>
                   <Avatar
-                    alt={getShortId(accountId)}
+                    alt={getShortId(vendorId)}
                     src={avatarUrl ? avatarUrl : getAvatarInitials(firstName, lastName)}
-                  />
+                    />
+                  {/* <ListItemText primary="Jhon Doe" secondary="Admin" sx={{ textAlign: 'right' }} /> */}
+                  {/* <Avatar
+                    alt="jhon_doe"
+                    src={getAvatarInitials('Jhon', 'Doe')}
+                  /> */}
                 </ListItemAvatar>
               </ListItem>
             </List>
@@ -59,6 +74,7 @@ export const Header: FC = () => {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
+                onClick={toggleConfirm}
                 // edge="end"
                 // onClick={handleDrawerToggle}
                 // sx={{ mr: 2 }}
@@ -69,6 +85,15 @@ export const Header: FC = () => {
           </Box>
         </Box>
       </Toolbar>
+      <ModuleConfirm
+        title="Confirm?"
+        open={openConfirm}
+        handleCancel={toggleConfirm}
+        handleConfirm={() => console.log('Confirm success.')}
+        size="lg"
+      >
+        <>Hello world</>
+      </ModuleConfirm>
     </AppBar>
   );
 };
