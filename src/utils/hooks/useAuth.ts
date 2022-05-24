@@ -10,10 +10,16 @@ const useAuth = () => {
   const setCurrentUser = (user: UserAuthenticated) => {
     dispatch(SET_CURRENT_USER(user));
   };
+  // window.clearToken = () => {
+  //   const user = JSON.parse(localStorage.user);
+  //   localStorage.setItem('user', JSON.stringify({ ...user, token: '' }));
+  //   localStorage.setItem('persist:root', '');
+  //   setCurrentUser({ token: '' });
+  // };
 
   // TODO: Fix problem with typing of dispatch of AnyAction
   const refreshUser = (refreshToken: string, email: string) => {
-    return dispatch<any>(REFRESH_TOKEN({ refreshToken, email }));
+    return dispatch<any>(REFRESH_TOKEN({ refreshToken, email })).unwrap();
   };
 
   const login = (email: string, password: string) => {
