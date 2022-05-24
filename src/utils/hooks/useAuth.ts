@@ -13,7 +13,7 @@ const useAuth = () => {
 
   // TODO: Fix problem with typing of dispatch of AnyAction
   const refreshUser = (refreshToken: string, email: string) => {
-    return dispatch<any>(REFRESH_TOKEN({ refreshToken, email }));
+    return dispatch<any>(REFRESH_TOKEN({ refreshToken, email })).unwrap();
   };
 
   const login = (email: string, password: string) => {

@@ -18,7 +18,7 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={defaultTheme}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <SnackbarProvider maxSnack={3}>
+            <SnackbarProvider autoHideDuration={3000} maxSnack={3}>
               <CssBaseline />
               <Router />
             </SnackbarProvider>

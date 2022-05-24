@@ -7,7 +7,11 @@ import { Security } from '../components/Settings/Security';
 import { Permissions } from '../components/Settings/Permissions';
 
 const SettingsView = () => {
-  const { tabs, setTab, tabSelectedIndex } = useNavTabs(['Notifications', 'Security', 'Permissions']);
+  const { tabs, setTab, tabSelectedIndex } = useNavTabs([
+    // 'Notifications',
+    'Security',
+    // 'Permissions'
+  ]);
 
   return (
     <>
@@ -35,7 +39,11 @@ const SettingsView = () => {
       </Box>
       <Box mt={2}>
         <SwipeableTabs tabSelectedIndex={tabSelectedIndex}>
-          {[<Notifications />, <Security />, <Permissions />]}
+          {[
+            // <Notifications />,
+            <Security />,
+            // <Permissions />
+          ]}
         </SwipeableTabs>
       </Box>
     </>
