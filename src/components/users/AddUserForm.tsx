@@ -46,7 +46,8 @@ const AddUserForm: FC<OrderFormProps> = ({ isLoading, open, handleClose }) => {
         TransitionComponent: Collapse,
       });
   }, [error]);
-
+  const localUserId = localStorage.user && JSON.parse(localStorage.user).user.vendorId;
+  console.log(`🚀 ~ localUserId`, localUserId);
   return (
     <>
       <Formik
@@ -61,15 +62,15 @@ const AddUserForm: FC<OrderFormProps> = ({ isLoading, open, handleClose }) => {
             // role: 'ADMIN',
             // status: 'ACTIVE ',
             email: values.email,
-            name: values.firstName,
+            first_name: values.firstName,
             password: values.password,
             last_name: values.lastName,
-            vendor_parent: ADD_USER_INITIAL_STATE.parent_vendor,
-            role: values.role,
+            vendor_parent: localUserId,
+            role: 1,
             status: values.status,
           });
         }}
-        validationSchema={ADD_USER_VALIDATION_SCHEMA}
+        // validationSchema={ADD_USER_VALIDATION_SCHEMA}
       >
         {({ handleSubmit, values, errors, touched, handleChange, handleBlur, handleReset, dirty, isValid }) => (
           <form onSubmit={handleSubmit}>

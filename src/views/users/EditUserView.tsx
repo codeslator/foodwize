@@ -82,10 +82,10 @@ const EditUsers = () => {
           onSubmit={(values) => {
             console.log('SUBMITING', values);
             return updateData({
-              name: name.firstName,
+              first_name: values.firstName,
               last_name: values.lastName,
               email: values.email,
-              role: values.role,
+              role: 1,
               status: values.status,
             });
           }}
