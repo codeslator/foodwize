@@ -13,33 +13,20 @@ const SuppliersView: FC = () => {
   return (
     <>
       <Helmet>
-        <title>Suplliers | Foodwize</title>
+        <title>Suppliers | Foodwize</title>
       </Helmet>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <ModuleToolbar
-            title="Suppliers"
-            action={toggleDialog}
-            actionTitle="Add Supplier"
-          >
+          <ModuleToolbar title="Suppliers" action={toggleDialog} actionTitle="Add Supplier">
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
               <OrderForm isLoading={false} />
             </ModuleDialog>
           </ModuleToolbar>
-
         </Grid>
         <Grid item xs={12}>
           <ModuleTabs
-            tabNames={[
-              'Orders',
-              'Suppliers',
-              'Delivery',
-            ]}
-            tabs={[
-              <OrdersList />,
-              <SuppliersList />,
-              <DeliveriesList />,
-            ]}
+            tabNames={['Orders', 'Suppliers', 'Delivery']}
+            tabs={[<OrdersList />, <SuppliersList />, <DeliveriesList />]}
           />
         </Grid>
       </Grid>

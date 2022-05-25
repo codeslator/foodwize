@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 
 interface ModuleToolbarProps {
@@ -19,14 +19,17 @@ const ModuleToolbar: FC<ModuleToolbarProps> = ({ title, action, actionTitle, chi
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4" color="#5E565A">{title}</Typography>
+        <Typography variant="h4" color="#5E565A">
+          {title}
+        </Typography>
         {Boolean(action) && (
           <Button
             variant="contained"
             color="secondary"
             onClick={action}
             sx={{
-              color: '#fff'
+              color: '#fff',
+              textTransform: 'none',
             }}
           >
             {actionTitle}

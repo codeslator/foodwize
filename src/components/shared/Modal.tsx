@@ -22,7 +22,7 @@ const BasicModal = (props) => {
 
   return (
     <Modal open={open} onClose={onClose} className={classes.modal} sx={{ borderRadius: '30px' }}>
-      <Card sx={{ maxWidth: '35%', borderRadius: '30px' }}>
+      <Card sx={{ maxWidth: '45%', borderRadius: '30px' }}>
         <Grid
           sx={{
             backgroundColor: defaultPalette.primary.main,

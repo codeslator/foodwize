@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Edit, DeleteOutline } from '@mui/icons-material';
 import { Chip } from '@mui/material';
 import { GridActionsCellItem, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
-import { suppliersData } from '../shared/mockData';
+import { suppliersData } from '../users/mockData';
 import DataGridTable from '../shared/DataGridTable';
 
 const OrdersList: FC = () => {
@@ -62,10 +62,7 @@ const OrdersList: FC = () => {
         loading={false}
         toolbar
       /> */}
-      <DataGridTable
-        columns={columns}
-        rows={[]}
-      />
+      <DataGridTable columns={columns} rows={[]} />
     </>
   );
 };
