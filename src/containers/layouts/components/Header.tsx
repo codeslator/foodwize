@@ -38,8 +38,14 @@ export const Header: FC = () => {
       color="default"
       elevation={3}
       sx={{
-        width: { md: `calc(100% - ${200}px)` },
-        ml: { md: `${200}px` },
+        width: {
+          md: 'calc(100% - 15vw)',
+          lg: 'calc(100% - 10vw)'
+        },
+        ml: {
+          md: '15vw',
+          lg: '10vw',
+        },
       }}>
       <Toolbar>
         <Box
@@ -61,7 +67,7 @@ export const Header: FC = () => {
                   <Avatar
                     alt={getShortId(vendorId)}
                     src={avatarUrl ? avatarUrl : getAvatarInitials(firstName, lastName)}
-                    />
+                  />
                   {/* <ListItemText primary="Jhon Doe" secondary="Admin" sx={{ textAlign: 'right' }} /> */}
                   {/* <Avatar
                     alt="jhon_doe"
@@ -75,9 +81,9 @@ export const Header: FC = () => {
                 color="inherit"
                 aria-label="open drawer"
                 onClick={toggleConfirm}
-                // edge="end"
-                // onClick={handleDrawerToggle}
-                // sx={{ mr: 2 }}
+              // edge="end"
+              // onClick={handleDrawerToggle}
+              // sx={{ mr: 2 }}
               >
                 <KeyboardArrowDown />
               </IconButton>

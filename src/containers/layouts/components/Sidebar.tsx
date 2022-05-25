@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { Drawer, List, Divider, useMediaQuery, Box } from '@mui/material';
+import { Drawer, Divider, useMediaQuery, Box, SxProps, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Store, Home, LocalOffer, PieChart, PeopleAlt, Logout, SettingsOutlined, Discount } from '@mui/icons-material';
+import { Store, Home, PieChart, PeopleAlt, Logout, SettingsOutlined, Discount } from '@mui/icons-material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { NavLink, useLocation, useNavigate, useResolvedPath } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { defaultTheme } from '../../../assets/themes';
 import { SidebarListItemButton } from '../../../components/shared/SidebarListButton';
 import { SidebarFooter } from './SidebarFooter';
@@ -11,20 +11,24 @@ import { SidebarHeader } from './SidebarHeader';
 import { useAuth, useUI } from '../../../utils/hooks';
 import { URLS_TO } from '../../../config/router/navigation/index';
 
-const useStyles = makeStyles({
-  root: {
-    '& .MuiDrawer-paper': {
-      width: 200,
-      MaxHeight: '100%',
-      overflowY: 'auto',
-      boxSizing: 'border-box',
-      backgroundColor: defaultTheme.palette.primary.main,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+
+const sidebarSX: SxProps<Theme> = (theme) => ({
+  '& .MuiDrawer-paper': {
+    width: {
+      xs: '25vw',
+      sm: '18vw',
+      md: '15vw',
+      lg: '10vw',
     },
+    MaxHeight: '100%',
+    overflowY: 'auto',
+    boxSizing: 'border-box',
+    backgroundColor: defaultTheme.palette.primary.main,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
-});
+}) 
 
 const routes = [
   {
@@ -64,7 +68,6 @@ export const Sidebar: FC = () => {
   // const match = useMatch();
   // console.log(match)
   const navigate = useNavigate();
-  const classes = useStyles();
   const matches = useMediaQuery(defaultTheme.breakpoints.up('md'));
   const { toggleDrawer, openDrawer } = useUI();
   const { logout } = useAuth();
@@ -84,7 +87,7 @@ export const Sidebar: FC = () => {
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
-        className={classes.root}
+        sx={sidebarSX}
       >
         <SidebarHeader />
         <Divider />

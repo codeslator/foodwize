@@ -7,11 +7,21 @@ const AppSkeletonLayout: FC = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       {matches && (
-        <Box sx={{ width: { md: 200 }, flexShrink: { md: 0 } }}>
+        <Box
+          sx={{
+            width: {
+              md: '15vw',
+              lg: '10vw',
+            },
+            flexShrink: {
+              md: 0
+            }
+          }}
+        >
           <Skeleton
             animation="wave"
             height="100vh"
-            width="200px"
+            width="100%"
             variant="rectangular"
             sx={(theme) => ({
               bgcolor: theme.palette.primary.main
@@ -27,7 +37,14 @@ const AppSkeletonLayout: FC = () => {
         >
           <Toolbar />
         </Skeleton>
-        <Box sx={{ px: 3, py: 1.5 }}>
+        <Box
+          sx={{
+            px: 3,
+            py: 1.5,
+            flexGrow: 1,
+            width: '100%'
+          }}
+        >
           <Box
             sx={{
               display: 'flex',
@@ -62,7 +79,7 @@ const AppSkeletonLayout: FC = () => {
               />
             </Typography>
           </Box>
-          <Grid container spacing={2} sx={{ height: '300px', mt: { md: '-60px'} }}>
+          <Grid container spacing={2} sx={{ height: '300px', mt: { md: '-60px' } }}>
             <Grid item xs={12} sm={12} md={4} lg={3} xl={2}>
               <Skeleton
                 animation="wave"

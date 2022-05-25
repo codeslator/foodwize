@@ -10,19 +10,27 @@ import useAxiosInterceptor from '../../config/useAxiosInterceptor';
 const AppLayout: FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  
+
   useEffect(() => {
-    if(!isAuthenticated) {
+    if (!isAuthenticated) {
       navigate(URLS_TO.ROOT, { replace: true });
     }
   }, []);
-  
+
   useAxiosInterceptor();
 
   return (
     <Box sx={{ display: 'flex' }}>
       <Header />
-      <Box sx={{ width: { md: 200 }, flexShrink: { md: 0 } }}>
+      <Box
+        sx={{
+          width: {
+            md: '15vw',
+            lg: '10vw',
+          },
+          flexShrink: { md: 0 }
+        }}
+      >
         <Sidebar />
       </Box>
       <Box
