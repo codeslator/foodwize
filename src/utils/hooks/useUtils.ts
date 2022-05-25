@@ -2,8 +2,11 @@
 const useUtils = () => {
 
   const getShortId = (longId: string): string => {
-    const shortId = longId.slice(-6)
-    return shortId;
+    if(Boolean(longId) && longId.length > 5) {
+      const shortId = longId.slice(-6)
+      return shortId;
+    }
+    return '';
   };
   
   const getAvatarInitials = (firstName: string, lastName: string): string => {

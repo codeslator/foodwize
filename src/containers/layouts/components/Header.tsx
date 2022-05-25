@@ -22,15 +22,16 @@ const initialUser = {
   role: '',
   avatarUrl: '',
   vendorId: '',
+  accountId: '',
 }
 
 export const Header: FC = () => {
   const matches = useMediaQuery(defaultTheme.breakpoints.up('md'));
   const { toggleDrawer, toggleConfirm, openConfirm } = useUI();
   const { currentUser } = useAuth();
+  const { firstName, lastName, role, avatarUrl, accountId, vendorId } = currentUser.user ? currentUser.user : initialUser;
   const { getAvatarInitials, getShortId } = useUtils();
-  console.log(currentUser.user)
-  const { firstName, lastName, role, avatarUrl, vendorId } = currentUser.user ? currentUser.user : initialUser;
+  console.log(firstName, currentUser.user)
 
   return (
     <AppBar
@@ -65,7 +66,7 @@ export const Header: FC = () => {
                 <ListItemText primary={`${firstName} ${lastName}`} secondary={role} sx={{ textAlign: 'right' }} />
                 <ListItemAvatar sx={{ ml: '10px' }}>
                   <Avatar
-                    alt={getShortId(vendorId)}
+                    alt={getShortId(accountId || vendorId)}
                     src={avatarUrl ? avatarUrl : getAvatarInitials(firstName, lastName)}
                   />
                   {/* <ListItemText primary="Jhon Doe" secondary="Admin" sx={{ textAlign: 'right' }} /> */}
