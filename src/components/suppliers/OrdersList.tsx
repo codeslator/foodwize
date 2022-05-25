@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { Edit, DeleteOutline } from '@mui/icons-material';
 import { Chip } from '@mui/material';
 import { GridActionsCellItem, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
@@ -62,10 +62,11 @@ const OrdersList: FC = () => {
         loading={false}
         toolbar
       /> */}
-      <DataGridTable
+      {/* <DataGridTable
         columns={columns}
         rows={[]}
-      />
+      /> */}
+      <Outlet />
     </>
   );
 };
