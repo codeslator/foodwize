@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import { ModuleToolbar } from '../../components/shared';
 import ModuleTabs from '../../components/shared/ModuleTabs';
@@ -17,7 +17,22 @@ const SuppliersView: FC = () => {
       </Helmet>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <ModuleToolbar title="Suppliers" action={toggleDialog} actionTitle="Add Supplier">
+          <ModuleToolbar
+            title="Suppliers"
+            actions={
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={toggleDialog}
+                sx={{
+                  color: '#fff',
+                  ml: 1,
+                }}
+              >
+                Add Supplier
+              </Button>
+            }
+          >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
               <OrderForm isLoading={false} />
             </ModuleDialog>

@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { SnackbarProvider } from 'notistack';
 import { defaultTheme } from './assets/themes/index';
 import { store } from './store';
@@ -15,10 +17,12 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={defaultTheme}>
-          <SnackbarProvider maxSnack={3}>
-            <CssBaseline />
-            <Router />
-          </SnackbarProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <SnackbarProvider autoHideDuration={3000} maxSnack={3}>
+              <CssBaseline />
+              <Router />
+            </SnackbarProvider>
+          </LocalizationProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

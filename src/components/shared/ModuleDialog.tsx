@@ -1,6 +1,6 @@
 import { FC, forwardRef } from 'react';
+
 import {
-  Box,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -12,6 +12,7 @@ import {
   Divider,
   Breakpoint,
 } from '@mui/material';
+
 import { TransitionProps } from '@mui/material/transitions';
 import { Close } from '@mui/icons-material';
 
@@ -44,8 +45,15 @@ const ModuleDialog: FC<ModuleDialogProps> = ({ open, handleClose, title, childre
       fullScreen={fullScreen}
       PaperProps={{
         sx: {
-          minWidth: '30%',
-          borderRadius: '25px',
+          minWidth: {
+            sx: '100%',
+            sm: '50%',
+            md: '30%',
+          },
+          borderRadius: {
+            xs: 0,
+            sm: '25px',
+          },
         },
       }}
     >

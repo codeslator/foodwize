@@ -1,8 +1,13 @@
 import { FC, LazyExoticComponent } from 'react';
-import { AxiosRequestConfig, AxiosError } from 'axios';
+import { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 
-interface AxiosMutationConfig extends AxiosRequestConfig {
+interface AxiosMutationConfig<D> extends AxiosRequestConfig<D> {
   onFinally?: () => void;
+  event?: {
+    onSuccess?: (response: AxiosResponse<D, D>) => void;
+    onError?: (error: AxiosError<D, D> | Error | ServerErrorResponse | string) => void;
+    onFinally?: () => void;
+  };
 }
 
 export type JSXComponent = () => JSX.Element;
@@ -12,6 +17,7 @@ export interface RouteChild {
   to?: string;
   path: string;
   Component: LazyComponent | JSXComponent | FC;
+  children?: RouteChild[];
 }
 
 export interface RouteParent {
@@ -20,7 +26,7 @@ export interface RouteParent {
   children: RouteChild[];
 }
 
-export type AxiosConfig = AxiosMutationConfig;
+export type AxiosConfig<D> = AxiosMutationConfig<D>;
 
 export interface ServerErrorResponse {
   httpStatusCode: number;
