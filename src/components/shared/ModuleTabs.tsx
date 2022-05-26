@@ -3,10 +3,13 @@ import { Box, SxProps, Tab, Tabs, Theme, useTheme, Fade } from '@mui/material';
 import SwipeableViews from 'react-swipeable-views';
 import useTabs from '../../utils/hooks/useTabs';
 import TabPanel from './TabPanel';
+import { NavLink } from 'react-router-dom';
 
 interface ModuleTabsProps {
   tabNames: Array<string>;
   tabs: Array<JSX.Element>;
+  hasRouter?: boolean;
+  links?: Array<string>;
 }
 
 const tabSX: SxProps<Theme> = (theme) => ({
@@ -22,7 +25,7 @@ const tabSX: SxProps<Theme> = (theme) => ({
   },
 });
 
-const ModuleTabs: FC<ModuleTabsProps> = ({ tabNames, tabs }) => {
+const ModuleTabs: FC<ModuleTabsProps> = ({ tabNames, tabs, hasRouter, links }) => {
   const theme = useTheme();
   const { selectedTab, handleSelectedTab, handleSelectedIndex, a11yProps } = useTabs();
 
@@ -43,9 +46,28 @@ const ModuleTabs: FC<ModuleTabsProps> = ({ tabNames, tabs }) => {
             minHeight: 0,
           }}
         >
-          {tabNames.map((name, index) => (
-            <Tab label={name} {...a11yProps(index)} sx={tabSX} key={`tab-${index}`} />
-          ))}
+          {tabNames.map((name, index) => {
+            if (hasRouter && links) {
+              return (
+                <Tab
+                  label={name}
+                  {...a11yProps(index)}
+                  sx={tabSX}
+                  key={`tab-${index}`}
+                  component={NavLink}
+                  to={links[index]}
+                />
+              )
+            }
+            return (
+              <Tab
+                label={name}
+                {...a11yProps(index)}
+                sx={tabSX}
+                key={`tab-${index}`}
+              />
+            );
+          })}
         </Tabs>
       </Box>
       <SwipeableViews

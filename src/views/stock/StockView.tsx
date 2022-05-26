@@ -98,6 +98,11 @@ const StockView: FC = () => {
               <WarehousesList />,
               <CanteensList />,
             ]}
+            hasRouter
+            links={[
+              'warehouses',
+              'canteens'
+            ]}
           />
         </Grid>
       </Grid>

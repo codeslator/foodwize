@@ -37,6 +37,7 @@ export const routes: RouteParent[] = [
         Component: StockView,
         children: [
           { path: ROUTES.WAREHOUSES, Component: OrderDetailsView },
+          { path: ROUTES.CANTEENS, Component: OrderDetailsView },
         ]
       },
       { path: ROUTES.PRODUCTS, Component: TestView },
@@ -45,7 +46,10 @@ export const routes: RouteParent[] = [
         path: ROUTES.SUPPLIERS,
         Component: SuppliersView,
         children: [
-          { path: ':orderId', Component: OrderDetailsView },
+          { path: ROUTES.ORDERS, Component: OrderDetailsView },
+          { path: ROUTES.SUPPLIERS, Component: OrderDetailsView },
+          { path: ROUTES.DELIVERIES, Component: OrderDetailsView },
+          { path: ROUTES.ORDER_ID, Component: OrderDetailsView },
         ],
       },
       { path: ROUTES.USERS, Component: Users },

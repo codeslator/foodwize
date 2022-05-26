@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Drawer, Divider, useMediaQuery, Box, SxProps, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { Store, Home, PieChart, PeopleAlt, Logout, SettingsOutlined, Discount } from '@mui/icons-material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -38,12 +37,12 @@ const routes = [
   },
   {
     name: 'Stock',
-    to: URLS_TO.STOCK,
+    to: URLS_TO.STOCK_WAREHOUSES,
     Icon: Store,
   },
   {
     name: 'Suppliers',
-    to: URLS_TO.SUPPLIERS,
+    to: URLS_TO.SUPPLIERS_ORDERS,
     Icon: Discount,
   },
   {
@@ -66,9 +65,10 @@ const routes = [
 export const Sidebar: FC = () => {
   const { pathname } = useLocation();
   // const match = useMatch();
-  // console.log(match)
+  // console.log(pathname.substring(0, pathname.lastIndexOf('/')))
   const navigate = useNavigate();
   const matches = useMediaQuery(defaultTheme.breakpoints.up('md'));
+  const parentPath = pathname.substring(0, pathname.lastIndexOf('/'));
   const { toggleDrawer, openDrawer } = useUI();
   const { logout } = useAuth();
 

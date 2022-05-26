@@ -31,7 +31,7 @@ export const Header: FC = () => {
   const { currentUser } = useAuth();
   const { firstName, lastName, role, avatarUrl, accountId, vendorId } = currentUser.user ? currentUser.user : initialUser;
   const { getAvatarInitials, getShortId } = useUtils();
-  console.log(firstName, currentUser.user)
+  // console.log(firstName, currentUser.user)
 
   return (
     <AppBar

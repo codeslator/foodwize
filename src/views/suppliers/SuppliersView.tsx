@@ -50,6 +50,12 @@ const SuppliersView: FC = () => {
               <SuppliersList />,
               <DeliveriesList />,
             ]}
+            hasRouter
+            links={[
+              'orders',
+              'suppliers',
+              'deliveries',
+            ]}
           />
         </Grid>
       </Grid>
