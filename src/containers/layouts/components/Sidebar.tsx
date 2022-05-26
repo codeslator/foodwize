@@ -37,12 +37,12 @@ const routes = [
   },
   {
     name: 'Stock',
-    to: URLS_TO.STOCK_WAREHOUSES,
+    to: URLS_TO.STOCK,
     Icon: Store,
   },
   {
     name: 'Suppliers',
-    to: URLS_TO.SUPPLIERS_ORDERS,
+    to: URLS_TO.SUPPLIERS,
     Icon: Discount,
   },
   {
@@ -101,7 +101,7 @@ export const Sidebar: FC = () => {
                 text={name}
                 to={to}
                 icon={<Icon />}
-                selected={pathname === to}
+                selected={pathname === to || parentPath === to}
               />
             ))}
           </PerfectScrollbar>
