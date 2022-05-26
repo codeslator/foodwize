@@ -7,6 +7,7 @@ import { SuppliersList, DeliveriesList, OrdersList } from '../../components/supp
 import ModuleDialog from '../../components/shared/ModuleDialog';
 import { useUI } from '../../utils/hooks';
 import OrderForm from '../../components/suppliers/OrderForm';
+import { Outlet } from 'react-router-dom';
 
 const SuppliersView: FC = () => {
   const { toggleDialog, openDialog } = useUI();
@@ -46,7 +47,7 @@ const SuppliersView: FC = () => {
               'Delivery',
             ]}
             tabs={[
-              <OrdersList />,
+              <Outlet />,
               <SuppliersList />,
               <DeliveriesList />,
             ]}

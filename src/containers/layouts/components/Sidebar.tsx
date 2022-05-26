@@ -27,7 +27,7 @@ const sidebarSX: SxProps<Theme> = (theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-}) 
+})
 
 const routes = [
   {
@@ -77,7 +77,7 @@ export const Sidebar: FC = () => {
     navigate(URLS_TO.LOGIN);
   };
 
-  
+
   return (
     <nav>
       <Drawer
@@ -91,23 +91,20 @@ export const Sidebar: FC = () => {
       >
         <SidebarHeader />
         <Divider />
-
-        <Box maxHeight="50%">
-          <PerfectScrollbar>
-            {routes.map(({ name, to, Icon }) => (
-              <SidebarListItemButton
-                key={to}
-                component={NavLink}
-                text={name}
-                to={to}
-                icon={<Icon />}
-                selected={pathname === to || parentPath === to}
-              />
-            ))}
-          </PerfectScrollbar>
-        </Box>
-        <Divider />
+        <PerfectScrollbar>
+          {routes.map(({ name, to, Icon }) => (
+            <SidebarListItemButton
+              key={to}
+              component={NavLink}
+              text={name}
+              to={to}
+              icon={<Icon />}
+              selected={pathname === to || parentPath === to}
+            />
+          ))}
+        </PerfectScrollbar>
         <Box>
+          <Divider />
           <SidebarListItemButton text="Log Out" icon={<Logout />} onClick={logOut} />
           <Divider />
           <SidebarFooter />

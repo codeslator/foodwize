@@ -62,11 +62,11 @@ const OrdersList: FC = () => {
         loading={false}
         toolbar
       /> */}
-      {/* <DataGridTable
+      <DataGridTable
         columns={columns}
         rows={[]}
-      /> */}
-      <Outlet />
+      />
+      {/* <Outlet /> */}
     </>
   );
 };

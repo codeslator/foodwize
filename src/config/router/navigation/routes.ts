@@ -15,6 +15,7 @@ import {
 } from '../../../views';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 import { ROUTES } from './index';
+import OrdersList from '../../../components/suppliers/OrdersList';
 
 export const routes: RouteParent[] = [
   {
@@ -36,6 +37,7 @@ export const routes: RouteParent[] = [
         path: ROUTES.STOCK,
         Component: StockView,
         children: [
+          { path: ROUTES.ROOT, Component: OrderDetailsView },
           { path: ROUTES.WAREHOUSES, Component: OrderDetailsView },
           { path: ROUTES.CANTEENS, Component: OrderDetailsView },
         ]
@@ -46,7 +48,8 @@ export const routes: RouteParent[] = [
         path: ROUTES.SUPPLIERS,
         Component: SuppliersView,
         children: [
-          { path: ROUTES.ORDERS, Component: OrderDetailsView },
+          { path: ROUTES.ROOT, Component: OrdersList },
+          { path: ROUTES.ORDERS, Component: OrdersList },
           { path: ROUTES.SUPPLIERS, Component: OrderDetailsView },
           { path: ROUTES.DELIVERIES, Component: OrderDetailsView },
           { path: ROUTES.ORDER_ID, Component: OrderDetailsView },
