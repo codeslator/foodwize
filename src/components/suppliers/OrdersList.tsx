@@ -1,12 +1,14 @@
 import { FC } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Edit, DeleteOutline } from '@mui/icons-material';
-import { Chip } from '@mui/material';
-import { GridActionsCellItem, GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
+import { Chip, IconButton } from '@mui/material';
+import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { suppliersData } from '../shared/mockData';
-import DataGridTable from '../shared/DataGridTable';
+import { ModuleDataGridTable } from '../shared';
 
 const OrdersList: FC = () => {
+  
+
   const columns: GridColumns = [
     {
       field: 'id',
@@ -33,21 +35,18 @@ const OrdersList: FC = () => {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <GridActionsCellItem
-            LinkComponent={NavLink}
-            icon={<Edit />}
-            label="Edit"
-            className="textPrimary"
-            color="secondary"
-            // onClick={() => console.log(id)}
-            // to=""
-          />,
-          <GridActionsCellItem
-            icon={<DeleteOutline />}
-            label="Delete"
-            color="primary"
-            onClick={() => console.log(id)}
-          />,
+          <IconButton
+            component={NavLink}
+            to={`${id}`}
+          >
+            <Edit color="secondary" />
+          </IconButton>,
+          <IconButton
+            component={NavLink}
+            to={`${id}`}
+          >
+            <DeleteOutline color="primary" />
+          </IconButton>,
         ];
       },
     },
@@ -55,16 +54,11 @@ const OrdersList: FC = () => {
 
   return (
     <>
-      {/* <ModuleDataGridTable
-        rows={suppliersData}
+      <ModuleDataGridTable
+        rows={[]}
         columns={columns}
         idName="supplierId"
         loading={false}
-        toolbar
-      /> */}
-      <DataGridTable
-        columns={columns}
-        rows={[]}
       />
       {/* <Outlet /> */}
     </>
