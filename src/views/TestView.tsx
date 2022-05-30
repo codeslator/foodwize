@@ -1,12 +1,12 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { Avatar, Box, Chip, Typography, IconButton, Collapse } from '@mui/material';
 import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { ModuleDataGridTable } from '../components/shared';
-import useAxios from '../utils/hooks/useAxios';
-import { Avatar, Box, Chip, Typography, IconButton } from '@mui/material';
 import { DeleteOutline, Edit } from '@mui/icons-material';
-import useUtils from '../utils/hooks/useUtils';
+import { useAxios, useUtils } from '../utils/hooks';
+import { useSnackbar } from 'notistack';
 
 interface VendorMetadata {
   Restaurant: string;
@@ -27,8 +27,23 @@ interface VendorData {
 }
 
 const TestView: FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const { getShortId, getAvatarInitials } = useUtils();
   const [refetch, { data, response, loading, error }] = useAxios<VendorData>({ url: 'vendors?limit=10&offset=0' });
+
+  useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+        TransitionComponent: Collapse,
+      });
+    }
+  }, [error]);
+
   const columns: GridColumns = [
     {
       field: 'accountId',
