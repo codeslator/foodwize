@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { useAuth } from '../utils/hooks';
 import { FOODWIZE_APP_URL, FOODWIZE_APP_APIKEY, FOODWIZE_STOCK_MANAGEMENT_API } from './index';
 
-const defaultConfig: AxiosRequestConfig = {
+const FOODWIZE_API_CONFIG: AxiosRequestConfig = {
   baseURL: FOODWIZE_APP_URL,
   url: 'settings/',
   method: 'get',
@@ -16,7 +16,7 @@ const defaultConfig: AxiosRequestConfig = {
   },
 };
 
-const stockApiConfig: AxiosRequestConfig = {
+const FOODWIZE_STOCK_API_CONFIG: AxiosRequestConfig = {
   baseURL: FOODWIZE_STOCK_MANAGEMENT_API,
   url: '/',
   method: 'get',
@@ -24,8 +24,8 @@ const stockApiConfig: AxiosRequestConfig = {
   headers: {},
 };
 
-export const foodwizeApi: AxiosInstance = axios.create(defaultConfig);
-export const foodwizeStockApi: AxiosInstance = axios.create(stockApiConfig);
+export const foodwizeApi: AxiosInstance = axios.create(FOODWIZE_API_CONFIG);
+export const foodwizeStockApi: AxiosInstance = axios.create(FOODWIZE_STOCK_API_CONFIG);
 
 const useAxiosInterceptor = () => {
   const navigate = useNavigate();
