@@ -1,9 +1,9 @@
 import { useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosError, AxiosResponse, AxiosInstance } from 'axios';
 import { isEmpty } from 'lodash';
 import { useAuth } from '../utils/hooks';
-import { FOODWIZE_APP_URL, FOODWIZE_APP_APIKEY } from './index';
+import { FOODWIZE_APP_URL, FOODWIZE_APP_APIKEY, FOODWIZE_STOCK_MANAGEMENT_API } from './index';
 
 const defaultConfig: AxiosRequestConfig = {
   baseURL: FOODWIZE_APP_URL,
@@ -16,12 +16,23 @@ const defaultConfig: AxiosRequestConfig = {
   },
 };
 
+const stockApiConfig: AxiosRequestConfig = {
+  baseURL: FOODWIZE_STOCK_MANAGEMENT_API,
+  url: '/',
+  method: 'get',
+  data: null,
+  headers: {},
+};
+
+export const foodwizeApi: AxiosInstance = axios.create(defaultConfig);
+export const foodwizeStockApi: AxiosInstance = axios.create(stockApiConfig);
+
 const useAxiosInterceptor = () => {
   const navigate = useNavigate();
   const { currentUser, refreshUser } = useAuth();
 
   useLayoutEffect(() => {
-    const interceptor = axios.interceptors.response.use(
+    const interceptor = foodwizeApi.interceptors.response.use(
       (response: AxiosResponse) => {
         return response;
       },
@@ -35,14 +46,14 @@ const useAxiosInterceptor = () => {
             const { token } = await refreshUser(currentUser.refreshToken, currentUser.user?.email);
             originalRequest.headers = defaultConfig.headers as {};
             originalRequest.headers.Authorization = token;
-            if (originalRequest.headers.Authorization) return axios(originalRequest);
+            if (originalRequest.headers.Authorization) return foodwizeApi(originalRequest);
           }
         }
         return Promise.reject(error);
       },
     );
 
-    return () => axios.interceptors.response.eject(interceptor);
+    return () => foodwizeApi.interceptors.response.eject(interceptor);
   }, []);
 };
 

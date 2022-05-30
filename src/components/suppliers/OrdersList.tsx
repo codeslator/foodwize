@@ -3,11 +3,17 @@ import { NavLink } from 'react-router-dom';
 import { Edit, DeleteOutline } from '@mui/icons-material';
 import { Chip, IconButton } from '@mui/material';
 import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
-import { suppliersData } from '../shared/mockData';
 import { ModuleDataGridTable } from '../shared';
+import useAxios from '../../utils/hooks/useAxios';
+import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
+
 
 const OrdersList: FC = () => {
-  
+  const [refetch, { data, response, error, loading }] = useAxios<Array<any>>({
+    url: 'warehouse/orders'
+  }, foodwizeStockApi);
+
+  console.log(data)
 
   const columns: GridColumns = [
     {
@@ -55,10 +61,13 @@ const OrdersList: FC = () => {
   return (
     <>
       <ModuleDataGridTable
-        rows={[]}
+        rows={data || []}
         columns={columns}
         idName="supplierId"
-        loading={false}
+        loading={loading}
+        count={data?.length.toString() || '0'}
+        refetch={refetch}
+        refetchUrl="warehouse/orders"
       />
       {/* <Outlet /> */}
     </>

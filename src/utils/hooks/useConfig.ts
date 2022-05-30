@@ -1,9 +1,10 @@
+import { AxiosInstance } from 'axios';
 import { FOODWIZE_APP_APIKEY, FOODWIZE_APP_URL } from '../../config';
-import { AxiosConfig } from '../../config/interfaces';
+import { AxiosCustomConfig } from '../../config/interfaces';
 import { store } from '../../store';
 
 const useConfig = () => {
-  const checkConfig = (config: AxiosConfig) => {
+  const checkConfig = (config: AxiosCustomConfig, instance: AxiosInstance) => {
     // parses headers and data if they are stringyfied
     if (config.data && typeof config.data === 'string') {
       config.data = JSON.parse(config.data);
@@ -14,7 +15,7 @@ const useConfig = () => {
 
     // checks for missing info in the request
     if (!config.baseURL) {
-      config.baseURL = FOODWIZE_APP_URL;
+      config.baseURL = instance.defaults.baseURL;
     }
 
     if (!config.method) {
@@ -25,14 +26,14 @@ const useConfig = () => {
       config.headers = {};
     }
 
-    if (!config.headers.Authorization) {
+    if (!config.headers.Authorization && instance.defaults.baseURL === FOODWIZE_APP_URL) {
       const { currentUser } = store.getState().auth;
       config.headers.Authorization = currentUser.token;
     }
-    if (!config.headers['x-api-key']) {
+    if (!config.headers['x-api-key'] && instance.defaults.baseURL === FOODWIZE_APP_URL) {
       config.headers['x-api-key'] = FOODWIZE_APP_APIKEY;
     }
-    if (!config.headers['Content-Type']) {
+    if (!config.headers['Content-Type'] && instance.defaults.baseURL === FOODWIZE_APP_URL) {
       config.headers['Content-Type'] = 'application/json';
     }
   };

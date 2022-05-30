@@ -26,9 +26,9 @@ interface VendorData {
   total: string;
 }
 
-const TestView = () => {
+const TestView: FC = () => {
   const { getShortId, getAvatarInitials } = useUtils();
-  const { data, loading, refetch } = useAxios<VendorData>({ url: 'vendors?limit=10&offset=0' });
+  const [refetch, { data, response, loading, error }] = useAxios<VendorData>({ url: 'vendors?limit=10&offset=0' });
   const columns: GridColumns = [
     {
       field: 'accountId',
