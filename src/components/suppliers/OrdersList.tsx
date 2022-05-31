@@ -6,6 +6,7 @@ import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { ModuleDataGridTable } from '../shared';
 import useAxios from '../../utils/hooks/useAxios';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
+import EmptyView from '../shared/EmptyView';
 
 
 const OrdersList: FC = () => {
@@ -60,16 +61,19 @@ const OrdersList: FC = () => {
 
   return (
     <>
-      <ModuleDataGridTable
-        rows={data || []}
-        columns={columns}
-        idName="supplierId"
-        loading={loading}
-        count={data?.length.toString() || '0'}
-        refetch={refetch}
-        refetchUrl="warehouse/orders"
-      />
-      {/* <Outlet /> */}
+      {(data && data.length > 0) ? (
+        <ModuleDataGridTable
+          rows={data || []}
+          columns={columns}
+          idName="supplierId"
+          loading={loading}
+          count={data?.length.toString() || '0'}
+          refetch={refetch}
+          refetchUrl="warehouse/orders"
+        />
+      ) : (
+        <EmptyView title="You don't have any Order" link="Click here to add your order" />
+      )}
     </>
   );
 };

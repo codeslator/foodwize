@@ -44,7 +44,7 @@ const useAxiosInterceptor = () => {
             navigate('/login');
           } else {
             const { token } = await refreshUser(currentUser.refreshToken, currentUser.user?.email);
-            originalRequest.headers = defaultConfig.headers as {};
+            originalRequest.headers = FOODWIZE_API_CONFIG.headers as {};
             originalRequest.headers.Authorization = token;
             if (originalRequest.headers.Authorization) return foodwizeApi(originalRequest);
           }
