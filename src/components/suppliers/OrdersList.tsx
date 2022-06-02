@@ -18,12 +18,12 @@ const OrdersList: FC = () => {
 
   const columns: GridColumns = [
     {
-      field: 'id',
+      field: 'supplier_details_id',
       headerName: 'Supplier Details Id',
       flex: 1,
     },
-    { field: 'totalCost', headerName: 'Total Cost', flex: 1 },
-    { field: 'actualCost', headerName: 'Actual Cost', flex: 1 },
+    { field: 'total_cost', headerName: 'Total Cost', flex: 1 },
+    { field: 'actual_cost', headerName: 'Actual Cost', flex: 1 },
     { field: 'tax', headerName: 'Tax', flex: 2 },
     { field: 'discount', headerName: 'Discount', flex: 0.8 },
     {
@@ -61,19 +61,19 @@ const OrdersList: FC = () => {
 
   return (
     <>
-      {(data && data.length > 0) ? (
-        <ModuleDataGridTable
-          rows={data || []}
-          columns={columns}
-          idName="supplierId"
-          loading={loading}
-          count={data?.length.toString() || '0'}
-          refetch={refetch}
-          refetchUrl="warehouse/orders"
-        />
+      <ModuleDataGridTable
+        rows={data || []}
+        columns={columns}
+        idName="id"
+        loading={loading}
+        count={data?.length.toString() || '0'}
+        refetch={refetch}
+        refetchUrl="warehouse/orders"
+      />
+      {/* {(data && data.length > 0) ? (
       ) : (
         <EmptyView title="You don't have any Order" link="Click here to add your order" />
-      )}
+      )} */}
     </>
   );
 };

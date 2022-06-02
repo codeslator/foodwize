@@ -5,6 +5,10 @@ export interface AxiosCustomConfig extends AxiosRequestConfig {
   onFinally?: () => void;
   onSuccess?: (response: AxiosResponse) => void;
   onError?: (error: AxiosError | Error | ServerErrorResponse | string) => void;
+};
+
+export interface AxiosMutationPayload {
+  [key: string]: any;
 }
 
 export type JSXComponent = () => JSX.Element;

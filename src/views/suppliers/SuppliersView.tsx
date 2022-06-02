@@ -1,16 +1,20 @@
 import { FC } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Button, Grid } from '@mui/material';
 import { Helmet } from 'react-helmet';
-import { ModuleToolbar } from '../../components/shared';
-import ModuleTabs from '../../components/shared/ModuleTabs';
-import { SuppliersList, DeliveriesList, OrdersList } from '../../components/suppliers';
-import ModuleDialog from '../../components/shared/ModuleDialog';
-import { useUI } from '../../utils/hooks';
+import { ModuleToolbar, ModuleTabs, ModuleDialog } from '../../components/shared';
+import { useUI, useAxiosMutation } from '../../utils/hooks';
 import OrderForm from '../../components/suppliers/OrderForm';
-import { Outlet } from 'react-router-dom';
+import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
 const SuppliersView: FC = () => {
   const { toggleDialog, openDialog } = useUI();
+  const [postData, { loading, error }] = useAxiosMutation({
+    url: '/warehouse/orders',
+    method: 'post',
+    onFinally: () => console.log('Register successfull')
+  }, foodwizeStockApi);
+
   return (
     <>
       <Helmet>
@@ -35,7 +39,7 @@ const SuppliersView: FC = () => {
             )}
           >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
-              <OrderForm isLoading={false} />
+              <OrderForm isLoading={loading} onSave={postData} />
             </ModuleDialog>
           </ModuleToolbar>
         </Grid>
@@ -48,8 +52,8 @@ const SuppliersView: FC = () => {
             ]}
             tabs={[
               <Outlet />,
-              <SuppliersList />,
-              <DeliveriesList />,
+              <Outlet />,
+              <Outlet />,
             ]}
             hasRouter
             links={[

@@ -3,54 +3,37 @@ import { Formik } from 'formik';
 import { Grid, TextField, MenuItem, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { ORDER_INITIAL_VALUES, ORDER_VALIDATION_SCHEMA } from '../../utils/validations/suplliersValidations';
+import { AxiosMutationPayload } from '../../config/interfaces';
 
 interface OrderFormProps {
   isLoading: boolean;
+  onSave: (payload: AxiosMutationPayload) => void;
 }
 
-const categories = [
+const statuses = [
   {
-    label: 'Category 1',
-    value: 'category-1'
+    label: 'Accepted',
+    value: 'ACCEPTED'
   },
   {
-    label: 'Category 2',
-    value: 'category-2'
+    label: 'Processing',
+    value: 'PROCESSING'
   },
   {
-    label: 'Category 3',
-    value: 'category-3'
+    label: 'Rejected',
+    value: 'REJECTED'
   },
   {
-    label: 'Category 4',
-    value: 'category-4'
-  },
-];
-
-const subCategories = [
-  {
-    label: 'SubCategory 1',
-    value: 'subcategory-1'
-  },
-  {
-    label: 'SubCategory 2',
-    value: 'subcategory-2'
-  },
-  {
-    label: 'SubCategory 3',
-    value: 'subcategory-3'
-  },
-  {
-    label: 'SubCategory 4',
-    value: 'subcategory-4'
+    label: 'PostPoned',
+    value: 'POSTPONED'
   },
 ];
 
-const OrderForm: FC<OrderFormProps> = ({ isLoading }) => {
+const OrderForm: FC<OrderFormProps> = ({ isLoading, onSave }) => {
   return (
     <Formik
       initialValues={ORDER_INITIAL_VALUES}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={(values) => onSave(values)}
       validationSchema={ORDER_VALIDATION_SCHEMA}
     >
       {({
@@ -66,90 +49,83 @@ const OrderForm: FC<OrderFormProps> = ({ isLoading }) => {
           <Grid container spacing={2} sx={{ pt: 3 }}>
             <Grid item xs={12}>
               <TextField
-                id="minMadLeanTime"
-                name="minMadLeanTime"
-                label="Min Mad Lean Time"
-                value={values.minMadLeanTime}
+                id="supplier_details_id"
+                name="supplier_details_id"
+                label="Supplier Detail Id"
+                value={values.supplier_details_id}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.minMadLeanTime && errors.minMadLeanTime)}
-                helperText={touched.minMadLeanTime && errors.minMadLeanTime}
+                error={Boolean(touched.supplier_details_id && errors.supplier_details_id)}
+                helperText={touched.supplier_details_id && errors.supplier_details_id}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="averageMadLeanTime"
-                name="averageMadLeanTime"
-                label="Average Mad Lean Time"
-                value={values.averageMadLeanTime}
+                id="total_cost"
+                name="total_cost"
+                label="Total Cost"
+                value={values.total_cost}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.averageMadLeanTime && errors.averageMadLeanTime)}
-                helperText={touched.averageMadLeanTime && errors.averageMadLeanTime}
+                error={Boolean(touched.total_cost && errors.total_cost)}
+                helperText={touched.total_cost && errors.total_cost}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="maxMadLeanTime"
-                name="maxMadLeanTime"
-                label="Max Mad Lean Time"
-                value={values.maxMadLeanTime}
+                id="actual_cost"
+                name="actual_cost"
+                label="Actual Cost"
+                value={values.actual_cost}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.maxMadLeanTime && errors.maxMadLeanTime)}
-                helperText={touched.maxMadLeanTime && errors.maxMadLeanTime}
+                error={Boolean(touched.actual_cost && errors.actual_cost)}
+                helperText={touched.actual_cost && errors.actual_cost}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="maxMadLeanTime"
-                name="maxMadLeanTime"
-                label="Max Mad Lean Time"
-                value={values.maxMadLeanTime}
+                id="tax"
+                name="tax"
+                label="Tax"
+                value={values.tax}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.maxMadLeanTime && errors.maxMadLeanTime)}
-                helperText={touched.maxMadLeanTime && errors.maxMadLeanTime}
+                error={Boolean(touched.tax && errors.tax)}
+                helperText={touched.tax && errors.tax}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="categoryId"
-                name="categoryId"
-                label="Categories"
-                value={values.categoryId}
+                id="discount"
+                name="discount"
+                label="Discount"
+                value={values.discount}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.categoryId && errors.categoryId)}
-                helperText={touched.categoryId && errors.categoryId}
+                error={Boolean(touched.discount && errors.discount)}
+                helperText={touched.discount && errors.discount}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="status"
+                name="status"
+                label="Status"
+                value={values.status}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={Boolean(touched.status && errors.status)}
+                helperText={touched.status && errors.status}
                 fullWidth
                 select
               >
-                {categories.map(({ label, value }) => (
-                  <MenuItem key={value} value={value}>
-                    {label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="subCategoryId"
-                name="subCategoryId"
-                label="Sub Categories"
-                value={values.subCategoryId}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={Boolean(touched.subCategoryId && errors.subCategoryId)}
-                helperText={touched.subCategoryId && errors.subCategoryId}
-                fullWidth
-                select
-              >
-                {subCategories.map(({ label, value }) => (
+                {statuses.map(({ label, value }) => (
                   <MenuItem key={value} value={value}>
                     {label}
                   </MenuItem>

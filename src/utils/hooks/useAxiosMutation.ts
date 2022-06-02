@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AxiosError, AxiosResponse, AxiosInstance } from 'axios';
-import { AxiosCustomConfig, ServerErrorResponse } from '../../config/interfaces';
+import { AxiosCustomConfig, AxiosMutationPayload, ServerErrorResponse } from '../../config/interfaces';
 import useConfig from './useConfig';
 import { APP_MODE } from '../../config';
 import { foodwizeApi } from '../../config/useAxiosInterceptor';
@@ -25,9 +25,10 @@ const useAxiosMutation = <T>(config: AxiosCustomConfig, instance: AxiosInstance 
   /**
    * @param {Object} newConfig Body of the request
    */
-  const fetchData = async (newConfig: AxiosCustomConfig) => {
-    config = { ...config, ...newConfig };
+  const fetchData = async (payload: AxiosMutationPayload, newConfig?: AxiosCustomConfig) => {
     const { onFinally, onSuccess, onError } = config;
+    config = { ...config, ...newConfig };
+    config.data = payload;
     checkConfig(config, instance);
     // logs the request in development only
     if (logs && (!APP_MODE || APP_MODE === 'development')) {
