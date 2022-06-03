@@ -9,6 +9,7 @@ export const logOut = (state: AuthState) => {
   state.currentUser = {
     token: '',
     refreshToken: '',
+    refresh_token: '',
     user: null,
   };
   state.isAuthenticated = false;

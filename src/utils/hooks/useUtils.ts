@@ -1,4 +1,13 @@
 
+enum STATUS {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACIVE',
+  ACCEPTED = 'ACCEPTED',
+  PROCESSING = 'PROCESSING',
+  REJECTED = 'REJECTED',
+  POSTPONED = 'POSTPONED',
+}
+
 const useUtils = () => {
 
   const getShortId = (longId: string): string => {
@@ -13,10 +22,23 @@ const useUtils = () => {
     const avatar = `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&color=fff&format=svg`
     return avatar;
   };
+
+  const getStatusColor = (status: string) => {
+    switch(status.toUpperCase()) {
+      case STATUS.ACTIVE: return '';
+      case STATUS.INACTIVE: return '';
+      case STATUS.ACCEPTED: return '';
+      case STATUS.ACTIVE: return '';
+      case STATUS.ACTIVE: return '';
+      case STATUS.ACTIVE: return '';
+      default: return '#000000';
+    }
+  }
   
   return {
     getShortId,
     getAvatarInitials,
+    getStatusColor,
   }
 }
 

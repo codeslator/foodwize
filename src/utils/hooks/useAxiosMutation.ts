@@ -26,10 +26,11 @@ const useAxiosMutation = <T>(config: AxiosCustomConfig, instance: AxiosInstance 
    * @param {Object} newConfig Body of the request
    */
   const fetchData = async (payload: AxiosMutationPayload, newConfig?: AxiosCustomConfig) => {
-    const { onFinally, onSuccess, onError } = config;
+    const { onFinally, onSuccess, onError, method } = config;
     config = { ...config, ...newConfig };
     config.data = payload;
     checkConfig(config, instance);
+    console.log(config)
     // logs the request in development only
     if (logs && (!APP_MODE || APP_MODE === 'development')) {
       console.log(config);
