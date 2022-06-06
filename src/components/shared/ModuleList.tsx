@@ -1,6 +1,23 @@
 import { FC, useState } from 'react';
-import { Box, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { MoreHoriz } from '@mui/icons-material';
+import {
+  Box,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
+import { GridRowParams } from '@mui/x-data-grid';
+import { MoreHoriz, Square } from '@mui/icons-material';
+import { useUtils } from '../../utils/hooks';
 
 interface MenuOptions {
   label: string;
@@ -19,8 +36,22 @@ interface ModuleListProps {
   actions?: Array<MenuOptions>
 }
 
-export const ModuleListRowActions: FC = () => {
+interface MenuOption {
+  label: string;
+  value?: string | number;
+  action: () => void;
+  isStatus?: boolean;
+  children?: Array<MenuOption>;
+}
+
+interface ModuleListRowActionsProps {
+  item?: GridRowParams;
+  options: Array<MenuOption>;
+}
+
+export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, options }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { getStatusColor } = useUtils();
   const openMenu = Boolean(anchorEl);
 
   const handleClose = () => {
@@ -57,8 +88,30 @@ export const ModuleListRowActions: FC = () => {
           horizontal: 'right',
         }}
       >
-        <MenuItem onClick={() => console.log('Works')}>Action 1</MenuItem>
-        <MenuItem onClick={() => console.log('Works')}>Action 2</MenuItem>
+        {options.map(({ label, value, action, children }) => {
+          if (children) {
+            return (
+              <>
+                <Divider />
+                <MenuItem>{label}</MenuItem>
+                {children.map(({ label, value, action, isStatus }) => (
+                  <MenuItem onClick={action}>
+                    {Boolean(isStatus) && (
+                      <ListItemIcon>
+                        <Square sx={{ color: (value) ? getStatusColor(value) : 'default' }} />
+                      </ListItemIcon>
+                    )}
+                    <ListItemText primary={label} />
+                  </MenuItem>
+                ))}
+              </>
+            );
+          }
+          return (
+            <MenuItem onClick={action}>{label}</MenuItem>
+          )
+        })}
+        {/* <MenuItem onClick={() => console.log('Works')}>Action 2</MenuItem> */}
       </Menu>
     </>
   );

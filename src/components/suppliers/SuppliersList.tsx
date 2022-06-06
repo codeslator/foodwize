@@ -6,15 +6,16 @@ import { MoreHoriz } from '@mui/icons-material';
 import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 import { ModuleDataGridTable } from '../shared';
-import { useAxios } from '../../utils/hooks';
+import { useAxios, useUtils } from '../../utils/hooks';
 import EmptyView from '../shared/EmptyView';
+import { ModuleListRowActions } from '../shared/ModuleList';
 
 const SuppliersList: FC = () => {
   const [refetch, { data, response, error, loading }] = useAxios<Array<any>>({
     url: 'suppliers/drinks'
   }, foodwizeStockApi);
+  const { getStatusColor } = useUtils();
 
-  console.log(data)
 
   const columns: GridColumns = [
     {
@@ -29,34 +30,74 @@ const SuppliersList: FC = () => {
     {
       field: 'status',
       headerName: 'Status',
-      flex: 0.7,
+      flex: 1,
+      headerAlign: 'center',
       renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <Chip label={value} color={value === 'Active' ? 'success' : 'error'} />
+        <Chip
+          label={value}
+          sx={(theme) => ({
+            backgroundColor: (value) ? getStatusColor(value) : theme.palette.grey[500],
+            color: '#fff',
+          })}
+        />
       ),
     },
     {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 100,
+      width: 1,
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <>
-            <IconButton
-              component={NavLink}
-              to={`${id}`}
-            >
-              <MoreHoriz color="secondary" />
-            </IconButton>
-          </>,
+          <ModuleListRowActions
+            options={[
+              {
+                label: 'See Detail',
+                action: () => console.log('Detail ID', id),
+              },
+              {
+                label: 'Edit',
+                action: () => console.log('Detail ID', id),
+              },
+              {
+                label: 'Delete',
+                action: () => console.log('Detail ID', id),
+              },
+              {
+                label: 'Change Status:',
+                action: () => console.log('Detail ID', id),
+                children: [
+                  {
+                    label: 'Completed',
+                    action: () => console.log('Detail ID', id),
+                    value: 'COMPLETED',
+                    isStatus: true
+                  },
+                  {
+                    label: 'Processing',
+                    action: () => console.log('Detail ID', id),
+                    value: 'PROCESSING',
+                    isStatus: true
+                  },
+                  {
+                    label: 'Rejected',
+                    action: () => console.log('Detail ID', id),
+                    value: 'REJECTED',
+                    isStatus: true
+                  },
+                ]
+              },
+            ]}
+          />
         ];
       },
     },
   ];
-  
+
   return (
     <>
+      {(data && data.length > 0) ? (
         <ModuleDataGridTable
           rows={data || []}
           columns={columns}
@@ -66,10 +107,9 @@ const SuppliersList: FC = () => {
           refetch={refetch}
           refetchUrl="warehouse/orders"
         />
-      {/* {(data && data.length > 0) ? (
       ) : (
         <EmptyView title="You don't have any Supplier" link="Click here to add your supplier" />
-      )} */}
+      )}
     </>
   );
 };

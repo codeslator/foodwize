@@ -3,6 +3,7 @@ enum STATUS {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACIVE',
   ACCEPTED = 'ACCEPTED',
+  COMPLETED = 'COMPLETED',
   PROCESSING = 'PROCESSING',
   REJECTED = 'REJECTED',
   POSTPONED = 'POSTPONED',
@@ -23,14 +24,15 @@ const useUtils = () => {
     return avatar;
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string): string => {
     switch(status.toUpperCase()) {
-      case STATUS.ACTIVE: return '';
-      case STATUS.INACTIVE: return '';
-      case STATUS.ACCEPTED: return '';
-      case STATUS.ACTIVE: return '';
-      case STATUS.ACTIVE: return '';
-      case STATUS.ACTIVE: return '';
+      case STATUS.ACTIVE: return '#A5CF8D';
+      case STATUS.INACTIVE: return '#5E565A';
+      case STATUS.ACCEPTED: return '#A5CF8D';
+      case STATUS.COMPLETED: return '#A5CF8D';
+      case STATUS.PROCESSING: return '#FFD489';
+      case STATUS.REJECTED: return '#F1856A';
+      case STATUS.POSTPONED: return '#BCD4DE';
       default: return '#000000';
     }
   }

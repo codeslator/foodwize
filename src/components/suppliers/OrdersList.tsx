@@ -1,18 +1,20 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Edit, DeleteOutline } from '@mui/icons-material';
-import { Chip, IconButton } from '@mui/material';
+import { Chip, Box } from '@mui/material';
 import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { ModuleDataGridTable } from '../shared';
-import useAxios from '../../utils/hooks/useAxios';
+import { useUtils, useAxios } from '../../utils/hooks';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 import EmptyView from '../shared/EmptyView';
+import { ModuleListRowActions } from '../shared/ModuleList';
 
 
 const OrdersList: FC = () => {
   const [refetch, { data, response, error, loading }] = useAxios<Array<any>>({
     url: 'warehouse/orders'
   }, foodwizeStockApi);
+  const { getStatusColor } = useUtils();
 
   const columns: GridColumns = [
     {
@@ -29,7 +31,15 @@ const OrdersList: FC = () => {
       headerName: 'Status',
       flex: 1,
       renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <Chip label={value} color={value === 'Active' ? 'success' : 'error'} />
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          <Chip
+            label={value}
+            sx={(theme) => ({
+              backgroundColor: (value) ? getStatusColor(value) : theme.palette.grey[500],
+              color: '#fff',
+            })}
+          />
+        </Box>
       ),
     },
     {
@@ -40,18 +50,46 @@ const OrdersList: FC = () => {
       cellClassName: 'actions',
       getActions: ({ id }) => {
         return [
-          <IconButton
-            component={NavLink}
-            to={`${id}`}
-          >
-            <Edit color="secondary" />
-          </IconButton>,
-          <IconButton
-            component={NavLink}
-            to={`${id}`}
-          >
-            <DeleteOutline color="primary" />
-          </IconButton>,
+          <ModuleListRowActions
+            options={[
+              {
+                label: 'See Detail',
+                action: () => console.log('Detail ID', id),
+              },
+              {
+                label: 'Edit',
+                action: () => console.log('Detail ID', id),
+              },
+              {
+                label: 'Delete',
+                action: () => console.log('Detail ID', id),
+              },
+              {
+                label: 'Change Status:',
+                action: () => console.log('Detail ID', id),
+                children: [
+                  {
+                    label: 'Completed',
+                    action: () => console.log('Detail ID', id),
+                    value: 'COMPLETED',
+                    isStatus: true
+                  },
+                  {
+                    label: 'Processing',
+                    action: () => console.log('Detail ID', id),
+                    value: 'PROCESSING',
+                    isStatus: true
+                  },
+                  {
+                    label: 'Rejected',
+                    action: () => console.log('Detail ID', id),
+                    value: 'REJECTED',
+                    isStatus: true
+                  },
+                ]
+              },
+            ]}
+          />
         ];
       },
     },

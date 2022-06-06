@@ -187,4 +187,4 @@ const ProductForm: FC<ProductFormProps> = ({ isLoading, onSave }) => {
   );
 };
 
-export default OrderForm;
+export default ProductForm;
