@@ -12,6 +12,10 @@ const SuppliersView: FC = () => {
   const [postData, { loading, error }] = useAxiosMutation({
     url: '/warehouse/orders',
     method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    },
     onFinally: () => console.log('Register successfull')
   }, foodwizeStockApi);
 

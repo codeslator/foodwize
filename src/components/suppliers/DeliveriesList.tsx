@@ -28,7 +28,7 @@ const DeliveriesList: FC = () => {
     {
       field: 'status',
       headerName: 'Status',
-      flex: 1,
+      flex: 0.7,
       renderCell: ({ value }: GridRenderCellParams<string>) => (
         <Chip
           label={value}
@@ -94,16 +94,19 @@ const DeliveriesList: FC = () => {
 
   return (
     <>
-      <ModuleDataGridTable
-        rows={data || []}
-        columns={columns}
-        idName="supplierId"
-        loading={loading}
-        count={data?.length.toString() || '0'}
-        refetch={refetch}
-        refetchUrl="warehouse/orders"
-      />
-      {/* <EmptyView title="You don't have any Supplier" link="Click here to add your supplier" /> */}
+      {(data && data.length > 0) ? (
+        <ModuleDataGridTable
+          rows={data || []}
+          columns={columns}
+          idName="supplierId"
+          loading={loading}
+          count={data?.length.toString() || '0'}
+          refetch={refetch}
+          refetchUrl="warehouse/orders"
+        />
+      ) : (
+        <EmptyView title="You don't have any Supplier" link="Click here to add your supplier" />
+      )}
     </>
   );
 };

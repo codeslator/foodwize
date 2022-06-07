@@ -98,7 +98,7 @@ export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, opti
                   <MenuItem onClick={action}>
                     {Boolean(isStatus) && (
                       <ListItemIcon>
-                        <Square sx={{ color: (value) ? getStatusColor(value) : 'default' }} />
+                        <Square sx={{ color: (value) ? getStatusColor(value.toString()) : 'default' }} />
                       </ListItemIcon>
                     )}
                     <ListItemText primary={label} />
@@ -111,7 +111,6 @@ export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, opti
             <MenuItem onClick={action}>{label}</MenuItem>
           )
         })}
-        {/* <MenuItem onClick={() => console.log('Works')}>Action 2</MenuItem> */}
       </Menu>
     </>
   );

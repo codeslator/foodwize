@@ -30,7 +30,7 @@ const SuppliersList: FC = () => {
     {
       field: 'status',
       headerName: 'Status',
-      flex: 1,
+      flex: 0.7,
       headerAlign: 'center',
       renderCell: ({ value }: GridRenderCellParams<string>) => (
         <Chip

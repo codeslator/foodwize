@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Edit, DeleteOutline } from '@mui/icons-material';
-import { Chip, Box } from '@mui/material';
+import { Chip } from '@mui/material';
 import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
 import { ModuleDataGridTable } from '../shared';
 import { useUtils, useAxios } from '../../utils/hooks';
@@ -11,6 +11,7 @@ import { ModuleListRowActions } from '../shared/ModuleList';
 
 
 const OrdersList: FC = () => {
+  const navigate = useNavigate();
   const [refetch, { data, response, error, loading }] = useAxios<Array<any>>({
     url: 'warehouse/orders'
   }, foodwizeStockApi);
@@ -29,17 +30,16 @@ const OrdersList: FC = () => {
     {
       field: 'status',
       headerName: 'Status',
-      flex: 1,
+      flex: 0.7,
+      align: 'center',
       renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-          <Chip
-            label={value}
-            sx={(theme) => ({
-              backgroundColor: (value) ? getStatusColor(value) : theme.palette.grey[500],
-              color: '#fff',
-            })}
-          />
-        </Box>
+        <Chip
+          label={value}
+          sx={(theme) => ({
+            backgroundColor: (value) ? getStatusColor(value) : theme.palette.grey[500],
+            color: '#fff',
+          })}
+        />
       ),
     },
     {
@@ -54,7 +54,7 @@ const OrdersList: FC = () => {
             options={[
               {
                 label: 'See Detail',
-                action: () => console.log('Detail ID', id),
+                action: () => navigate(`/${id}`),
               },
               {
                 label: 'Edit',
