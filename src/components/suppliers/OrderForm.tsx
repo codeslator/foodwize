@@ -1,14 +1,13 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Formik } from 'formik';
-import { Grid, TextField, MenuItem, Button } from '@mui/material';
+import { Grid, TextField, MenuItem, Button, Collapse } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { useSnackbar } from 'notistack';
 import { ORDER_INITIAL_VALUES, ORDER_VALIDATION_SCHEMA } from '../../utils/validations/suplliersValidations';
-import { AxiosMutationPayload } from '../../config/interfaces';
+import { useAxiosMutation } from '../../utils/hooks';
+import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
-interface OrderFormProps {
-  isLoading: boolean;
-  onSave: (payload: AxiosMutationPayload) => void;
-}
+interface OrderFormProps {}
 
 const statuses = [
   {
@@ -29,11 +28,38 @@ const statuses = [
   },
 ];
 
-const OrderForm: FC<OrderFormProps> = ({ isLoading, onSave }) => {
+const OrderForm: FC<OrderFormProps> = ({}) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [onPost, { loading, error }] = useAxiosMutation({
+    url: '/warehouse/orders',
+    method: 'post',
+    onFinally: () => enqueueSnackbar('Register successful', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+      },
+      TransitionComponent: Collapse,
+    }),
+  }, foodwizeStockApi);
+
+  useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+        TransitionComponent: Collapse,
+      });
+    }
+  }, [error]);
+
   return (
     <Formik
       initialValues={ORDER_INITIAL_VALUES}
-      onSubmit={(values) => onSave(values)}
+      onSubmit={(values) => onPost(values)}
       validationSchema={ORDER_VALIDATION_SCHEMA}
     >
       {({
@@ -146,8 +172,8 @@ const OrderForm: FC<OrderFormProps> = ({ isLoading, onSave }) => {
                     variant="contained"
                     color="secondary"
                     sx={{ color: '#ffffff' }}
-                    loading={isLoading}
-                    disabled={isLoading}
+                    loading={loading}
+                    disabled={loading}
                   >
                     Save
                   </LoadingButton>

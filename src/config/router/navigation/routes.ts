@@ -13,9 +13,10 @@ import {
   EditUserView,
   StockView,
 } from '../../../views';
+import { OrdersList, SuppliersList, DeliveriesList } from '../../../components/suppliers';
+import { WarehousesList, CanteensList } from '../../../components/stock';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 import { ROUTES } from './index';
-import { OrdersList, SuppliersList, DeliveriesList } from '../../../components/suppliers';
 
 export const routes: RouteParent[] = [
   {
@@ -38,8 +39,8 @@ export const routes: RouteParent[] = [
         Component: StockView,
         children: [
           { path: ROUTES.ROOT, Component: OrderDetailsView },
-          { path: ROUTES.WAREHOUSES, Component: OrderDetailsView },
-          { path: ROUTES.CANTEENS, Component: OrderDetailsView },
+          { path: ROUTES.WAREHOUSES, Component: WarehousesList },
+          { path: ROUTES.CANTEENS, Component: CanteensList },
         ]
       },
       { path: ROUTES.PRODUCTS, Component: TestView },

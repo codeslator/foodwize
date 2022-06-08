@@ -1,13 +1,23 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'; 
 import { Grid, Button } from '@mui/material';
 import { AddCircleOutline } from '@mui/icons-material';
 import { ModuleDialog, ModuleTabs, ModuleToolbar } from '../../components/shared';
-import { CanteensList, WarehousesList } from '../../components/stock';
+// import { CanteensList, WarehousesList } from '../../components/stock';
 import { useUI } from '../../utils/hooks';
 import { StockForm, WarehouseForm, CanteenForm } from '../../components/stock';
 
 const StockView: FC = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(pathname === '/app/stock') {
+      navigate('/app/stock/warehouses')
+    }
+  }, [])
+
   const { toggleDialog, openDialog } = useUI();
   const [openWarehouseDialog, setOpenWarehouseDialog] = useState<boolean>(false);
   const [openCanteenDialog, setOpenCanteenDialog] = useState<boolean>(false);
@@ -19,10 +29,6 @@ const StockView: FC = () => {
   const toggleCanteenDialog = () => {
     setOpenCanteenDialog(!openCanteenDialog);
   };
-
-  const buttons = [
-
-  ]
 
   return (
     <>
@@ -45,7 +51,7 @@ const StockView: FC = () => {
               >
                 Add Stock
               </Button>),
-              (<Button
+              pathname === '/app/stock/warehouses' ? (<Button
                 variant="contained"
                 startIcon={<AddCircleOutline />}
                 onClick={toggleWarehouseDialog}
@@ -59,7 +65,7 @@ const StockView: FC = () => {
                 }}
               >
                 Add Warehouse
-              </Button>),
+              </Button>) :
               (<Button
                 variant="contained"
                 startIcon={<AddCircleOutline />}
@@ -78,7 +84,7 @@ const StockView: FC = () => {
             ]}
           >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="lg">
-              <StockForm isLoading={false} />
+              <StockForm />
             </ModuleDialog>
             <ModuleDialog title="Create Warehouse" open={openWarehouseDialog} handleClose={toggleWarehouseDialog} size="sm">
               <WarehouseForm isLoading={false} />
@@ -95,8 +101,8 @@ const StockView: FC = () => {
               'Canteens',
             ]}
             tabs={[
-              <WarehousesList />,
-              <CanteensList />,
+              <Outlet />,
+              <Outlet />,
             ]}
             hasRouter
             links={[

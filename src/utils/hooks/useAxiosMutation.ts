@@ -6,7 +6,7 @@ import { APP_MODE } from '../../config';
 import { foodwizeApi } from '../../config/useAxiosInterceptor';
 
 type UseAxiosMutationReturn<T> = [
-  dispatch: (newConfig: AxiosCustomConfig) => void,
+  dispatch: (payload: AxiosMutationPayload, newConfig?: AxiosCustomConfig) => void,
   state: {
     data: T | undefined;
     response: AxiosResponse | undefined;

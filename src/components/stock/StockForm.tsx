@@ -1,16 +1,44 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Button, Collapse, Grid, TextField } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { STOCK_INITIAL_VALUES, STOCK_VALIDATION_SCHEMA } from '../../utils/validations/stockValidations';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useSnackbar } from 'notistack';
+import { STOCK_INITIAL_VALUES, STOCK_VALIDATION_SCHEMA } from '../../utils/validations/stockValidations';
+import { useAxiosMutation } from '../../utils/hooks';
+import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
-interface StockFormProps {
-  isLoading: boolean;
-}
+interface StockFormProps {}
 
-const StockForm: FC<StockFormProps> = ({ isLoading }) => {
+const StockForm: FC<StockFormProps> = ({}) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState<boolean>(false);
+  const [onPost, { loading, error }] = useAxiosMutation({
+    url: '/warehouse/orders',
+    method: 'post',
+    onFinally: () => enqueueSnackbar('Register successful', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+      },
+      TransitionComponent: Collapse,
+    }),
+  }, foodwizeStockApi);
+
+  useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+        TransitionComponent: Collapse,
+      });
+    }
+  }, [error]);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -20,7 +48,7 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
     <Formik
       initialValues={STOCK_INITIAL_VALUES}
       validationSchema={STOCK_VALIDATION_SCHEMA}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={(values) => onPost(values)}
     >
       {({
         handleSubmit,
@@ -36,27 +64,27 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
           <Grid container spacing={2} sx={{ pt: 3 }}>
             <Grid item xs={12} sm={12} md={6}>
               <TextField
-                id="warehouseDetailId"
-                name="warehouseDetailId"
+                id="warehouse_detail_id"
+                name="warehouse_detail_id"
                 label="Warehouse Detail Id"
-                value={values.warehouseDetailId}
+                value={values.warehouse_detail_id}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.warehouseDetailId && errors.warehouseDetailId)}
-                helperText={touched.warehouseDetailId && errors.warehouseDetailId}
+                error={Boolean(touched.warehouse_detail_id && errors.warehouse_detail_id)}
+                helperText={touched.warehouse_detail_id && errors.warehouse_detail_id}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <TextField
-                id="warehouseOrderId"
-                name="warehouseOrderId"
+                id="warehouse_order_id"
+                name="warehouse_order_id"
                 label="Warehouse Order Id"
-                value={values.warehouseOrderId}
+                value={values.warehouse_order_id}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.warehouseOrderId && errors.warehouseOrderId)}
-                helperText={touched.warehouseOrderId && errors.warehouseOrderId}
+                error={Boolean(touched.warehouse_order_id && errors.warehouse_order_id)}
+                helperText={touched.warehouse_order_id && errors.warehouse_order_id}
                 fullWidth
               />
             </Grid>
@@ -64,8 +92,8 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
               <DatePicker
                 label="Expired At"
                 inputFormat="dd/MM/yyyy"
-                value={values.expiredAt}
-                onChange={(value) => setFieldValue('expiredAt', value)}
+                value={values.expired_at}
+                onChange={(value) => setFieldValue('expired_at', value)}
                 renderInput={(params) => <TextField type="text" fullWidth {...params} />}
               />
             </Grid>
@@ -73,8 +101,8 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
               <DatePicker
                 label="Manufactured At"
                 inputFormat="dd/MM/yyyy"
-                value={values.manufacturedAt}
-                onChange={(value) => setFieldValue('manufacturedAt', value)}
+                value={values.manufactured_at}
+                onChange={(value) => setFieldValue('manufactured_at', value)}
                 renderInput={(params) => <TextField type="text" fullWidth {...params} />}
               />
             </Grid>
@@ -88,8 +116,8 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={6}>
                     <TextField
-                      id="initialQuantity"
-                      name="initialQuantity"
+                      id="initial_quantity"
+                      name="initial_quantity"
                       label="Initial Quantity"
                       type="number"
                       InputLabelProps={{
@@ -100,18 +128,18 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
                           min: 0,
                         }
                       }}
-                      value={values.initialQuantity}
+                      value={values.initial_quantity}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={Boolean(touched.initialQuantity && errors.initialQuantity)}
-                      helperText={touched.initialQuantity && errors.initialQuantity}
+                      error={Boolean(touched.initial_quantity && errors.initial_quantity)}
+                      helperText={touched.initial_quantity && errors.initial_quantity}
                       fullWidth
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     <TextField
-                      id="currentQuantity"
-                      name="currentQuantity"
+                      id="current_quantity"
+                      name="current_quantity"
                       label="Current Quantity"
                       type="number"
                       InputLabelProps={{
@@ -122,11 +150,11 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
                           min: 0,
                         }
                       }}
-                      value={values.currentQuantity}
+                      value={values.current_quantity}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={Boolean(touched.currentQuantity && errors.currentQuantity)}
-                      helperText={touched.currentQuantity && errors.currentQuantity}
+                      error={Boolean(touched.current_quantity && errors.current_quantity)}
+                      helperText={touched.current_quantity && errors.current_quantity}
                       fullWidth
                     />
                   </Grid>
@@ -158,27 +186,27 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     <TextField
-                      id="supplierLabel"
-                      name="supplierLabel"
+                      id="supplier_label"
+                      name="supplier_label"
                       label="Supplier Label"
-                      value={values.supplierLabel}
+                      value={values.supplier_label}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={Boolean(touched.supplierLabel && errors.supplierLabel)}
-                      helperText={touched.supplierLabel && errors.supplierLabel}
+                      error={Boolean(touched.supplier_label && errors.supplier_label)}
+                      helperText={touched.supplier_label && errors.supplier_label}
                       fullWidth
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     <TextField
-                      id="supplierProductId"
-                      name="supplierProductId"
+                      id="supplier_product_id"
+                      name="supplier_product_id"
                       label="Warehouse Order Id"
-                      value={values.supplierProductId}
+                      value={values.supplier_product_id}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={Boolean(touched.supplierProductId && errors.supplierProductId)}
-                      helperText={touched.supplierProductId && errors.supplierProductId}
+                      error={Boolean(touched.supplier_product_id && errors.supplier_product_id)}
+                      helperText={touched.supplier_product_id && errors.supplier_product_id}
                       fullWidth
                     />
                   </Grid>
@@ -215,9 +243,16 @@ const StockForm: FC<StockFormProps> = ({ isLoading }) => {
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
-                  <Button type="submit" color="secondary" variant="contained" sx={{ color: '#fff', minWidth: '200px' }}>
+                  <LoadingButton
+                    type="submit"
+                    color="secondary"
+                    variant="contained"
+                    sx={{ color: '#fff', minWidth: '200px' }}
+                    loading={loading}
+                    disabled={loading}
+                  >
                     Save
-                  </Button>
+                  </LoadingButton>
                 </Grid>
               </Grid>
             </Grid>

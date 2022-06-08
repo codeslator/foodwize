@@ -3,14 +3,13 @@ import { Formik } from 'formik';
 import { Button, Grid, InputAdornment, MenuItem, TextField } from '@mui/material';
 import { CANTEEN_INITIAL_VALUES, CANTEEN_VALIDATION_SCHEMA } from '../../utils/validations/stockValidations';
 import { LocationOnOutlined } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 
-interface CanteenFormProps {
-  isLoading: boolean;
-}
+interface CanteenFormProps {}
 
 const statusList = ['ACTIVE', 'INACTIVE'];
 
-const CanteenForm: FC<CanteenFormProps> = ({ isLoading }) => {
+const CanteenForm: FC<CanteenFormProps> = ({}) => {
   return (
     <Formik
       initialValues={CANTEEN_INITIAL_VALUES}
@@ -146,9 +145,15 @@ const CanteenForm: FC<CanteenFormProps> = ({ isLoading }) => {
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
-                  <Button type="submit" fullWidth color="secondary" variant="contained" sx={{ color: '#fff' }}>
+                  <LoadingButton
+                    type="submit"
+                    fullWidth
+                    color="secondary"
+                    variant="contained"
+                    sx={{ color: '#fff' }}
+                  >
                     Save
-                  </Button>
+                  </LoadingButton>
                 </Grid>
               </Grid>
             </Grid>

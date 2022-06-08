@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { Outlet } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Grid } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import { ModuleToolbar, ModuleTabs, ModuleDialog } from '../../components/shared';
@@ -8,16 +8,16 @@ import OrderForm from '../../components/suppliers/OrderForm';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
 const SuppliersView: FC = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(pathname === '/app/suppliers') {
+      navigate('/app/suppliers/orders')
+    }
+  }, [])
+  
   const { toggleDialog, openDialog } = useUI();
-  const [postData, { loading, error }] = useAxiosMutation({
-    url: '/warehouse/orders',
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    },
-    onFinally: () => console.log('Register successfull')
-  }, foodwizeStockApi);
 
   return (
     <>
@@ -43,7 +43,7 @@ const SuppliersView: FC = () => {
             )}
           >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
-              <OrderForm isLoading={loading} onSave={postData} />
+              <OrderForm />
             </ModuleDialog>
           </ModuleToolbar>
         </Grid>

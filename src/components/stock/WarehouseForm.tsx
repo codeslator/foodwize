@@ -3,14 +3,13 @@ import { Formik } from 'formik';
 import { Button, MenuItem, Grid, InputAdornment, TextField } from '@mui/material';
 import { WAREHOUSE_INITIAL_VALUES, WAREHOUSE_VALIDATION_SCHEMA } from '../../utils/validations/stockValidations';
 import { LocationOnOutlined } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 
-interface WarehouseFormProps {
-  isLoading: boolean;
-};
+interface WarehouseFormProps {};
 
 const statusList = ['ACTIVE', 'INACTIVE'];
 
-const WarehouseForm: FC<WarehouseFormProps> = ({ isLoading }) => {
+const WarehouseForm: FC<WarehouseFormProps> = ({}) => {
   return (
     <Formik
       initialValues={WAREHOUSE_INITIAL_VALUES}
@@ -146,9 +145,15 @@ const WarehouseForm: FC<WarehouseFormProps> = ({ isLoading }) => {
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
-                  <Button type="submit" fullWidth color="secondary" variant="contained" sx={{ color: '#fff' }}>
+                  <LoadingButton
+                    type="submit"
+                    fullWidth
+                    color="secondary"
+                    variant="contained"
+                    sx={{ color: '#fff' }}
+                  >
                     Save
-                  </Button>
+                  </LoadingButton>
                 </Grid>
               </Grid>
             </Grid>

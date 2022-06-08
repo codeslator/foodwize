@@ -10,32 +10,66 @@ const CanteensList: FC = () => {
       warehouseId: 'abc123',
       name: 'Warehouse 1',
       category: 'Category 1',
-      actions: <ModuleListRowActions />
-  
+      actions: <ModuleListRowActions
+        options={[
+          {
+            label: 'Action 1',
+            action: () => console.log('Hello world')
+          }
+        ]}
+      />
     },
     {
       warehouseId: 'def123',
       name: 'Warehouse 1',
       category: 'Category 1',
-      actions: <ModuleListRowActions />
+      actions: <ModuleListRowActions
+        options={[
+          {
+            label: 'Action 1',
+            action: () => console.log('Hello world')
+          }
+        ]}
+      />
     },
     {
       warehouseId: 'ghi123',
       name: 'Warehouse 1',
       category: 'Category 1',
-      actions: <ModuleListRowActions />
+      actions: <ModuleListRowActions
+        options={[
+          {
+            label: 'Action 1',
+            action: () => console.log('Hello world')
+          }
+        ]}
+      />
     },
     {
       warehouseId: 'jkl123',
       name: 'Warehouse 1',
       category: 'Category 1',
-      actions: <ModuleListRowActions />
+      actions: <ModuleListRowActions
+        options={[
+          {
+            label: 'Action 1',
+            action: () => console.log('Hello world')
+          }
+        ]}
+      />
     },
     {
       warehouseId: 'mno123',
       name: 'Warehouse 1',
       category: 'Category 1',
-      actions: <ModuleListRowActions />
+      actions: <ModuleListRowActions
+        options={[
+          {
+            label: 'Action 1',
+            action: () => console.log('Hello world')
+          }
+        ]}
+      />
     },
   ];
 

@@ -1,16 +1,17 @@
 import * as Yup from 'yup';
 
 interface IStock {
-  warehouseDetailId?: string;
-  warehouseOrderId?: string;
-  expiredAt: string | Date;
-  manufacturedAt: string | Date;
-  initialQuantity: number;
-  currentQuantity: number;
+  warehouse_id?: string | number;
+  warehouse_detail_id?: string | number;
+  warehouse_order_id?: string | number;
+  expired_at: string | Date;
+  manufactured_at: string | Date;
+  initial_quantity: number;
+  current_quantity: number;
   label: string;
   batch: string;
-  supplierLabel: string;
-  supplierProductId: string;
+  supplier_label: string;
+  supplier_product_id: string;
   status: string;
 }
 
@@ -33,30 +34,32 @@ interface ICanteen {
 }
 
 export const STOCK_INITIAL_VALUES: IStock = {
-  warehouseDetailId: '',
-  warehouseOrderId: '',
-  expiredAt: new Date(),
-  manufacturedAt: new Date(),
-  initialQuantity: 0,
-  currentQuantity: 0,
+  warehouse_id: '',
+  warehouse_detail_id: '',
+  warehouse_order_id: '',
+  expired_at: new Date(),
+  manufactured_at: new Date(),
+  initial_quantity: 0,
+  current_quantity: 0,
   label: '',
   batch: '',
-  supplierLabel: '',
-  supplierProductId: '',
+  supplier_label: '',
+  supplier_product_id: '',
   status: ''
 };
 
 export const STOCK_VALIDATION_SCHEMA = Yup.object({
-  warehouseDetailId: Yup.string().required(),
-  warehouseOrderId: Yup.string().required(),
-  expiredAt: Yup.date().required(),
-  manufacturedAt: Yup.date().required(),
-  initialQuantity: Yup.number().required(),
-  currentQuantity: Yup.number().required(),
+  warehouse_id: Yup.string().required(),
+  warehouse_detail_id: Yup.string().required(),
+  warehouse_order_id: Yup.string().required(),
+  expired_at: Yup.date().required(),
+  manufactured_at: Yup.date().required(),
+  initial_quantity: Yup.number().required(),
+  current_quantity: Yup.number().required(),
   label: Yup.string().required(),
   batch: Yup.string().required(),
-  supplierLabel: Yup.string().required(),
-  supplierProductId: Yup.string().required(),
+  supplier_label: Yup.string().required(),
+  supplier_product_id: Yup.string().required(),
   status: Yup.string().required()
 });
 
