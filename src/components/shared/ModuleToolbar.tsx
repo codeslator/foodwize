@@ -1,10 +1,10 @@
-import { FC, Fragment } from 'react'
+import { FC, Fragment } from 'react';
 import { Box, Typography } from '@mui/material';
 
 interface ModuleToolbarProps {
   title: string;
   children?: JSX.Element | FC | Array<JSX.Element | FC>;
-  actions?: JSX.Element | FC | Array<JSX.Element | FC>
+  actions?: JSX.Element | FC | Array<JSX.Element | FC>;
 }
 
 const ModuleToolbar: FC<ModuleToolbarProps> = ({ title, actions, children }) => {
@@ -18,19 +18,19 @@ const ModuleToolbar: FC<ModuleToolbarProps> = ({ title, actions, children }) => 
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4" color="#5E565A">{title}</Typography>
+        <Typography variant="h4" color="#5E565A">
+          {title}
+        </Typography>
         {Boolean(actions) && (
           <>
-            {(Array.isArray(actions)) ? (
+            {Array.isArray(actions) ? (
               <Box>
                 {actions?.map((action, index) => (
                   <Fragment key={index}>{action}</Fragment>
                 ))}
               </Box>
             ) : (
-              <>
-                {actions}
-              </>
+              <>{actions}</>
             )}
           </>
         )}

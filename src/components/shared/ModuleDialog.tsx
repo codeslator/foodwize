@@ -1,5 +1,18 @@
 import { FC, forwardRef } from 'react';
-import { Dialog, DialogContent, DialogTitle, Slide, Typography, useMediaQuery, useTheme, IconButton, Divider, Breakpoint } from '@mui/material';
+
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  IconButton,
+  Divider,
+  Breakpoint,
+} from '@mui/material';
+
 import { TransitionProps } from '@mui/material/transitions';
 import { Close } from '@mui/icons-material';
 
@@ -48,7 +61,7 @@ const ModuleDialog: FC<ModuleDialogProps> = ({ open, handleClose, title, childre
         sx={(theme) => ({
           backgroundColor: theme.palette.primary.main,
           color: '#fff',
-          display:'flex',
+          display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -61,9 +74,7 @@ const ModuleDialog: FC<ModuleDialogProps> = ({ open, handleClose, title, childre
           <Close sx={{ color: '#fff' }} />
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{ paddingX: 10 }}>
-        {children}
-      </DialogContent>
+      <DialogContent sx={{ paddingX: 10 }}>{children}</DialogContent>
     </Dialog>
   );
 };

@@ -22,13 +22,13 @@ const SuppliersView: FC = () => {
   return (
     <>
       <Helmet>
-        <title>Suplliers | Foodwize</title>
+        <title>Suppliers | Foodwize</title>
       </Helmet>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <ModuleToolbar
             title="Suppliers"
-            actions={(
+            actions={
               <Button
                 variant="contained"
                 color="secondary"
@@ -40,7 +40,7 @@ const SuppliersView: FC = () => {
               >
                 Add Supplier
               </Button>
-            )}
+            }
           >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
               <OrderForm />

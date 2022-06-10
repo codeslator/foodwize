@@ -44,6 +44,7 @@ export const routes: RouteParent[] = [
         ]
       },
       { path: ROUTES.PRODUCTS, Component: TestView },
+
       { path: ROUTES.ANALYTICS, Component: EditUserView },
       {
         path: ROUTES.SUPPLIERS,
@@ -56,6 +57,7 @@ export const routes: RouteParent[] = [
           { path: ROUTES.ORDER_ID, Component: OrderDetailsView },
         ],
       },
+
       { path: ROUTES.USERS, Component: Users },
       { path: ROUTES.SETTINGS, Component: SettingsView },
       { path: ROUTES.ANY, Component: NotFoundView },
