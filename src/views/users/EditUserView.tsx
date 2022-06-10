@@ -34,15 +34,11 @@ const EditUsers = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
-  //Brings id from user on table
-  const params = useParams();
-  //Fetch roles
+  const { vendorId } = useParams();
   const [, { data: roles = [], loading: isLoadingRoles }] = useAxios<Roles[]>({ url: 'utils/roles' });
-  //Fetch user from the id in params
-  const [, { data: user }] = useAxios<User>({ url: `vendors/${params.orderId}` });
-
+  const [, { data: user }] = useAxios<User>({ url: `vendors/${vendorId}` });
   const [onPut, { error, loading }] = useAxiosMutation<UserData>({
-    url: `accounts/profiles/${params.orderId}`,
+    url: `accounts/profiles/${vendorId}`,
     method: 'put',
     onFinally: () => {
       navigate(-1);
@@ -62,12 +58,14 @@ const EditUsers = () => {
   }, [error]);
 
   const INITIAL_FORM_STATUS = {
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    email: user?.email,
-    status: user?.status,
-    role: user?.role,
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    status: user?.status || '',
+    role: user?.role || '',
   };
+  console.log(INITIAL_FORM_STATUS)
+
 
   return (
     <>
@@ -78,16 +76,13 @@ const EditUsers = () => {
       <Formik
         initialValues={INITIAL_FORM_STATUS}
         // validationSchema={ADD_USER_VALIDATION_SCHEMA}
-        onSubmit={(values) => {
-          console.log('SUBMITING', values);
-          return onPut({
-            first_name: values.firstName,
-            last_name: values.lastName,
-            email: values.email,
-            role: 1,
-            status: values.status,
-          });
-        }}
+        onSubmit={(values) => onPut({
+          first_name: values.firstName,
+          last_name: values.lastName,
+          email: values.email,
+          role: 1,
+          status: values.status,
+        })}
       >
         {({
           handleSubmit,
@@ -138,9 +133,8 @@ const EditUsers = () => {
                   label="Name"
                   variant="outlined"
                   fullWidth
-                  placeholder="Input text"
                   onChange={handleChange}
-                  value={values?.firstName || ''}
+                  value={values.firstName}
                   onBlur={handleBlur}
                   error={Boolean(touched.firstName && errors.firstName)}
                   helperText={touched.firstName && errors.firstName}
@@ -150,9 +144,8 @@ const EditUsers = () => {
                   label="Last Name"
                   variant="outlined"
                   fullWidth
-                  placeholder="Input text"
                   onChange={handleChange}
-                  value={values?.lastName || ''}
+                  value={values.lastName}
                   onBlur={handleBlur}
                   error={Boolean(touched.lastName && errors.lastName)}
                   helperText={touched.lastName && errors.lastName}
@@ -162,9 +155,8 @@ const EditUsers = () => {
                   label="Email"
                   variant="outlined"
                   fullWidth
-                  placeholder="Input text"
                   onChange={handleChange}
-                  value={values?.email || ''}
+                  value={values.email}
                   onBlur={handleBlur}
                   error={Boolean(touched.email && errors.email)}
                   helperText={touched.email && errors.email}
@@ -187,7 +179,7 @@ const EditUsers = () => {
                     name="role"
                     select
                     onChange={handleChange}
-                    value={values?.role || ''}
+                    value={values.role}
                     onBlur={handleBlur}
                     error={Boolean(touched.role && errors.role)}
                     helperText={touched.role && errors.role}
@@ -205,7 +197,7 @@ const EditUsers = () => {
                   label="Status"
                   fullWidth
                   onChange={handleChange}
-                  value={values?.status || ''}
+                  value={values.status}
                   onBlur={handleBlur}
                   error={Boolean(touched.status && errors.status)}
                   helperText={touched.status && errors.status}

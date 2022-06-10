@@ -60,7 +60,9 @@ export const routes: RouteParent[] = [
         path: ROUTES.USERS,
         Component: UsersView,
         children: [
+          // { path: ROUTES.ROOT, Component: UsersView },
           { path: ROUTES.VENDOR_ID, Component: EditUserView },
+          { path: ROUTES.TEST, Component: EditUserView },
         ]
       },
       { path: ROUTES.SETTINGS, Component: SettingsView },
