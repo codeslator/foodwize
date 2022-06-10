@@ -88,14 +88,14 @@ export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, opti
           horizontal: 'right',
         }}
       >
-        {options.map(({ label, value, action, children }) => {
+        {options.map(({ label, value, action, children }, index) => {
           if (children) {
             return (
-              <>
+              <Box key={index}>
                 <Divider />
                 <MenuItem>{label}</MenuItem>
-                {children.map(({ label, value, action, isStatus }) => (
-                  <MenuItem onClick={action}>
+                {children.map(({ label, value, action, isStatus }, i) => (
+                  <MenuItem onClick={action} key={i}>
                     {Boolean(isStatus) && (
                       <ListItemIcon>
                         <Square sx={{ color: (value) ? getStatusColor(value.toString()) : 'default' }} />
@@ -104,11 +104,11 @@ export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, opti
                     <ListItemText primary={label} />
                   </MenuItem>
                 ))}
-              </>
+              </Box>
             );
           }
           return (
-            <MenuItem onClick={action}>{label}</MenuItem>
+            <MenuItem onClick={action} key={index}>{label}</MenuItem>
           )
         })}
       </Menu>

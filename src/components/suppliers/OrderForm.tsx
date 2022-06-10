@@ -45,7 +45,7 @@ const OrderForm: FC<OrderFormProps> = ({}) => {
 
   useEffect(() => {
     if (error) {
-      enqueueSnackbar(error, {
+      enqueueSnackbar(error.message, {
         variant: 'error',
         anchorOrigin: {
           vertical: 'bottom',
