@@ -37,11 +37,11 @@ const EditUsers = () => {
   //Brings id from user on table
   const params = useParams();
   //Fetch roles
-  const { data: roles = [], loading: roleLoading, refetch } = useAxios<Roles[]>({ url: 'utils/roles' });
+  const [, { data: roles = [], loading: isLoadingRoles }] = useAxios<Roles[]>({ url: 'utils/roles' });
   //Fetch user from the id in params
-  const { data: user, loading, refetch: refetch2 } = useAxios<User>({ url: `vendors/${params.orderId}` });
+  const [, { data: user }] = useAxios<User>({ url: `vendors/${params.orderId}` });
 
-  const [updateData, { response, error, loading: userLoading, data }] = useAxiosMutation<UserData>({
+  const [onPut, { error, loading }] = useAxiosMutation<UserData>({
     url: `accounts/profiles/${params.orderId}`,
     method: 'put',
     onFinally: () => {
@@ -70,173 +70,171 @@ const EditUsers = () => {
   };
 
   return (
-    !loading && (
-      <>
-        <Helmet>
-          <title>Users | Foodwize</title>
-        </Helmet>
+    <>
+      <Helmet>
+        <title>Users | Foodwize</title>
+      </Helmet>
 
-        <Formik
-          initialValues={INITIAL_FORM_STATUS}
-          // validationSchema={ADD_USER_VALIDATION_SCHEMA}
-          onSubmit={(values) => {
-            console.log('SUBMITING', values);
-            return updateData({
-              first_name: values.firstName,
-              last_name: values.lastName,
-              email: values.email,
-              role: 1,
-              status: values.status,
-            });
-          }}
-        >
-          {({
-            handleSubmit,
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleReset,
-            dirty,
-            isValid,
-            initialValues,
-          }) => (
-            <form onSubmit={handleSubmit}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <Typography variant="h4" color="#5E565A">
-                  User Detail
-                </Typography>
-                <Grid>
-                  <Button color="secondary" variant="outlined">
-                    <Typography variant="body2" sx={{ textTransform: 'none', padding: '0 10px' }}>
-                      Edit User
-                    </Typography>
-                  </Button>
-                  <Button color="primary" variant="outlined" sx={{ marginLeft: '20px' }}>
-                    <Typography variant="body2" sx={{ textTransform: 'none', padding: '0 20px' }}>
-                      Delete
-                    </Typography>
-                  </Button>
-                </Grid>
-              </Box>
-
-              <Box mt={2}>
-                <Typography variant="subtitle1" color="#5E565A">
-                  Personal Information
-                </Typography>
-                <Divider />
-              </Box>
-              <Grid container spacing={3} sx={{ padding: '20px 0' }} xs={12} item>
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                  <TextField
-                    name="firstName"
-                    label="Name"
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Input text"
-                    onChange={handleChange}
-                    value={values?.firstName || ''}
-                    onBlur={handleBlur}
-                    error={Boolean(touched.firstName && errors.firstName)}
-                    helperText={touched.firstName && errors.firstName}
-                  />
-                  <TextField
-                    name="lastName"
-                    label="Last Name"
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Input text"
-                    onChange={handleChange}
-                    value={values?.lastName || ''}
-                    onBlur={handleBlur}
-                    error={Boolean(touched.lastName && errors.lastName)}
-                    helperText={touched.lastName && errors.lastName}
-                  />
-                  <TextField
-                    name="email"
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Input text"
-                    onChange={handleChange}
-                    value={values?.email || ''}
-                    onBlur={handleBlur}
-                    error={Boolean(touched.email && errors.email)}
-                    helperText={touched.email && errors.email}
-                  />
-                </Grid>
+      <Formik
+        initialValues={INITIAL_FORM_STATUS}
+        // validationSchema={ADD_USER_VALIDATION_SCHEMA}
+        onSubmit={(values) => {
+          console.log('SUBMITING', values);
+          return onPut({
+            first_name: values.firstName,
+            last_name: values.lastName,
+            email: values.email,
+            role: 1,
+            status: values.status,
+          });
+        }}
+      >
+        {({
+          handleSubmit,
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleReset,
+          dirty,
+          isValid,
+          initialValues,
+        }) => (
+          <form onSubmit={handleSubmit}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Typography variant="h4" color="#5E565A">
+                User Detail
+              </Typography>
+              <Grid>
+                <Button color="secondary" variant="outlined">
+                  <Typography variant="body2" sx={{ textTransform: 'none', padding: '0 10px' }}>
+                    Edit User
+                  </Typography>
+                </Button>
+                <Button color="primary" variant="outlined" sx={{ marginLeft: '20px' }}>
+                  <Typography variant="body2" sx={{ textTransform: 'none', padding: '0 20px' }}>
+                    Delete
+                  </Typography>
+                </Button>
               </Grid>
-              <Box mt={2}>
-                <Typography variant="subtitle1" color="#5E565A">
-                  User Information
-                </Typography>
-                <Divider />
-              </Box>
-              <Grid container spacing={3} sx={{ padding: '20px 0' }} xs={8} item>
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                  {!roleLoading && (
-                    <TextField
-                      label="User Role"
-                      fullWidth
-                      id="id"
-                      name="role"
-                      select
-                      onChange={handleChange}
-                      value={values?.role || ''}
-                      onBlur={handleBlur}
-                      error={Boolean(touched.role && errors.role)}
-                      helperText={touched.role && errors.role}
-                    >
-                      {roles?.map((role) => (
-                        <MenuItem key={role.id} value={role.roleName}>
-                          {role.roleName}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  )}
+            </Box>
+
+            <Box mt={2}>
+              <Typography variant="subtitle1" color="#5E565A">
+                Personal Information
+              </Typography>
+              <Divider />
+            </Box>
+            <Grid container spacing={3} sx={{ padding: '20px 0' }} xs={12} item>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+                <TextField
+                  name="firstName"
+                  label="Name"
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Input text"
+                  onChange={handleChange}
+                  value={values?.firstName || ''}
+                  onBlur={handleBlur}
+                  error={Boolean(touched.firstName && errors.firstName)}
+                  helperText={touched.firstName && errors.firstName}
+                />
+                <TextField
+                  name="lastName"
+                  label="Last Name"
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Input text"
+                  onChange={handleChange}
+                  value={values?.lastName || ''}
+                  onBlur={handleBlur}
+                  error={Boolean(touched.lastName && errors.lastName)}
+                  helperText={touched.lastName && errors.lastName}
+                />
+                <TextField
+                  name="email"
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  placeholder="Input text"
+                  onChange={handleChange}
+                  value={values?.email || ''}
+                  onBlur={handleBlur}
+                  error={Boolean(touched.email && errors.email)}
+                  helperText={touched.email && errors.email}
+                />
+              </Grid>
+            </Grid>
+            <Box mt={2}>
+              <Typography variant="subtitle1" color="#5E565A">
+                User Information
+              </Typography>
+              <Divider />
+            </Box>
+            <Grid container spacing={3} sx={{ padding: '20px 0' }} xs={8} item>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+                {!isLoadingRoles && (
                   <TextField
+                    label="User Role"
+                    fullWidth
+                    id="id"
+                    name="role"
                     select
-                    name="status"
-                    label="Status"
-                    fullWidth
                     onChange={handleChange}
-                    value={values?.status || ''}
+                    value={values?.role || ''}
                     onBlur={handleBlur}
-                    error={Boolean(touched.status && errors.status)}
-                    helperText={touched.status && errors.status}
+                    error={Boolean(touched.role && errors.role)}
+                    helperText={touched.role && errors.role}
                   >
-                    <MenuItem key="ACTIVE" value="ACTIVE">
-                      Active
-                    </MenuItem>
-                    <MenuItem key="INACTIVE" value="INACTIVE">
-                      Inactive
-                    </MenuItem>
+                    {roles?.map((role) => (
+                      <MenuItem key={role.id} value={role.roleName}>
+                        {role.roleName}
+                      </MenuItem>
+                    ))}
                   </TextField>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'start', gap: '15px' }}>
-                <LoadingButton
-                  color="secondary"
-                  type="submit"
-                  variant="contained"
-                  sx={{ color: '#FFF', width: '7%', mt: '20px', textTransform: 'none' }}
-                  disabled={!dirty}
-                  loading={loading}
+                )}
+                <TextField
+                  select
+                  name="status"
+                  label="Status"
+                  fullWidth
+                  onChange={handleChange}
+                  value={values?.status || ''}
+                  onBlur={handleBlur}
+                  error={Boolean(touched.status && errors.status)}
+                  helperText={touched.status && errors.status}
                 >
-                  Save
-                </LoadingButton>
+                  <MenuItem key="ACTIVE" value="ACTIVE">
+                    Active
+                  </MenuItem>
+                  <MenuItem key="INACTIVE" value="INACTIVE">
+                    Inactive
+                  </MenuItem>
+                </TextField>
               </Grid>
-            </form>
-          )}
-        </Formik>
-      </>
-    )
+            </Grid>
+            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'start', gap: '15px' }}>
+              <LoadingButton
+                color="secondary"
+                type="submit"
+                variant="contained"
+                sx={{ color: '#FFF', width: '7%', mt: '20px', textTransform: 'none' }}
+                disabled={!dirty}
+                loading={loading}
+              >
+                Save
+              </LoadingButton>
+            </Grid>
+          </form>
+        )}
+      </Formik>
+    </>
   );
 };
 

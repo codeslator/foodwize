@@ -9,15 +9,17 @@ import { STOCK_INITIAL_VALUES, STOCK_VALIDATION_SCHEMA } from '../../utils/valid
 import { useAxiosMutation } from '../../utils/hooks';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
-interface StockFormProps {}
+interface StockFormProps {
+  onClose: () => void;
+}
 
-const StockForm: FC<StockFormProps> = ({}) => {
+const StockForm: FC<StockFormProps> = ({ onClose }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState<boolean>(false);
   const [onPost, { loading, error }] = useAxiosMutation({
     url: '/warehouse/orders',
     method: 'post',
-    onFinally: () => enqueueSnackbar('Register successful', {
+    onSuccess: () => enqueueSnackbar('Register successful', {
       variant: 'success',
       anchorOrigin: {
         vertical: 'bottom',
@@ -25,6 +27,7 @@ const StockForm: FC<StockFormProps> = ({}) => {
       },
       TransitionComponent: Collapse,
     }),
+    onFinally: onClose
   }, foodwizeStockApi);
 
   useEffect(() => {

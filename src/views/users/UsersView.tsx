@@ -1,10 +1,9 @@
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import { useAxios, useUI } from '../../utils/hooks';
 import { ModuleDataGridTable, ModuleDialog, ModuleTabs, ModuleToolbar } from '../../components/shared';
 import AddUserForm from '../../components/users/AddUserForm';
 import { Helmet } from 'react-helmet';
 import { columns } from '../../components/users/UserTableColumns';
-// import AlertDialogSlide from '../../components/shared/ConfirmationModal';
 
 interface UserMetadata {
   Restaurant: string;
@@ -23,23 +22,42 @@ interface UserData {
   total: string;
 }
 
-const Users = () => {
+const UsersView = () => {
+  const [refetch, { data, response, error, loading }] = useAxios<UserData>({
+    url: 'accounts/profiles?limit=10&offset=0'
+  });
   const { toggleDialog, openDialog } = useUI();
 
-  const { data, loading, refetch } = useAxios<UserData>({ url: 'accounts/profiles?limit=10&offset=0' });
-  // console.log(`🚀 ~ data`, data);
+  const onClose = () => {
+    refetch();
+    toggleDialog();
+  }
 
   return (
     <>
       <Helmet>
         <title>Users | Foodwize</title>
       </Helmet>
-
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <ModuleToolbar title="Users" action={toggleDialog} actionTitle="Add User">
+          <ModuleToolbar
+            title="Users"
+            actions={
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={toggleDialog}
+                sx={{
+                  color: '#fff',
+                  ml: 1,
+                }}
+              >
+                Add User
+              </Button>
+            }
+          >
             <ModuleDialog title="Add User" open={openDialog} handleClose={toggleDialog} size="sm">
-              <AddUserForm isLoading={false} open={openDialog} handleClose={toggleDialog} />
+              <AddUserForm onClose={onClose} />
             </ModuleDialog>
           </ModuleToolbar>
         </Grid>
@@ -53,7 +71,7 @@ const Users = () => {
                 columns={columns}
                 idName="vendorId"
                 loading={loading}
-                toolbar
+                // toolbar
                 refetch={refetch}
                 refetchUrl="accounts/profiles?limit=10&offset=0"
               />,
@@ -65,4 +83,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default UsersView;

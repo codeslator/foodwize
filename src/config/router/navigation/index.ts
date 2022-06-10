@@ -18,6 +18,7 @@ export enum ROUTES {
   ORDERS = 'orders',
   DELIVERIES = 'deliveries',
   ORDER_ID = ':orderId',
+  VENDOR_ID = ':vendorId',
   ANY = '*'
 };
 

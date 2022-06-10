@@ -7,7 +7,9 @@ import { ORDER_INITIAL_VALUES, ORDER_VALIDATION_SCHEMA } from '../../utils/valid
 import { useAxiosMutation } from '../../utils/hooks';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
-interface OrderFormProps {}
+interface OrderFormProps {
+  onClose: () => void;
+}
 
 const statuses = [
   {
@@ -28,12 +30,12 @@ const statuses = [
   },
 ];
 
-const OrderForm: FC<OrderFormProps> = ({}) => {
+const OrderForm: FC<OrderFormProps> = ({ onClose }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [onPost, { loading, error }] = useAxiosMutation({
     url: '/warehouse/orders',
     method: 'post',
-    onFinally: () => enqueueSnackbar('Register successful', {
+    onSuccess: () => enqueueSnackbar('Register successful', {
       variant: 'success',
       anchorOrigin: {
         vertical: 'bottom',
@@ -41,6 +43,7 @@ const OrderForm: FC<OrderFormProps> = ({}) => {
       },
       TransitionComponent: Collapse,
     }),
+    onFinally: () => onClose()
   }, foodwizeStockApi);
 
   useEffect(() => {

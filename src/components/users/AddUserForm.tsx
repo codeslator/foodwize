@@ -1,13 +1,9 @@
+import { FC, useEffect, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { Button, Collapse, Grid, MenuItem, TextField } from '@mui/material';
 import { useAxios, useAxiosMutation } from '../../utils/hooks';
 import { Formik } from 'formik';
 import { ADD_USER_VALIDATION_SCHEMA, ADD_USER_INITIAL_STATE } from '../../utils/validations/authValidations';
-import { FC, useEffect, useState } from 'react';
-import { AxiosConfig, ServerErrorResponse } from '../../config/interfaces';
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import DeleteInventoryModal from '../shared/DeleteModal';
-import AlertDialogSlide from '../shared/ConfirmationModal';
 import { useSnackbar } from 'notistack';
 
 interface Roles {
@@ -15,26 +11,33 @@ interface Roles {
   roleName: [];
 }
 interface OrderFormProps {
-  open: boolean;
-  handleClose: () => void;
-  isLoading: boolean;
+  onClose: () => void;
 }
 
 interface UserData {
   result: string;
 }
-const AddUserForm: FC<OrderFormProps> = ({ isLoading, open, handleClose }) => {
+const AddUserForm: FC<OrderFormProps> = ({ onClose }) => {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data: roles = [], refetch } = useAxios<Roles[]>({ url: 'utils/roles' });
-
-  const [updateData, { response, error, loading: userLoading, data }] = useAxiosMutation<UserData>({
+  const localUserId = localStorage.user && JSON.parse(localStorage.user).user.vendorId;
+  const [refetch, { data: roles = [] }] = useAxios<Roles[]>({
+    url: 'utils/roles'
+  });
+  const [onPost, { response, error, loading, data }] = useAxiosMutation<UserData>({
     url: `identities`,
     method: 'post',
-    onFinally: () => {
-      handleClose();
-    },
+    onSuccess: () => enqueueSnackbar('Register Successful', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+      },
+      TransitionComponent: Collapse,
+    }),
+    onFinally: () => onClose()
   });
+  
   useEffect(() => {
     if (error?.response?.data?.errorMessage)
       enqueueSnackbar(error.response.data.errorMessage.slice(23, -2), {
@@ -46,21 +49,14 @@ const AddUserForm: FC<OrderFormProps> = ({ isLoading, open, handleClose }) => {
         TransitionComponent: Collapse,
       });
   }, [error]);
-  const localUserId = localStorage.user && JSON.parse(localStorage.user).user.vendorId;
-  console.log(`🚀 ~ localUserId`, localUserId);
+  
   return (
     <>
       <Formik
         initialValues={ADD_USER_INITIAL_STATE}
         onSubmit={(values) => {
           console.log('SUBMITING', values);
-          updateData({
-            // email: 'jhon@dao.com',
-            // name: 'Jhon',
-            // last_name: 'Dao',
-            // vendor_parent: '783643-GH-235345',
-            // role: 'ADMIN',
-            // status: 'ACTIVE ',
+          onPost({
             email: values.email,
             first_name: values.firstName,
             password: values.password,
@@ -188,7 +184,7 @@ const AddUserForm: FC<OrderFormProps> = ({ isLoading, open, handleClose }) => {
                   variant="contained"
                   sx={{ color: '#FFF', width: '50%' }}
                   disabled={!dirty || !isValid}
-                  loading={isLoading}
+                  loading={loading}
                 >
                   Submit
                 </LoadingButton>

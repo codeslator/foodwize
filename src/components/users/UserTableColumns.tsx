@@ -75,7 +75,6 @@ export const columns: GridColumns = [
     cellClassName: 'actions',
     getActions: ({ id }) => {
       const [open, setOpen] = useState(false);
-      // console.log('id table: ', id);
       return [
         <IconButton component={NavLink} to={`${id}`}>
           <Edit color="secondary" />
@@ -88,9 +87,3 @@ export const columns: GridColumns = [
     },
   },
 ];
-
-{
-}
-// const Modal2 = () => {
-//   return <AlertDialogSlide open={open} />;
-// };

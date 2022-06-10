@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 import { ModuleToolbar, ModuleTabs, ModuleDialog } from '../../components/shared';
 import { useUI, useAxiosMutation } from '../../utils/hooks';
 import OrderForm from '../../components/suppliers/OrderForm';
-import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
 const SuppliersView: FC = () => {
   const { pathname } = useLocation();
@@ -43,7 +42,7 @@ const SuppliersView: FC = () => {
             }
           >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
-              <OrderForm />
+              <OrderForm onClose={toggleDialog} />
             </ModuleDialog>
           </ModuleToolbar>
         </Grid>

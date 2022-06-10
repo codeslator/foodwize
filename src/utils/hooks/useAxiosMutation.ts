@@ -16,7 +16,6 @@ type UseAxiosMutationReturn<T> = [
 ];
 
 const useAxiosMutation = <T>(config: AxiosCustomConfig, instance: AxiosInstance = foodwizeApi, logs = false): UseAxiosMutationReturn<T> => {
-  // const { enqueueSnackbar } = useSnackbar();
   const [response, setResponse] = useState<AxiosResponse>();
   const [data, setData] = useState<T>();
   const [error, setError] = useState<AxiosError | Error | ServerErrorResponse | string>();
@@ -26,7 +25,7 @@ const useAxiosMutation = <T>(config: AxiosCustomConfig, instance: AxiosInstance 
    * @param {Object} newConfig Body of the request
    */
   const fetchData = async (payload: AxiosMutationPayload, newConfig?: AxiosCustomConfig) => {
-    const { onFinally, onSuccess, onError, method } = config;
+    const { onFinally, onSuccess, onError } = config;
     config = { ...config, ...newConfig };
     config.data = payload;
     checkConfig(config, instance);
@@ -44,19 +43,16 @@ const useAxiosMutation = <T>(config: AxiosCustomConfig, instance: AxiosInstance 
       }
       setResponse(axiosResponse);
       setData(axiosResponse.data);
-      if (onSuccess) onSuccess(axiosResponse);
+      if (onSuccess) onSuccess();
     } catch (err: any) {
       // logs the error in development only
       if (logs && (!APP_MODE || APP_MODE === 'development')) {
         console.error(err);
       }
       setError(err);
-      if (onError) onError(err);
+      if (onError) onError();
     } finally {
       setloading(false);
-      if (config.onFinally) {
-        config.onFinally();
-      }
       if (onFinally) onFinally();
     }
   };

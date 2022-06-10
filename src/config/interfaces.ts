@@ -3,8 +3,8 @@ import { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 
 export interface AxiosCustomConfig extends AxiosRequestConfig {
   onFinally?: () => void;
-  onSuccess?: (response: AxiosResponse) => void;
-  onError?: (error: AxiosError | Error | ServerErrorResponse | string) => void;
+  onSuccess?: () => void;
+  onError?: () => void;
 };
 
 export interface AxiosMutationPayload {
