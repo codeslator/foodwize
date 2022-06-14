@@ -17,6 +17,11 @@ export enum ROUTES {
   CANTEENS = 'canteens',
   ORDERS = 'orders',
   DELIVERIES = 'deliveries',
+  ALL = 'all',
+  FINANCES = 'finances',
+  OPERATIONS = 'operations',
+  ADMINS = 'admins',
+  SUPER_ADMINS = 'superadmins',
   ORDER_ID = ':orderId',
   VENDOR_ID = ':vendorId',
   ANY = '*'

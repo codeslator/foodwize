@@ -35,8 +35,8 @@ const EditUsers = () => {
 
   const navigate = useNavigate();
   const { vendorId } = useParams();
-  const [, { data: roles = [], loading: isLoadingRoles }] = useAxios<Roles[]>({ url: 'utils/roles' });
   const [, { data: user }] = useAxios<User>({ url: `vendors/${vendorId}` });
+  const [, { data: roles = [], loading: isLoadingRoles }] = useAxios<Roles[]>({ url: 'utils/roles' });
   const [onPut, { error, loading }] = useAxiosMutation<UserData>({
     url: `accounts/profiles/${vendorId}`,
     method: 'put',

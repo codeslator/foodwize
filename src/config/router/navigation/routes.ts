@@ -15,6 +15,7 @@ import {
 } from '../../../views';
 import { OrdersList, SuppliersList, DeliveriesList } from '../../../components/suppliers';
 import { WarehousesList, CanteensList } from '../../../components/stock';
+import { AllList, UsersList } from '../../../components/users';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 import { ROUTES } from './index';
 
@@ -61,6 +62,12 @@ export const routes: RouteParent[] = [
         Component: UsersView,
         children: [
           // { path: ROUTES.ROOT, Component: UsersView },
+          { path: ROUTES.ALL, Component: AllList },
+          { path: ROUTES.USERS, Component: UsersList },
+          { path: ROUTES.FINANCES, Component: UsersList },
+          { path: ROUTES.OPERATIONS, Component: UsersList },
+          { path: ROUTES.ADMINS, Component: UsersList },
+          { path: ROUTES.SUPER_ADMINS, Component: UsersList },
           { path: ROUTES.VENDOR_ID, Component: EditUserView },
           { path: ROUTES.TEST, Component: EditUserView },
         ]
