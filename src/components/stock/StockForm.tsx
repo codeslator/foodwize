@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { Formik } from 'formik';
-import { Button, Collapse, Grid, TextField } from '@mui/material';
+import { Button, Collapse, Grid, TextField, MenuItem } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -13,11 +13,30 @@ interface StockFormProps {
   onClose: () => void;
 }
 
+const statuses = [
+  {
+    label: 'Accepted',
+    value: 'ACCEPTED'
+  },
+  {
+    label: 'Processing',
+    value: 'PROCESSING'
+  },
+  {
+    label: 'Rejected',
+    value: 'REJECTED'
+  },
+  {
+    label: 'PostPoned',
+    value: 'POSTPONED'
+  },
+];
+
 const StockForm: FC<StockFormProps> = ({ onClose }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState<boolean>(false);
   const [onPost, { loading, error }] = useAxiosMutation({
-    url: '/warehouse/orders',
+    url: '/warehouse/stocks',
     method: 'post',
     onSuccess: () => enqueueSnackbar('Register successful', {
       variant: 'success',
@@ -27,7 +46,7 @@ const StockForm: FC<StockFormProps> = ({ onClose }) => {
       },
       TransitionComponent: Collapse,
     }),
-    onFinally: onClose
+    onFinally: () => onClose(),
   }, foodwizeStockApi);
 
   useEffect(() => {
@@ -224,7 +243,14 @@ const StockForm: FC<StockFormProps> = ({ onClose }) => {
                       error={Boolean(touched.status && errors.status)}
                       helperText={touched.status && errors.status}
                       fullWidth
-                    />
+                      select
+                    >
+                      {statuses.map(({ label, value }) => (
+                        <MenuItem key={value} value={value}>
+                          {label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   </Grid>
                 </Grid>
               </Collapse>

@@ -18,6 +18,7 @@ import {
 import { GridRowParams } from '@mui/x-data-grid';
 import { MoreHoriz, Square } from '@mui/icons-material';
 import { useUtils } from '../../utils/hooks';
+import { NavLink } from 'react-router-dom';
 
 interface MenuOptions {
   label: string;
@@ -39,9 +40,11 @@ interface ModuleListProps {
 interface MenuOption {
   label: string;
   value?: string | number;
-  action: () => void;
+  action?: () => void;
   isStatus?: boolean;
   children?: Array<MenuOption>;
+  hasRouter?: boolean;
+  to?: string;
 }
 
 interface ModuleListRowActionsProps {
@@ -54,7 +57,7 @@ export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, opti
   const { getStatusColor } = useUtils();
   const openMenu = Boolean(anchorEl);
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
 
@@ -88,7 +91,7 @@ export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, opti
           horizontal: 'right',
         }}
       >
-        {options.map(({ label, value, action, children }, index) => {
+        {options.map(({ label, value, action, children, hasRouter, to }, index) => {
           if (children) {
             return (
               <Box key={index}>
@@ -107,8 +110,23 @@ export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, opti
               </Box>
             );
           }
-          return (
-            <MenuItem onClick={action} key={index}>{label}</MenuItem>
+          return (hasRouter && to) ? (
+            <NavLink to={to}
+              style={{
+                textDecoration: 'none',
+                display: 'block',
+                color: 'inherit'
+              }}
+              key={index}
+            >
+              <MenuItem>
+                {label}
+              </MenuItem>
+            </NavLink>
+          ) : (
+            <MenuItem key={index} onClick={action}>
+              {label}
+            </MenuItem>
           )
         })}
       </Menu>

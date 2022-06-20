@@ -49,7 +49,7 @@ export const STOCK_INITIAL_VALUES: IStock = {
 };
 
 export const STOCK_VALIDATION_SCHEMA = Yup.object({
-  warehouse_id: Yup.string().required(),
+  // warehouse_id: Yup.string().required(),
   warehouse_detail_id: Yup.string().required(),
   warehouse_order_id: Yup.string().required(),
   expired_at: Yup.date().required(),

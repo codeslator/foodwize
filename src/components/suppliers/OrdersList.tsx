@@ -1,21 +1,73 @@
-import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Edit, DeleteOutline } from '@mui/icons-material';
-import { Chip } from '@mui/material';
+import { FC, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { Chip, Collapse } from '@mui/material';
 import { GridColumns, GridRenderCellParams } from '@mui/x-data-grid';
-import { ModuleDataGridTable } from '../shared';
-import { useUtils, useAxios } from '../../utils/hooks';
+import { useSnackbar } from 'notistack';
+import { ModuleDataGridTable, ModuleDialog } from '../shared';
+import { useUtils, useAxios, useAxiosMutation } from '../../utils/hooks';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 import EmptyView from '../shared/EmptyView';
 import { ModuleListRowActions } from '../shared/ModuleList';
+import OrderForm from './OrderForm';
 
+type ContexType = [
+  openDialog: boolean,
+  toggleDialog: () => void
+];
 
 const OrdersList: FC = () => {
-  const navigate = useNavigate();
-  const [refetch, { data, response, error, loading }] = useAxios<Array<any>>({
+  const [openDialog, toggleDialog] = useOutletContext<ContexType>();
+  const { enqueueSnackbar } = useSnackbar();
+  const { getStatusColor } = useUtils();
+  const [refetch, { data, error, loading }] = useAxios<Array<any>>({
     url: 'warehouse/orders'
   }, foodwizeStockApi);
-  const { getStatusColor } = useUtils();
+
+  // TODO: Add loading feedback
+  const [onPut] = useAxiosMutation({
+    method: 'put',
+    onSuccess: () => enqueueSnackbar('Record updated successfully', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+      },
+      TransitionComponent: Collapse,
+    }),
+    onFinally: () => refetch()
+  }, foodwizeStockApi);
+
+  // TODO: Add loading feedback
+  const [onDelete] = useAxiosMutation({
+    method: 'delete',
+    onSuccess: () => enqueueSnackbar('Record deleted successfully', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+      },
+      TransitionComponent: Collapse,
+    }),
+    onFinally: () => refetch()
+  }, foodwizeStockApi);
+
+  useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+        TransitionComponent: Collapse,
+      });
+    }
+  }, [error]);
+
+  const onClose = () => {
+    toggleDialog();
+    refetch();
+  }
 
   const columns: GridColumns = [
     {
@@ -54,15 +106,16 @@ const OrdersList: FC = () => {
             options={[
               {
                 label: 'See Detail',
-                action: () => navigate(`/${id}`),
+                hasRouter: true,
+                to: `${id}`
               },
               {
                 label: 'Edit',
-                action: () => console.log('Detail ID', id),
+                // action: () => console.log('Detail ID', id),
               },
               {
                 label: 'Delete',
-                action: () => console.log('Detail ID', id),
+                action: () => onDelete({}, { url: `warehouse/orders/${id}` }),
               },
               {
                 label: 'Change Status:',
@@ -70,19 +123,25 @@ const OrdersList: FC = () => {
                 children: [
                   {
                     label: 'Completed',
-                    action: () => console.log('Detail ID', id),
+                    action: () => onPut(
+                      {
+                        status: 'COMPLETED',
+                      },
+                      {
+                        url: `warehouse/orders/${id}`,
+                      }),
                     value: 'COMPLETED',
                     isStatus: true
                   },
                   {
                     label: 'Processing',
-                    action: () => console.log('Detail ID', id),
+                    action: () => onPut({ status: 'PROCESSING' }, { url: `warehouse/orders/${id}` }),
                     value: 'PROCESSING',
                     isStatus: true
                   },
                   {
                     label: 'Rejected',
-                    action: () => console.log('Detail ID', id),
+                    action: () => onPut({ status: 'REJECTED' }, { url: `warehouse/orders/${id}` }),
                     value: 'REJECTED',
                     isStatus: true
                   },
@@ -97,6 +156,9 @@ const OrdersList: FC = () => {
 
   return (
     <>
+      <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
+        <OrderForm onClose={onClose} />
+      </ModuleDialog>
       {(data && data.length > 0) ? (
         <ModuleDataGridTable
           rows={data || []}

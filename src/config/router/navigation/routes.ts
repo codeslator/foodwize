@@ -54,7 +54,7 @@ export const routes: RouteParent[] = [
           { path: ROUTES.ORDERS, Component: OrdersList },
           { path: ROUTES.SUPPLIERS, Component: SuppliersList },
           { path: ROUTES.DELIVERIES, Component: DeliveriesList },
-          { path: ROUTES.ORDER_ID, Component: OrderDetailsView },
+          { path: `${ROUTES.ORDERS}/${ROUTES.ORDER_ID}`, Component: OrderDetailsView },
         ],
       },
       {

@@ -3,8 +3,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Grid } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import { ModuleToolbar, ModuleTabs, ModuleDialog } from '../../components/shared';
-import { useUI, useAxiosMutation } from '../../utils/hooks';
-import OrderForm from '../../components/suppliers/OrderForm';
+import { useUI } from '../../utils/hooks';
 
 const SuppliersView: FC = () => {
   const { pathname } = useLocation();
@@ -14,8 +13,7 @@ const SuppliersView: FC = () => {
     if(pathname === '/app/suppliers') {
       navigate('/app/suppliers/orders')
     }
-  }, [])
-  
+  }, [])  
   const { toggleDialog, openDialog } = useUI();
 
   return (
@@ -40,11 +38,7 @@ const SuppliersView: FC = () => {
                 Add Supplier
               </Button>
             }
-          >
-            <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="sm">
-              <OrderForm onClose={toggleDialog} />
-            </ModuleDialog>
-          </ModuleToolbar>
+          />
         </Grid>
         <Grid item xs={12}>
           <ModuleTabs
@@ -54,7 +48,7 @@ const SuppliersView: FC = () => {
               'Delivery',
             ]}
             tabs={[
-              <Outlet />,
+              <Outlet context={[ openDialog, toggleDialog ]} />,
               <Outlet />,
               <Outlet />,
             ]}
