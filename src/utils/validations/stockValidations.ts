@@ -2,8 +2,8 @@ import * as Yup from 'yup';
 
 interface IStock {
   warehouse_id?: string | number;
-  warehouse_detail_id?: string | number;
-  warehouse_order_id?: string | number;
+  warehouse_details_id: string;
+  warehouse_orders_id: string;
   expired_at: string | Date;
   manufactured_at: string | Date;
   initial_quantity: number;
@@ -11,7 +11,7 @@ interface IStock {
   label: string;
   batch: string;
   supplier_label: string;
-  supplier_product_id: string;
+  supplier_products_id: string;
   status: string;
 }
 
@@ -35,8 +35,8 @@ interface ICanteen {
 
 export const STOCK_INITIAL_VALUES: IStock = {
   warehouse_id: '',
-  warehouse_detail_id: '',
-  warehouse_order_id: '',
+  warehouse_details_id: '',
+  warehouse_orders_id: '',
   expired_at: new Date(),
   manufactured_at: new Date(),
   initial_quantity: 0,
@@ -44,14 +44,14 @@ export const STOCK_INITIAL_VALUES: IStock = {
   label: '',
   batch: '',
   supplier_label: '',
-  supplier_product_id: '',
+  supplier_products_id: '',
   status: ''
 };
 
 export const STOCK_VALIDATION_SCHEMA = Yup.object({
   // warehouse_id: Yup.string().required(),
-  warehouse_detail_id: Yup.string().required(),
-  warehouse_order_id: Yup.string().required(),
+  warehouse_details_id: Yup.string().required(),
+  warehouse_orders_id: Yup.string().required(),
   expired_at: Yup.date().required(),
   manufactured_at: Yup.date().required(),
   initial_quantity: Yup.number().required(),
@@ -59,7 +59,7 @@ export const STOCK_VALIDATION_SCHEMA = Yup.object({
   label: Yup.string().required(),
   batch: Yup.string().required(),
   supplier_label: Yup.string().required(),
-  supplier_product_id: Yup.string().required(),
+  supplier_products_id: Yup.string().required(),
   status: Yup.string().required()
 });
 

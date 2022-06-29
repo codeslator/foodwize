@@ -16,13 +16,37 @@ declare module '@mui/material/styles/createPalette' {
     '10': string;
     '0': string;
   };
+
+  type MaterialColorPalette = {
+    light: string;
+    main: string;
+    dark: string;
+    constrastText: string;
+  };
+
   interface Palette {
     greys: Greys;
+    tertary: MaterialColorPalette;
+    quaternary: MaterialColorPalette;
+    quinary: MaterialColorPalette;
   }
   interface PaletteOptions {
     greys: Greys;
+    tertary?: MaterialColorPalette;
+    quaternary?: MaterialColorPalette;
+    quinary?: MaterialColorPalette;
   }
 }
+
+// Update the Button's color prop options
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    tertary: true;
+    quaternary: true;
+    quinary: true;
+  }
+}
+
 export const defaultTheme = createTheme({
   typography: {
     fontFamily: 'Montserrat',

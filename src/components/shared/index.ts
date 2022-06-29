@@ -5,3 +5,4 @@ export { default as ModuleDialog } from './ModuleDialog';
 export { default as ModuleConfirm } from './ModuleConfirm';
 export { default as ModuleList } from './ModuleList';
 export { default as ModuleFilter } from './ModuleFilter';
+export { default as ModuleDetailsToolbar } from './ModuleDetailsToolbar';

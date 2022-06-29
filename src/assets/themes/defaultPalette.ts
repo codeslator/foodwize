@@ -15,7 +15,19 @@ export const defaultPalette = {
     light: '#ffffba',
     main: '#ffd489',
     dark: '#caa35b',
-    constrastText: '#ffffff',
+    constrastText: '#000000',
+  },
+  quaternary: {
+    light: '#efffff',
+    main: '#bcd4de',
+    dark: '#8ca3ac',
+    constrastText: '#000000',
+  },
+  quinary: {
+    light: '#8b8387',
+    main: '#5e565a',
+    dark: '#342d31',
+    constrastText: '#000000',
   },
   greys: {
     '100': '#5E565A',

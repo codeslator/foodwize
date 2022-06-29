@@ -84,13 +84,13 @@ const StockView: FC = () => {
             ]}
           >
             <ModuleDialog title="Create Product" open={openDialog} handleClose={toggleDialog} size="lg">
-              <StockForm />
+              <StockForm onClose={toggleDialog} />
             </ModuleDialog>
             <ModuleDialog title="Create Warehouse" open={openWarehouseDialog} handleClose={toggleWarehouseDialog} size="sm">
-              <WarehouseForm isLoading={false} />
+              <WarehouseForm />
             </ModuleDialog>
             <ModuleDialog title="Create Canteen" open={openCanteenDialog} handleClose={toggleCanteenDialog} size="sm">
-              <CanteenForm isLoading={false} />
+              <CanteenForm />
             </ModuleDialog>
           </ModuleToolbar>
         </Grid>

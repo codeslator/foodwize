@@ -51,7 +51,7 @@ const StockForm: FC<StockFormProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (error) {
-      enqueueSnackbar(error, {
+      enqueueSnackbar(error?.message, {
         variant: 'error',
         anchorOrigin: {
           vertical: 'bottom',
@@ -70,7 +70,12 @@ const StockForm: FC<StockFormProps> = ({ onClose }) => {
     <Formik
       initialValues={STOCK_INITIAL_VALUES}
       validationSchema={STOCK_VALIDATION_SCHEMA}
-      onSubmit={(values) => onPost(values)}
+      onSubmit={(values) => onPost({
+        ...values,
+        supplier_products_id: parseInt(values.supplier_products_id),
+        warehouse_orders_id: parseInt(values.warehouse_orders_id),
+        warehouse_details_id: parseInt(values.warehouse_details_id),
+      })}
     >
       {({
         handleSubmit,
@@ -86,27 +91,27 @@ const StockForm: FC<StockFormProps> = ({ onClose }) => {
           <Grid container spacing={2} sx={{ pt: 3 }}>
             <Grid item xs={12} sm={12} md={6}>
               <TextField
-                id="warehouse_detail_id"
-                name="warehouse_detail_id"
+                id="warehouse_details_id"
+                name="warehouse_details_id"
                 label="Warehouse Detail Id"
-                value={values.warehouse_detail_id}
+                value={values.warehouse_details_id}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.warehouse_detail_id && errors.warehouse_detail_id)}
-                helperText={touched.warehouse_detail_id && errors.warehouse_detail_id}
+                error={Boolean(touched.warehouse_details_id && errors.warehouse_details_id)}
+                helperText={touched.warehouse_details_id && errors.warehouse_details_id}
                 fullWidth
               />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <TextField
-                id="warehouse_order_id"
-                name="warehouse_order_id"
+                id="warehouse_orders_id"
+                name="warehouse_orders_id"
                 label="Warehouse Order Id"
-                value={values.warehouse_order_id}
+                value={values.warehouse_orders_id}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.warehouse_order_id && errors.warehouse_order_id)}
-                helperText={touched.warehouse_order_id && errors.warehouse_order_id}
+                error={Boolean(touched.warehouse_orders_id && errors.warehouse_orders_id)}
+                helperText={touched.warehouse_orders_id && errors.warehouse_orders_id}
                 fullWidth
               />
             </Grid>
@@ -221,14 +226,14 @@ const StockForm: FC<StockFormProps> = ({ onClose }) => {
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     <TextField
-                      id="supplier_product_id"
-                      name="supplier_product_id"
-                      label="Warehouse Order Id"
-                      value={values.supplier_product_id}
+                      id="supplier_products_id"
+                      name="supplier_products_id"
+                      label="Supplier Product Id"
+                      value={values.supplier_products_id}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      error={Boolean(touched.supplier_product_id && errors.supplier_product_id)}
-                      helperText={touched.supplier_product_id && errors.supplier_product_id}
+                      error={Boolean(touched.supplier_products_id && errors.supplier_products_id)}
+                      helperText={touched.supplier_products_id && errors.supplier_products_id}
                       fullWidth
                     />
                   </Grid>
