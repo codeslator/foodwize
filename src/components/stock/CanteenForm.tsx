@@ -1,20 +1,70 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Formik } from 'formik';
-import { Button, Grid, InputAdornment, MenuItem, TextField } from '@mui/material';
+import { Button, Collapse, Grid, InputAdornment, MenuItem, TextField } from '@mui/material';
 import { CANTEEN_INITIAL_VALUES, CANTEEN_VALIDATION_SCHEMA } from '../../utils/validations/stockValidations';
 import { LocationOnOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
+import { useSnackbar } from 'notistack';
+import { useAxiosMutation } from '../../utils/hooks';
+import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
 
-interface CanteenFormProps {}
+interface CanteenFormProps {
+  onClose: () => void;
+}
 
-const statusList = ['ACTIVE', 'INACTIVE'];
+const statuses = [
+  {
+    label: 'Accepted',
+    value: 'ACCEPTED'
+  },
+  {
+    label: 'Processing',
+    value: 'PROCESSING'
+  },
+  {
+    label: 'Rejected',
+    value: 'REJECTED'
+  },
+  {
+    label: 'PostPoned',
+    value: 'POSTPONED'
+  },
+];
 
-const CanteenForm: FC<CanteenFormProps> = ({}) => {
+const CanteenForm: FC<CanteenFormProps> = ({ onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [onPost, { loading, error }] = useAxiosMutation({
+    url: '/warehouse/canteens',
+    method: 'post',
+    onSuccess: () => enqueueSnackbar('Canteen registered successful', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+      },
+      TransitionComponent: Collapse,
+    }),
+    onFinally: () => onClose()
+  }, foodwizeStockApi);
+
+  useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+        TransitionComponent: Collapse,
+      });
+    }
+  }, [error]);
+
   return (
     <Formik
       initialValues={CANTEEN_INITIAL_VALUES}
       validationSchema={CANTEEN_VALIDATION_SCHEMA}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={(values) => onPost(values)}
     >
       {({
         handleSubmit,
@@ -68,19 +118,6 @@ const CanteenForm: FC<CanteenFormProps> = ({}) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="label"
-                name="label"
-                label="Label"
-                value={values.label}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={Boolean(touched.label && errors.label)}
-                helperText={touched.label && errors.label}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
                 id="address"
                 name="address"
                 label="Address"
@@ -101,14 +138,14 @@ const CanteenForm: FC<CanteenFormProps> = ({}) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="geolocation"
-                name="geolocation"
-                label="Geolocation"
-                value={values.geolocation}
+                id="geo_address"
+                name="geo_address"
+                label="Geo_address"
+                value={values.geo_address}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={Boolean(touched.geolocation && errors.geolocation)}
-                helperText={touched.geolocation && errors.geolocation}
+                error={Boolean(touched.geo_address && errors.geo_address)}
+                helperText={touched.geo_address && errors.geo_address}
                 fullWidth
                 InputProps={{
                   endAdornment: (
@@ -132,8 +169,10 @@ const CanteenForm: FC<CanteenFormProps> = ({}) => {
                 fullWidth
                 select
               >
-                {statusList.map((status, index) => (
-                  <MenuItem value={status} key={index}>{status}</MenuItem>
+                {statuses.map(({ label, value }) => (
+                  <MenuItem key={value} value={value}>
+                    {label}
+                  </MenuItem>
                 ))}
               </TextField>
             </Grid>
@@ -151,6 +190,7 @@ const CanteenForm: FC<CanteenFormProps> = ({}) => {
                     color="secondary"
                     variant="contained"
                     sx={{ color: '#fff' }}
+                    loading={loading}
                   >
                     Save
                   </LoadingButton>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, FC } from 'react';
 import { Box, FormControl, FormHelperText, IconButton, Input, InputAdornment, Typography } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
@@ -11,7 +11,8 @@ type UpdatePasswordData = {
   password: string;
   confirm_password: string;
 };
-export const Security = () => {
+
+const Security: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [updatePassword, { data, loading, error }] = useAxiosMutation<UpdatePasswordData>({
     url: '/identities',
@@ -130,3 +131,5 @@ export const Security = () => {
     </Box>
   );
 };
+
+export default Security;

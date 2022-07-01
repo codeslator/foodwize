@@ -1,12 +1,13 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, Divider, Grid, MenuItem, TextField, Typography } from '@mui/material';
+import { Formik } from 'formik';
+import { Button, Collapse, Divider, Grid, MenuItem, TextField, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { GridColumns } from '@mui/x-data-grid';
 import { ModuleDataGridTable, ModuleDetailsToolbar } from '../../components/shared';
 import { foodwizeStockApi } from '../../config/useAxiosInterceptor';
-import { useAxios } from '../../utils/hooks';
-import { Formik } from 'formik';
+import { useAxios, useAxiosMutation } from '../../utils/hooks';
 import { IOrder, ORDER_VALIDATION_SCHEMA } from '../../utils/validations/suplliersValidations';
-import { GridColumns } from '@mui/x-data-grid';
 import { ModuleListRowActions } from '../../components/shared/ModuleList';
 
 const statuses = [
@@ -30,6 +31,7 @@ const statuses = [
 
 const OrderDetailsView: FC = () => {
   const { orderId } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [refetch, { data, error, loading }] = useAxios<IOrder>({
     url: `warehouse/orders/${orderId}`,
@@ -37,7 +39,39 @@ const OrderDetailsView: FC = () => {
 
   const toggleIsEditing = () => {
     setIsEditing(!isEditing);
-  }
+  };
+
+  const [onPut] = useAxiosMutation({
+    method: 'put',
+    url: `warehouse/orders/${orderId}`,
+    onSuccess: () => enqueueSnackbar('Record updated successfully', {
+      variant: 'success',
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'right',
+      },
+      TransitionComponent: Collapse,
+    }),
+    onFinally: () => {
+      toggleIsEditing();
+      refetch();
+    }
+  }, foodwizeStockApi);
+
+  useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error.message, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+        TransitionComponent: Collapse,
+      });
+    }
+  }, [error]);
+
+  
 
   const ORDER_INITAL_VALUES = {
     supplier_details_id: data?.supplier_details_id || '',
@@ -46,7 +80,7 @@ const OrderDetailsView: FC = () => {
     tax: data?.tax || '',
     discount: data?.discount || '',
     status: data?.status || '',
-  }
+  };
 
   const columns: GridColumns = [
     {
@@ -110,17 +144,6 @@ const OrderDetailsView: FC = () => {
                 <Button
                   type="submit"
                   variant="outlined"
-                  color="secondary"
-                  // onClick={toggleDialog}
-                  sx={{
-                    ml: 1,
-                  }}
-                >
-                  Update
-                </Button>
-                <Button
-                  type="submit"
-                  variant="outlined"
                   color="inherit"
                   onClick={toggleIsEditing}
                   sx={{
@@ -141,7 +164,7 @@ const OrderDetailsView: FC = () => {
         <Grid item xs={12}>
           <Formik
             initialValues={ORDER_INITAL_VALUES}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => onPut(values)}
             validationSchema={ORDER_VALIDATION_SCHEMA}
             enableReinitialize
           >
@@ -246,6 +269,17 @@ const OrderDetailsView: FC = () => {
                       ))}
                     </TextField>
                   </Grid>
+                  {(isEditing) && (
+                    <Grid item xs={12} sm={12} md={6}>
+                      <Button
+                        type="submit"
+                        variant="outlined"
+                        color="secondary"
+                      >
+                        Update
+                      </Button>
+                    </Grid>
+                  )}
                 </Grid>
               </form>
             )}

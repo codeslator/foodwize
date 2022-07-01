@@ -1,9 +1,8 @@
-import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { CheckList } from '../shared/CheckList';
 
-export const Notifications = () => {
+const Notifications = () => {
   const checks = [
     {
       label: 'Email',
@@ -18,6 +17,7 @@ export const Notifications = () => {
       label: 'Phone Call',
     },
   ];
+
   return (
     <Box>
       <Typography>Manage what kind of notifications you want to receive from us</Typography>
@@ -37,3 +37,5 @@ export const Notifications = () => {
     </Box>
   );
 };
+
+export default Notifications;

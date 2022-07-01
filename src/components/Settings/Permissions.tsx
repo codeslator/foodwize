@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Box, Grid } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { CheckList } from '../shared/CheckList';
@@ -32,7 +32,7 @@ const Categories: FC<CategoriesProps> = ({ categories, setCategory, indexCategor
   );
 };
 
-export const Permissions = () => {
+const Permissions: FC = () => {
   const {
     tabs: categories,
     tabSelectedIndex,
@@ -65,6 +65,7 @@ export const Permissions = () => {
         </Grid>
       ),
   );
+
   return (
     <Grid container display="flex" flexWrap="nowrap">
       <Grid item>
@@ -85,3 +86,5 @@ export const Permissions = () => {
     </Grid>
   );
 };
+
+export default Permissions;

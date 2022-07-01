@@ -1,51 +1,49 @@
-/* eslint-disable no-constant-condition */
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import { NavTabs, SwipeableTabs, useNavTabs } from '../components/shared/NavTabs';
-import { Notifications } from '../components/Settings/Notifications';
-import { Security } from '../components/Settings/Security';
-import { Permissions } from '../components/Settings/Permissions';
+import { FC, useEffect } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Grid } from '@mui/material';
+import { ModuleTabs, ModuleToolbar } from '../components/shared';
 
-const SettingsView = () => {
-  const { tabs, setTab, tabSelectedIndex } = useNavTabs([
-    // 'Notifications',
-    'Security',
-    // 'Permissions'
-  ]);
+const SettingsView: FC = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(pathname === '/app/users') {
+      navigate('/app/users/all')
+    }
+  }, [])
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Typography fontWeight="bold" variant="h4" color="#5E565A">
-          Settings
-        </Typography>
-        {/* <Button color="secondary" variant="contained">
-          <Typography
-            variant="body2"
-            color="#fff"
-            sx={{ textTransform: 'none' }}
-          >
-            Add Users
-          </Typography>
-        </Button> */}
-      </Box>
-      <Box mt={2}>
-        <NavTabs tabs={tabs} onSetTab={setTab} />
-      </Box>
-      <Box mt={2}>
-        <SwipeableTabs tabSelectedIndex={tabSelectedIndex}>
-          {[
-            // <Notifications />,
-            <Security />,
-            // <Permissions />
-          ]}
-        </SwipeableTabs>
-      </Box>
+      <Helmet>
+        <title>Settings | Foodwize</title>
+      </Helmet>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ModuleToolbar title="Settings" />
+        </Grid>
+        <Grid item xs={12}>
+          <ModuleTabs
+            hasRouter
+            tabNames={[
+              'Notifications',
+              'Security',
+              'Permissions',
+            ]}
+            tabs={[
+              <Outlet />,
+              <Outlet />,
+              <Outlet />,
+            ]}
+            links={[
+              'notifications',
+              'security',
+              'permissions',
+            ]}
+          />
+        </Grid>
+      </Grid>
     </>
   );
 };

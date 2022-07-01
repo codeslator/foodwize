@@ -11,6 +11,9 @@ export enum ROUTES {
   PRODUCTS = 'products',
   SUPPLIERS = 'suppliers',
   SETTINGS = 'settings',
+  PERMISSIONS = 'permissions',
+  SECURITY = 'security',
+  NOTIFICATIONS = 'notifications',
   ANALYTICS = 'analytics',
   TEST = 'test',
   WAREHOUSES = 'warehouses',
@@ -44,6 +47,9 @@ export enum URLS_TO {
   SUPPLIERS_SUPPLIERS = '/app/suppliers/suppliers',
   SUPPLIERS_DELIVERIES = '/app/suppliers/deliveries',
   SETTINGS = '/app/settings',
+  SETTINGS_PERMISSIONS = '/app/settings/permissions',
+  SETTINGS_SECURITY = '/app/settings/security',
+  SETTINGS_NOTIFICATIONS = '/app/settings/notifications',
   ANALYTICS = '/app/analytics',
   TEST = '/app/test'
 };

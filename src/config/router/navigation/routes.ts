@@ -18,6 +18,7 @@ import { WarehousesList, CanteensList } from '../../../components/stock';
 import { AllList, UsersList } from '../../../components/users';
 import { AuthLayout, AppLayout } from '../../../containers/layouts';
 import { ROUTES } from './index';
+import { Permissions, Notifications, Security } from '../../../components/Settings';
 
 export const routes: RouteParent[] = [
   {
@@ -72,7 +73,15 @@ export const routes: RouteParent[] = [
           { path: ROUTES.TEST, Component: EditUserView },
         ]
       },
-      { path: ROUTES.SETTINGS, Component: SettingsView },
+      {
+        path: ROUTES.SETTINGS,
+        Component: SettingsView,
+        children: [
+          { path: ROUTES.PERMISSIONS, Component: Permissions },
+          { path: ROUTES.NOTIFICATIONS, Component: Notifications },
+          { path: ROUTES.SECURITY, Component: Security },
+        ]
+      },
       { path: ROUTES.ANY, Component: NotFoundView },
     ],
   },

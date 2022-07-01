@@ -1,12 +1,22 @@
-import { Box, Button, Collapse, Divider, Grid, MenuItem, TextField, Typography } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton/LoadingButton';
+import { FC, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAxios, useAxiosMutation } from '../../utils/hooks';
-import { Helmet } from 'react-helmet';
+import {
+  Box,
+  Button,
+  Collapse,
+  Divider,
+  Grid,
+  MenuItem,
+  TextField,
+  Typography
+} from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton/LoadingButton';
 import { Formik } from 'formik';
+// import { Helmet } from 'react-helmet';
+import { useAxios, useAxiosMutation } from '../../utils/hooks';
 import { ADD_USER_INITIAL_STATE, ADD_USER_VALIDATION_SCHEMA } from '../../utils/validations/authValidations';
-import { useEffect } from 'react';
 import { useSnackbar } from 'notistack';
+import { ModuleDetailsToolbar } from '../../components/shared';
 
 interface UserMetadata {
   Restaurant: string;
@@ -22,67 +32,89 @@ interface User {
   Metadata: UserMetadata;
 }
 
-interface Roles {
+interface Role {
   id: number;
-  roleName: [];
+  roleName: string;
 }
 
 interface UserData {
   result: string;
 }
-const EditUsers = () => {
-  const { enqueueSnackbar } = useSnackbar();
 
+const statuses = [
+  {
+    label: 'ACTIVE',
+    value: 'ACTIVE',
+  },
+  {
+    label: 'INACTIVE',
+    value: 'INACTIVE',
+  },
+]
+
+const EditUsers: FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState<boolean>(false)
   const { vendorId } = useParams();
-  const [, { data: user }] = useAxios<User>({ url: `vendors/${vendorId}` });
-  const [, { data: roles = [], loading: isLoadingRoles }] = useAxios<Roles[]>({ url: 'utils/roles' });
+  const [refetch, { data: user }] = useAxios<User>({ url: `vendors/${vendorId}` });
+  const [, { data: roles, loading: loadingRoles }] = useAxios<Role[]>({ url: 'utils/roles' });
+
+  const toggleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
+
   const [onPut, { error, loading }] = useAxiosMutation<UserData>({
     url: `accounts/profiles/${vendorId}`,
     method: 'put',
     onFinally: () => {
-      navigate(-1);
+      toggleIsEditing();
+      refetch();
     },
   });
 
-  useEffect(() => {
-    if (error?.response?.data?.errorMessage)
-      enqueueSnackbar(error.response.data.errorMessage.slice(23, -2), {
-        variant: 'error',
-        anchorOrigin: {
-          vertical: 'bottom',
-          horizontal: 'right',
-        },
-        TransitionComponent: Collapse,
-      });
-  }, [error]);
-
-  const INITIAL_FORM_STATUS = {
+  const USER_INITIAL_VALUES = {
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
     email: user?.email || '',
     status: user?.status || '',
     role: user?.role || '',
   };
-  console.log(INITIAL_FORM_STATUS)
 
+  console.log(USER_INITIAL_VALUES, roles)
 
   return (
     <>
-      <Helmet>
-        <title>Users | Foodwize</title>
-      </Helmet>
-
+      <ModuleDetailsToolbar
+        title="User Detail"
+        actions={[
+          (<Button
+            variant="outlined"
+            color="quinary"
+            onClick={toggleIsEditing}
+            sx={{
+              ml: 1,
+            }}
+          >
+            Edit
+          </Button>),
+          (<Button
+            variant="outlined"
+            color="primary"
+            // onClick={toggleIsEditing}
+            sx={{
+              ml: 1,
+            }}
+          >
+            Delete
+          </Button>)
+        ]}
+      />
       <Formik
-        initialValues={INITIAL_FORM_STATUS}
+        initialValues={USER_INITIAL_VALUES}
         // validationSchema={ADD_USER_VALIDATION_SCHEMA}
-        onSubmit={(values) => onPut({
-          first_name: values.firstName,
-          last_name: values.lastName,
-          email: values.email,
-          role: 1,
-          status: values.status,
-        })}
+        onSubmit={(values) => onPut(values)}
+        enableReinitialize
       >
         {({
           handleSubmit,
@@ -91,137 +123,122 @@ const EditUsers = () => {
           touched,
           handleChange,
           handleBlur,
-          handleReset,
-          dirty,
-          isValid,
-          initialValues,
         }) => (
           <form onSubmit={handleSubmit}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Typography variant="h4" color="#5E565A">
-                User Detail
-              </Typography>
-              <Grid>
-                <Button color="secondary" variant="outlined">
-                  <Typography variant="body2" sx={{ textTransform: 'none', padding: '0 10px' }}>
-                    Edit User
-                  </Typography>
-                </Button>
-                <Button color="primary" variant="outlined" sx={{ marginLeft: '20px' }}>
-                  <Typography variant="body2" sx={{ textTransform: 'none', padding: '0 20px' }}>
-                    Delete
-                  </Typography>
-                </Button>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography>Personal Information</Typography>
+                <Divider />
               </Grid>
-            </Box>
-
-            <Box mt={2}>
-              <Typography variant="subtitle1" color="#5E565A">
-                Personal Information
-              </Typography>
-              <Divider />
-            </Box>
-            <Grid container spacing={3} sx={{ padding: '20px 0' }} xs={12} item>
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                <TextField
-                  name="firstName"
-                  label="Name"
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  value={values.firstName}
-                  onBlur={handleBlur}
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  helperText={touched.firstName && errors.firstName}
-                />
-                <TextField
-                  name="lastName"
-                  label="Last Name"
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  value={values.lastName}
-                  onBlur={handleBlur}
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  helperText={touched.lastName && errors.lastName}
-                />
-                <TextField
-                  name="email"
-                  label="Email"
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  value={values.email}
-                  onBlur={handleBlur}
-                  error={Boolean(touched.email && errors.email)}
-                  helperText={touched.email && errors.email}
-                />
+              <Grid item xs={12}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <TextField
+                      name="firstName"
+                      label="First Name"
+                      variant="outlined"
+                      onChange={handleChange}
+                      value={values.firstName}
+                      onBlur={handleBlur}
+                      error={Boolean(touched.firstName && errors.firstName)}
+                      helperText={touched.firstName && errors.firstName}
+                      fullWidth
+                      disabled={!isEditing}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <TextField
+                      name="lastName"
+                      label="Last Name"
+                      variant="outlined"
+                      onChange={handleChange}
+                      value={values.lastName}
+                      onBlur={handleBlur}
+                      error={Boolean(touched.lastName && errors.lastName)}
+                      helperText={touched.lastName && errors.lastName}
+                      fullWidth
+                      disabled={!isEditing}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <TextField
+                      name="email"
+                      label="Email"
+                      variant="outlined"
+                      onChange={handleChange}
+                      value={values.email}
+                      onBlur={handleBlur}
+                      error={Boolean(touched.email && errors.email)}
+                      helperText={touched.email && errors.email}
+                      fullWidth
+                      disabled={!isEditing}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-            </Grid>
-            <Box mt={2}>
-              <Typography variant="subtitle1" color="#5E565A">
-                User Information
-              </Typography>
-              <Divider />
-            </Box>
-            <Grid container spacing={3} sx={{ padding: '20px 0' }} xs={8} item>
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                {!isLoadingRoles && (
-                  <TextField
-                    label="User Role"
-                    fullWidth
-                    id="id"
-                    name="role"
-                    select
-                    onChange={handleChange}
-                    value={values.role}
-                    onBlur={handleBlur}
-                    error={Boolean(touched.role && errors.role)}
-                    helperText={touched.role && errors.role}
-                  >
-                    {roles?.map((role) => (
-                      <MenuItem key={role.id} value={role.roleName}>
-                        {role.roleName}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-                <TextField
-                  select
-                  name="status"
-                  label="Status"
+              <Grid item xs={12}>
+                <Typography>User Information</Typography>
+                <Divider />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <TextField
+                      label="User Role"
+                      fullWidth
+                      id="id"
+                      name="role"
+                      select
+                      onChange={handleChange}
+                      value={values.role}
+                      onBlur={handleBlur}
+                      error={Boolean(touched.role && errors.role)}
+                      helperText={touched.role && errors.role}
+                      disabled={!isEditing}
+                    >
+                      {roles?.map((role) => (
+                        <MenuItem key={role.id} value={role.roleName} selected={values.role === role.roleName}>
+                          {role.roleName}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <TextField
+                      select
+                      name="status"
+                      id="status"
+                      label="Status"
+                      onChange={handleChange}
+                      value={values.status}
+                      onBlur={handleBlur}
+                      error={Boolean(touched.status && errors.status)}
+                      helperText={touched.status && errors.status}
+                      disabled={!isEditing}
+                      fullWidth
+                    >
+                      {statuses.map(({ label, value }) => (
+                        <MenuItem key={value} value={value}>
+                          {label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={12} md={2}>
+                <LoadingButton
+                  color="secondary"
+                  type="submit"
+                  variant="contained"
+                  sx={{ color: '#FFF', mt: '20px', textTransform: 'none' }}
+                  disabled={!isEditing}
+                  loading={loading}
                   fullWidth
-                  onChange={handleChange}
-                  value={values.status}
-                  onBlur={handleBlur}
-                  error={Boolean(touched.status && errors.status)}
-                  helperText={touched.status && errors.status}
                 >
-                  <MenuItem key="ACTIVE" value="ACTIVE">
-                    Active
-                  </MenuItem>
-                  <MenuItem key="INACTIVE" value="INACTIVE">
-                    Inactive
-                  </MenuItem>
-                </TextField>
+                  Save
+                </LoadingButton>
               </Grid>
-            </Grid>
-            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'start', gap: '15px' }}>
-              <LoadingButton
-                color="secondary"
-                type="submit"
-                variant="contained"
-                sx={{ color: '#FFF', width: '7%', mt: '20px', textTransform: 'none' }}
-                disabled={!dirty}
-                loading={loading}
-              >
-                Save
-              </LoadingButton>
             </Grid>
           </form>
         )}
@@ -231,17 +248,3 @@ const EditUsers = () => {
 };
 
 export default EditUsers;
-
-// id: params.orderId,
-// email: 'jhon@dao.com',
-// firstName: 'Jhon',
-// lastName: 'Dao',
-// vendor_parent: '783643-GH-235345',
-// role: 'ADMIN',
-// status: 'ACTIVE ',
-// sold_rule: '10%',
-// unsold_rule: '5%',
-// metadata: {
-//   Restaurant: 'McDonalds',
-//   Description: 'Best restaurant ever',
-// },

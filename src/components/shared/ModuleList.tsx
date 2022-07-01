@@ -48,11 +48,10 @@ interface MenuOption {
 }
 
 interface ModuleListRowActionsProps {
-  item?: GridRowParams;
   options: Array<MenuOption>;
 }
 
-export const ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ item, options }) => {
+export const  ModuleListRowActions: FC<ModuleListRowActionsProps> = ({ options }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { getStatusColor } = useUtils();
   const openMenu = Boolean(anchorEl);

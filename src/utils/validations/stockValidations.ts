@@ -20,7 +20,7 @@ interface IWarehouse {
   label: string;
   size: number | string;
   address: string;
-  geolocation: string;
+  geo_address: string;
   status: string;
 }
 
@@ -29,7 +29,7 @@ interface ICanteen {
   label: string;
   size: number | string;
   address: string;
-  geolocation: string;
+  geo_address: string;
   status: string;
 }
 
@@ -68,7 +68,7 @@ export const WAREHOUSE_INITIAL_VALUES: IWarehouse = {
   label: '',
   size: '',
   address: '',
-  geolocation: '',
+  geo_address: '',
   status: '',
 };
 
@@ -77,7 +77,7 @@ export const WAREHOUSE_VALIDATION_SCHEMA = Yup.object({
   label: Yup.string().required(),
   size: Yup.string().required(),
   address: Yup.string().required(),
-  geolocation: Yup.string().required(),
+  geo_address: Yup.string().required(),
   status: Yup.string().required(),
 })
 
@@ -86,7 +86,7 @@ export const CANTEEN_INITIAL_VALUES: ICanteen = {
   label: '',
   size: '',
   address: '',
-  geolocation: '',
+  geo_address: '',
   status: '',
 };
 
@@ -95,6 +95,6 @@ export const CANTEEN_VALIDATION_SCHEMA = Yup.object({
   label: Yup.string().required(),
   size: Yup.string().required(),
   address: Yup.string().required(),
-  geolocation: Yup.string().required(),
+  geo_address: Yup.string().required(),
   status: Yup.string().required(),
 })
