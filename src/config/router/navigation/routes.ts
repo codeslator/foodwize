@@ -12,6 +12,8 @@ import {
   OrderDetailsView,
   EditUserView,
   StockView,
+  DashboardView,
+  AnalyticsView
 } from '../../../views';
 import { OrdersList, SuppliersList, DeliveriesList } from '../../../components/suppliers';
 import { WarehousesList, CanteensList } from '../../../components/stock';
@@ -35,7 +37,7 @@ export const routes: RouteParent[] = [
     path: ROUTES.APP,
     Layout: AppLayout,
     children: [
-      { path: ROUTES.HOME, Component: TestView },
+      { path: ROUTES.HOME, Component: DashboardView },
       {
         path: ROUTES.STOCK,
         Component: StockView,
@@ -46,7 +48,7 @@ export const routes: RouteParent[] = [
         ]
       },
       { path: ROUTES.PRODUCTS, Component: TestView },
-      { path: ROUTES.ANALYTICS, Component: EditUserView },
+      { path: ROUTES.ANALYTICS, Component: AnalyticsView },
       {
         path: ROUTES.SUPPLIERS,
         Component: SuppliersView,

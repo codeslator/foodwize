@@ -2,6 +2,8 @@ import { lazy } from 'react';
 
 // Lazy views
 export const TestView = lazy(() => import(/* webpackChunkName: "TestView" */ './TestView'));
+export const AnalyticsView = lazy(() => import(/* webpackChunkName: "AnalyticsView" */ './AnalyticsView'));
+export const DashboardView = lazy(() => import(/* webpackChunkName: "DashboardView" */ './DashboardView'));
 export const SignInView = lazy(() => import(/* webpackChunkName: "SignInView" */ './SignInView'));
 export const SignUpView = lazy(() => import(/* webpackChunkName: "SignUpView" */ './SignUpView'));
 export const RecoverPasswordView = lazy(
@@ -18,5 +20,4 @@ export const OrderDetailsView = lazy(
   () => import(/* webpackChunkName: "OrderDetailsView" */ './suppliers/OrderDetailsView'),
 );
 export const StockView = lazy(() => import(/* webpackChunkName: "StockView" */ './stock/StockView'));
-
-export const SettingsView = lazy(() => import(/* webpackChunkName: "SettingsView" */ './SettingsView'));
+export const SettingsView = lazy(() => import(/* webpackChunkName: "SettingsView" */ './settings/SettingsView'));

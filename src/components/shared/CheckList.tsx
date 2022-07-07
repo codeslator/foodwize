@@ -1,8 +1,17 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Box, Checkbox, FormControl, FormControlLabel, Paper, Theme, Typography } from '@mui/material';
 
-export const CheckList: FC<{ checks: Array<{ label: string }>; title: string }> = ({ checks, title }) => (
-  <Paper sx={{ width: '12rem' }} variant="outlined" square>
+interface Check {
+  label: string;
+}
+
+interface CheckListProps {
+  title: string;
+  checks: Array<Check>
+}
+
+export const CheckList: FC<CheckListProps> = ({ checks, title }) => (
+  <Paper sx={{ width: '12rem' }} variant="outlined">
     <Box
       sx={(theme: Theme) => ({
         p: '12px 8px',

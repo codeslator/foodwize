@@ -2,15 +2,15 @@ import { FC, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Grid } from '@mui/material';
-import { ModuleTabs, ModuleToolbar } from '../components/shared';
+import { ModuleTabs, ModuleToolbar } from '../../components/shared';
 
 const SettingsView: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(pathname === '/app/users') {
-      navigate('/app/users/all')
+    if(pathname === '/app/settings') {
+      navigate('/app/settings/notifications')
     }
   }, [])
 

@@ -1,11 +1,12 @@
-import { useState, FC } from 'react';
-import { Box, FormControl, FormHelperText, IconButton, Input, InputAdornment, Typography } from '@mui/material';
+import { FC, useState, useEffect } from 'react';
+import {IconButton, TextField, InputAdornment, Typography, Grid, Collapse } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { useAxiosMutation } from '../../utils/hooks';
-import { useFormik } from 'formik';
+import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useSnackbar } from 'notistack';
+import { UPDATE_PASSWORD_INITIAL_VALUES, UPDATE_PASSWORD_VALIDATION_SCHEMA } from '../../utils/validations/settingsValidations';
 
 type UpdatePasswordData = {
   password: string;
@@ -14,121 +15,133 @@ type UpdatePasswordData = {
 
 const Security: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [updatePassword, { data, loading, error }] = useAxiosMutation<UpdatePasswordData>({
+  const [onPut, { loading, error }] = useAxiosMutation<UpdatePasswordData>({
     url: '/identities',
-    method: 'PUT',
-  });
-
-  const form = useFormik({
-    initialValues: {
-      newPassword: '',
-      confirmNewPassword: '',
-    },
-    validationSchema: yup.object().shape({
-      newPassword: yup.string().required().min(8),
-      confirmNewPassword: yup
-        .string()
-        .equals([yup.ref('newPassword')], 'Confirm Password are not equal to New Password')
-        .required()
-        .min(8),
-    }),
-    onSubmit(values) {
-      updatePassword({
-        data: {
-          password: values.newPassword,
-          confirm_password: values.confirmNewPassword,
+    method: 'put',
+    onSuccess() {
+      enqueueSnackbar('Successfull Password Update', {
+        variant: 'success',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
         },
-        event: {
-          onSuccess() {
-            enqueueSnackbar('Successfull Password Update', {
-              variant: 'success',
-              anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'right',
-              },
-            });
-            form.resetForm();
-          },
-        },
+        TransitionComponent: Collapse,
       });
     },
   });
+
+  useEffect(() => {
+    if (error) {
+      enqueueSnackbar(error?.message, {
+        variant: 'error',
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right',
+        },
+        TransitionComponent: Collapse,
+      });
+    }
+  }, [error]);
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   return (
-    <Box>
-      <Typography>Update your Password</Typography>
-      <Box component="form" onSubmit={form.handleSubmit}>
-        <Box mt="1rem">
-          <Typography>Type New Password</Typography>
-          <FormControl error={Boolean(form.errors.newPassword)}>
-            <Input
-              value={form.values.newPassword}
-              name="newPassword"
-              onChange={form.handleChange}
-              type={showPassword ? 'password' : 'text'}
-              disableUnderline
-              placeholder="New Password"
-              sx={{
-                width: '28rem',
-                border: '2px solid grey',
-                borderRadius: '8px',
-                padding: '8px',
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" onClick={toggleShowPassword}>
-                    {!showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-            <FormHelperText>{form.errors.newPassword}</FormHelperText>
-          </FormControl>
-        </Box>
-        <Box mt="1rem">
-          <Typography>Confirm New Password</Typography>
-          <FormControl error={Boolean(form.errors.confirmNewPassword)}>
-            <Input
-              value={form.values.confirmNewPassword}
-              name="confirmNewPassword"
-              onChange={form.handleChange}
-              type={showPassword ? 'password' : 'text'}
-              disableUnderline
-              placeholder="Confirm Password"
-              sx={{
-                width: '28rem',
-                border: '2px solid grey',
-                borderRadius: '8px',
-                padding: '8px',
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" onClick={toggleShowPassword}>
-                    {!showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-            <FormHelperText>{form.errors.confirmNewPassword}</FormHelperText>
-          </FormControl>
-        </Box>
-        <Box mt={2}>
-          <LoadingButton
-            disabled={!form.dirty || !form.isValid}
-            loading={loading}
-            type="submit"
-            variant="contained"
-            color="secondary"
-            sx={{ color: '#ffffff' }}
-          >
-            Save
-          </LoadingButton>
-        </Box>
-      </Box>
-    </Box>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Typography>Update your Password</Typography>
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <Formik
+          initialValues={UPDATE_PASSWORD_INITIAL_VALUES}
+          validationSchema={UPDATE_PASSWORD_VALIDATION_SCHEMA}
+          onSubmit={(values) => onPut(values)}
+        >
+          {({
+            handleSubmit,
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    id="password"
+                    name="password"
+                    label="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.password && errors.password)}
+                    helperText={touched.password && errors.password}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={toggleShowPassword}
+                          >
+                            {!showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                    fullWidth
+                    placeholder="New Password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    id="confirm_password"
+                    name="confirm_password"
+                    label="Password Confirm"
+                    type={showPassword ? 'text' : 'password'}
+                    value={values.confirm_password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.confirm_password && errors.confirm_password)}
+                    helperText={touched.confirm_password && errors.confirm_password}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={toggleShowPassword}
+                          >
+                            {!showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                    fullWidth
+                    placeholder="Confirm Password"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <LoadingButton
+                    type="submit"
+                    // fullWidth
+                    variant="contained"
+                    color="secondary"
+                    sx={{ color: '#ffffff' }}
+                    loading={loading}
+                    disabled={loading}
+                  >
+                    Save
+                  </LoadingButton>
+                </Grid>
+              </Grid>
+            </form>
+          )}
+        </Formik>
+      </Grid>
+    </Grid>
   );
 };
 

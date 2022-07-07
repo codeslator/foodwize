@@ -1,30 +1,39 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { Button, Collapse, Grid, MenuItem, TextField } from '@mui/material';
 import { useAxios, useAxiosMutation } from '../../utils/hooks';
 import { Formik } from 'formik';
-import { ADD_USER_VALIDATION_SCHEMA, ADD_USER_INITIAL_STATE } from '../../utils/validations/authValidations';
+import { USER_VALIDATION_SCHEMA, USER_INITIAL_STATE } from '../../utils/validations/usersValidations';
 import { useSnackbar } from 'notistack';
-
-interface Roles {
+interface Role {
   id: number;
   roleName: [];
 }
-interface OrderFormProps {
-  onClose: () => void;
-}
-
 interface UserData {
   result: string;
 }
-const AddUserForm: FC<OrderFormProps> = ({ onClose }) => {
-  const { enqueueSnackbar } = useSnackbar();
+interface UserFormProps {
+  onClose: () => void;
+}
 
+const statuses = [
+  {
+    label: 'ACTIVE',
+    value: 'ACTIVE',
+  },
+  {
+    label: 'INACTIVE',
+    value: 'INACTIVE',
+  },
+]
+
+const UserForm: FC<UserFormProps> = ({ onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const localUserId = localStorage.user && JSON.parse(localStorage.user).user.vendorId;
-  const [refetch, { data: roles = [] }] = useAxios<Roles[]>({
+  const [, { data: roles = [] }] = useAxios<Role[]>({
     url: 'utils/roles'
   });
-  const [onPost, { response, error, loading, data }] = useAxiosMutation<UserData>({
+  const [onPost, { error, loading }] = useAxiosMutation<UserData>({
     url: `identities`,
     method: 'post',
     onSuccess: () => enqueueSnackbar('Register Successful', {
@@ -37,7 +46,7 @@ const AddUserForm: FC<OrderFormProps> = ({ onClose }) => {
     }),
     onFinally: () => onClose()
   });
-  
+
   useEffect(() => {
     if (error?.response?.data?.errorMessage)
       enqueueSnackbar(error.response.data.errorMessage.slice(23, -2), {
@@ -49,28 +58,25 @@ const AddUserForm: FC<OrderFormProps> = ({ onClose }) => {
         TransitionComponent: Collapse,
       });
   }, [error]);
-  
+
   return (
     <>
       <Formik
-        initialValues={ADD_USER_INITIAL_STATE}
-        onSubmit={(values) => {
-          console.log('SUBMITING', values);
-          onPost({
-            email: values.email,
-            first_name: values.firstName,
-            password: values.password,
-            last_name: values.lastName,
-            vendor_parent: localUserId,
-            role: 1,
-            status: values.status,
-          });
-        }}
-        // validationSchema={ADD_USER_VALIDATION_SCHEMA}
+        initialValues={USER_INITIAL_STATE}
+        onSubmit={(values) => onPost({
+          ...values,
+          first_name: values.firstName,
+          last_name: values.lastName,
+          vendor_parent: localUserId,
+          role: values.role,
+          // status: values.status,
+        })
+        }
+        validationSchema={USER_VALIDATION_SCHEMA}
       >
         {({ handleSubmit, values, errors, touched, handleChange, handleBlur, handleReset, dirty, isValid }) => (
           <form onSubmit={handleSubmit}>
-            <Grid container spacing={3} sx={{ padding: '20px 0' }}>
+            <Grid container spacing={2} sx={{ pt: 3 }}>
               <Grid item xs={12} sm={12}>
                 <TextField
                   name="firstName"
@@ -159,35 +165,40 @@ const AddUserForm: FC<OrderFormProps> = ({ onClose }) => {
                   error={Boolean(touched.status && errors.status)}
                   helperText={touched.status && errors.status}
                 >
-                  <MenuItem key="ACTIVE" value="ACTIVE">
-                    Active
-                  </MenuItem>
-                  <MenuItem key="INACTIVE" value="INACTIVE">
-                    Inactive
-                  </MenuItem>
+                  {statuses.map(({ label, value }) => (
+                    <MenuItem key={value} value={value}>
+                      {label}
+                    </MenuItem>
+                  ))}
                 </TextField>
               </Grid>
-
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                <Button
-                  color="inherit"
-                  type="reset"
-                  variant="text"
-                  sx={{ color: '#333', width: '50%' }}
-                  onClick={handleReset}
-                >
-                  Clear
-                </Button>
-                <LoadingButton
-                  color="primary"
-                  type="submit"
-                  variant="contained"
-                  sx={{ color: '#FFF', width: '50%' }}
-                  disabled={!dirty || !isValid}
-                  loading={loading}
-                >
-                  Submit
-                </LoadingButton>
+              <Grid item xs={12}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Button
+                      color="inherit"
+                      type="reset"
+                      variant="text"
+                      onClick={handleReset}
+                      fullWidth
+                    >
+                      Clear
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <LoadingButton
+                      color="primary"
+                      type="submit"
+                      variant="contained"
+                      sx={{ color: '#fff' }}
+                      // disabled={!dirty || !isValid}
+                      loading={loading}
+                      fullWidth
+                    >
+                      Submit
+                    </LoadingButton>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </form>
@@ -197,4 +208,4 @@ const AddUserForm: FC<OrderFormProps> = ({ onClose }) => {
   );
 };
 
-export default AddUserForm;
+export default UserForm;
