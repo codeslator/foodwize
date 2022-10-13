@@ -24,7 +24,7 @@ const AuthLayout: FC = () => {
       <Grid
         item
         xs={false}
-        sm={4}
+        sm={false}
         md={6}
       >
         <Image
@@ -45,7 +45,7 @@ const AuthLayout: FC = () => {
       <Grid
         item
         xs={12}
-        sm={8}
+        sm={12}
         md={6}
         component={Paper}
         elevation={6}
